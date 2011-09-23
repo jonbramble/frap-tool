@@ -1,0 +1,38 @@
+SHELL = /bin/sh
+
+CC = g++
+CXXFLAGS =-Wall `gsl-config --cflags`
+#CXXFLAGS =-Wall -g `gsl-config --cflags`
+LD = g++
+LDFLAGS =-Wall -O2 `gsl-config --libs` -L/usr/X11R6/lib -lm -lpthread -lX11 
+#LDFLAGS =-Wall `gsl-config --libs` -L/usr/X11R6/lib -lm -lpthread -lX11 
+# mtune=corei7
+
+OBJDIR = bin
+OBJS = $(OBJDIR)/frap.o $(OBJDIR)/selection.o $(OBJDIR)/fitting.o
+
+#SRCS = frap.cpp
+SRCDIR = src
+
+TARGET = $(OBJDIR)/FRAP
+
+all: $(TARGET)
+
+$(TARGET): $(OBJS)
+	@echo "Linking $(TARGET) ..."
+	@$(LD) -o $(TARGET) $(OBJS) $(LDFLAGS)
+	@echo "done"
+
+$(OBJDIR)/frap.o: $(SRCDIR)/frap.cpp
+	@echo "Compiling frap.cpp ..."
+	@$(CC) $(CXXFLAGS) -c $< -o $@
+
+$(OBJDIR)/selection.o: $(SRCDIR)/selection.cpp
+	@echo "Compiling selection.cpp ..."
+	@$(CC) $(CXXFLAGS) -c $< -o $@
+
+$(OBJDIR)/fitting.o: $(SRCDIR)/fitting.cpp
+	@echo "Compiling fitting.cpp ..."
+	@$(CC) $(CXXFLAGS) -c $< -o $@
+
+clean:;	rm -f $(OBJS) FRAP

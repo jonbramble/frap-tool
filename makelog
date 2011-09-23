@@ -1,0 +1,10 @@
+make  all-am
+make[1]: Entering directory `/home/jon/Programming/C/cimgcopy/frap'
+depbase=`echo src/frap.o | sed 's|[^/]*$|.deps/&|;s|\.o$||'`;\
+	g++ -DHAVE_CONFIG_H -I.  -I/usr/include   -g -O2 -MT src/frap.o -MD -MP -MF $depbase.Tpo -c -o src/frap.o src/frap.cc &&\
+	mv -f $depbase.Tpo $depbase.Po
+depbase=`echo src/selection.o | sed 's|[^/]*$|.deps/&|;s|\.o$||'`;\
+	g++ -DHAVE_CONFIG_H -I.  -I/usr/include   -g -O2 -MT src/selection.o -MD -MP -MF $depbase.Tpo -c -o src/selection.o src/selection.cc &&\
+	mv -f $depbase.Tpo $depbase.Po
+g++  -g -O2   -o FRAP src/frap.o src/selection.o -L/usr/X11R6/lib -lpthread -lX11 
+make[1]: Leaving directory `/home/jon/Programming/C/cimgcopy/frap'
