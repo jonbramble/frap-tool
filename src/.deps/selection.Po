@@ -1,17 +1,17 @@
 src/selection.o: src/selection.cc src/../include/selection.h \
  /usr/include/CImg.h /usr/include/c++/4.5/cstdio \
- /usr/include/c++/4.5/i686-linux-gnu/bits/c++config.h \
- /usr/include/c++/4.5/i686-linux-gnu/bits/os_defines.h \
+ /usr/include/c++/4.5/x86_64-linux-gnu/bits/c++config.h \
+ /usr/include/c++/4.5/x86_64-linux-gnu/bits/os_defines.h \
  /usr/include/features.h /usr/include/bits/predefs.h \
  /usr/include/sys/cdefs.h /usr/include/bits/wordsize.h \
- /usr/include/gnu/stubs.h /usr/include/gnu/stubs-32.h \
- /usr/include/c++/4.5/i686-linux-gnu/bits/cpu_defines.h \
+ /usr/include/gnu/stubs.h /usr/include/gnu/stubs-64.h \
+ /usr/include/c++/4.5/x86_64-linux-gnu/bits/cpu_defines.h \
  /usr/include/c++/4.5/cstddef \
- /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stddef.h \
+ /usr/lib/x86_64-linux-gnu/gcc/x86_64-linux-gnu/4.5.2/include/stddef.h \
  /usr/include/stdio.h /usr/include/bits/types.h \
  /usr/include/bits/typesizes.h /usr/include/libio.h \
  /usr/include/_G_config.h /usr/include/wchar.h \
- /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdarg.h \
+ /usr/lib/x86_64-linux-gnu/gcc/x86_64-linux-gnu/4.5.2/include/stdarg.h \
  /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
  /usr/include/bits/stdio.h /usr/include/bits/stdio2.h \
  /usr/include/c++/4.5/cstdlib /usr/include/stdlib.h \
@@ -56,17 +56,17 @@ src/selection.o: src/selection.cc src/../include/selection.h \
  /usr/include/c++/4.5/bits/stl_iterator_base_funcs.h \
  /usr/include/c++/4.5/bits/stl_iterator.h \
  /usr/include/c++/4.5/debug/debug.h /usr/include/c++/4.5/bits/localefwd.h \
- /usr/include/c++/4.5/i686-linux-gnu/bits/c++locale.h \
+ /usr/include/c++/4.5/x86_64-linux-gnu/bits/c++locale.h \
  /usr/include/c++/4.5/clocale /usr/include/locale.h \
  /usr/include/bits/locale.h /usr/include/c++/4.5/cctype \
  /usr/include/ctype.h /usr/include/c++/4.5/bits/ios_base.h \
  /usr/include/c++/4.5/ext/atomicity.h \
- /usr/include/c++/4.5/i686-linux-gnu/bits/gthr.h \
- /usr/include/c++/4.5/i686-linux-gnu/bits/gthr-default.h \
- /usr/include/c++/4.5/i686-linux-gnu/bits/atomic_word.h \
+ /usr/include/c++/4.5/x86_64-linux-gnu/bits/gthr.h \
+ /usr/include/c++/4.5/x86_64-linux-gnu/bits/gthr-default.h \
+ /usr/include/c++/4.5/x86_64-linux-gnu/bits/atomic_word.h \
  /usr/include/c++/4.5/bits/locale_classes.h /usr/include/c++/4.5/string \
  /usr/include/c++/4.5/bits/allocator.h \
- /usr/include/c++/4.5/i686-linux-gnu/bits/c++allocator.h \
+ /usr/include/c++/4.5/x86_64-linux-gnu/bits/c++allocator.h \
  /usr/include/c++/4.5/ext/new_allocator.h /usr/include/c++/4.5/new \
  /usr/include/c++/4.5/bits/ostream_insert.h \
  /usr/include/c++/4.5/cxxabi-forced.h \
@@ -80,9 +80,9 @@ src/selection.o: src/selection.cc src/../include/selection.h \
  /usr/include/c++/4.5/bits/basic_ios.h \
  /usr/include/c++/4.5/bits/locale_facets.h /usr/include/c++/4.5/cwctype \
  /usr/include/wctype.h \
- /usr/include/c++/4.5/i686-linux-gnu/bits/ctype_base.h \
+ /usr/include/c++/4.5/x86_64-linux-gnu/bits/ctype_base.h \
  /usr/include/c++/4.5/bits/streambuf_iterator.h \
- /usr/include/c++/4.5/i686-linux-gnu/bits/ctype_inline.h \
+ /usr/include/c++/4.5/x86_64-linux-gnu/bits/ctype_inline.h \
  /usr/include/c++/4.5/bits/locale_facets.tcc \
  /usr/include/c++/4.5/bits/basic_ios.tcc \
  /usr/include/c++/4.5/bits/ostream.tcc /usr/include/c++/4.5/istream \
@@ -94,9 +94,9 @@ src/../include/selection.h:
 
 /usr/include/c++/4.5/cstdio:
 
-/usr/include/c++/4.5/i686-linux-gnu/bits/c++config.h:
+/usr/include/c++/4.5/x86_64-linux-gnu/bits/c++config.h:
 
-/usr/include/c++/4.5/i686-linux-gnu/bits/os_defines.h:
+/usr/include/c++/4.5/x86_64-linux-gnu/bits/os_defines.h:
 
 /usr/include/features.h:
 
@@ -108,13 +108,13 @@ src/../include/selection.h:
 
 /usr/include/gnu/stubs.h:
 
-/usr/include/gnu/stubs-32.h:
+/usr/include/gnu/stubs-64.h:
 
-/usr/include/c++/4.5/i686-linux-gnu/bits/cpu_defines.h:
+/usr/include/c++/4.5/x86_64-linux-gnu/bits/cpu_defines.h:
 
 /usr/include/c++/4.5/cstddef:
 
-/usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stddef.h:
+/usr/lib/x86_64-linux-gnu/gcc/x86_64-linux-gnu/4.5.2/include/stddef.h:
 
 /usr/include/stdio.h:
 
@@ -128,7 +128,7 @@ src/../include/selection.h:
 
 /usr/include/wchar.h:
 
-/usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdarg.h:
+/usr/lib/x86_64-linux-gnu/gcc/x86_64-linux-gnu/4.5.2/include/stdarg.h:
 
 /usr/include/bits/stdio_lim.h:
 
@@ -292,7 +292,7 @@ src/../include/selection.h:
 
 /usr/include/c++/4.5/bits/localefwd.h:
 
-/usr/include/c++/4.5/i686-linux-gnu/bits/c++locale.h:
+/usr/include/c++/4.5/x86_64-linux-gnu/bits/c++locale.h:
 
 /usr/include/c++/4.5/clocale:
 
@@ -308,11 +308,11 @@ src/../include/selection.h:
 
 /usr/include/c++/4.5/ext/atomicity.h:
 
-/usr/include/c++/4.5/i686-linux-gnu/bits/gthr.h:
+/usr/include/c++/4.5/x86_64-linux-gnu/bits/gthr.h:
 
-/usr/include/c++/4.5/i686-linux-gnu/bits/gthr-default.h:
+/usr/include/c++/4.5/x86_64-linux-gnu/bits/gthr-default.h:
 
-/usr/include/c++/4.5/i686-linux-gnu/bits/atomic_word.h:
+/usr/include/c++/4.5/x86_64-linux-gnu/bits/atomic_word.h:
 
 /usr/include/c++/4.5/bits/locale_classes.h:
 
@@ -320,7 +320,7 @@ src/../include/selection.h:
 
 /usr/include/c++/4.5/bits/allocator.h:
 
-/usr/include/c++/4.5/i686-linux-gnu/bits/c++allocator.h:
+/usr/include/c++/4.5/x86_64-linux-gnu/bits/c++allocator.h:
 
 /usr/include/c++/4.5/ext/new_allocator.h:
 
@@ -354,11 +354,11 @@ src/../include/selection.h:
 
 /usr/include/wctype.h:
 
-/usr/include/c++/4.5/i686-linux-gnu/bits/ctype_base.h:
+/usr/include/c++/4.5/x86_64-linux-gnu/bits/ctype_base.h:
 
 /usr/include/c++/4.5/bits/streambuf_iterator.h:
 
-/usr/include/c++/4.5/i686-linux-gnu/bits/ctype_inline.h:
+/usr/include/c++/4.5/x86_64-linux-gnu/bits/ctype_inline.h:
 
 /usr/include/c++/4.5/bits/locale_facets.tcc:
 
