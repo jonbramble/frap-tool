@@ -2,6 +2,15 @@ AC_INIT([Frap],[0.1],[phyjpb@leeds.ac.uk],[frap],[http://mpi.leeds.ac.uk/softwar
 AC_PREREQ([2.67])
 AM_INIT_AUTOMAKE([1.10 -Wall no-define])
 AC_CONFIG_HEADERS([config.h])
+AC_CHECK_HEADER([tiffio.h],
+                     [AC_DEFINE([HAVE_TIFFIO_H], 1,
+                        [Define to 1 if you have <tiffio.h>.])],
+                     [AC_MSG_ERROR([install libtiff4-dev])])
+
+AC_CHECK_HEADER([cimg.h],
+                     [AC_DEFINE([HAVE_CIMG_H], 1,
+                        [Define to 1 if you have <cimg.h>.])],
+                     [AC_MSG_ERROR([install cimg-dev])])
 
 AM_PATH_GSL(1.13,[],AC_MSG_ERROR(could not find required version of GSL))
 
