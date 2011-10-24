@@ -30,7 +30,7 @@ int main(int argc, char* argv[]) {
 	printf ("prima = %s, closed = %s\n ", prima, closed);
 
 	for (index = optind; index < argc; index++){
-        	printf ("Image files %s\n", argv[index]);
+        	//printf ("Image files %s\n", argv[index]);
 		ifiles.push_back(argv[index]);
 	}
 
