@@ -96,7 +96,6 @@ CC = gcc
 CCDEPMODE = depmode=gcc3
 CFLAGS = -g -O2
 CIMG_LIBS = -L/usr/X11R6/lib -lpthread -lX11
-CPP = gcc -E
 CPPFLAGS = 
 CXX = g++
 CXXDEPMODE = depmode=gcc3
@@ -107,9 +106,7 @@ DEPDIR = .deps
 ECHO_C = 
 ECHO_N = -n
 ECHO_T = 
-EGREP = /bin/grep -E
 EXEEXT = 
-GREP = /bin/grep
 GSL_CFLAGS = -I/usr/include
 GSL_CONFIG = /usr/bin/gsl-config
 GSL_LIBS = -L/usr/lib -lgsl -lgslcblas -lm
@@ -137,7 +134,7 @@ PATH_SEPARATOR = :
 SET_MAKE = 
 SHELL = /bin/bash
 STRIP = 
-TIFF_LIBS = -ltiffxx
+TIFF_LIBS = -ltiff
 VERSION = 0.1
 abs_builddir = /home/DS/phyjpb/Programming/C/frap-tool
 abs_srcdir = /home/DS/phyjpb/Programming/C/frap-tool
