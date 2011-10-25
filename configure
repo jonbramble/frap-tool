@@ -576,7 +576,6 @@ CXXFLAGS
 CXX
 TIFF_LIBS
 CIMG_LIBS
-OMP_OPTS
 GSL_LIBS
 GSL_CFLAGS
 am__fastdepCC_FALSE
@@ -3642,7 +3641,7 @@ OMP_OPTS="-fopenmp"
 CIMG_LIBS="-L/usr/X11R6/lib -lpthread -lX11"
 TIFF_LIBS="-ltiff"
 
-
+#AC_SUBST([OMP_OPTS])
 
 
 

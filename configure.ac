@@ -10,7 +10,7 @@ AM_PATH_GSL(1.13,[],AC_MSG_ERROR(could not find required version of GSL))
 [CIMG_LIBS="-L/usr/X11R6/lib -lpthread -lX11"] 
 [TIFF_LIBS="-ltiff"]
 
-AC_SUBST([OMP_OPTS])
+#AC_SUBST([OMP_OPTS])
 AC_SUBST([CIMG_LIBS])
 AC_SUBST([TIFF_LIBS])
 

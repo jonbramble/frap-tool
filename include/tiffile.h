@@ -3,7 +3,9 @@
 #include <cstdlib>
 #include <ctime>
 
-#include "tiffio.h"
+#include <tiffio.h>
+
+
 
 class Tiffile {
 	
