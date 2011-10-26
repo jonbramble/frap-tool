@@ -3,14 +3,11 @@ AC_PREREQ([2.67])
 AM_INIT_AUTOMAKE([1.10 -Wall no-define])
 AC_CONFIG_HEADERS([config.h])
 
-
 AM_PATH_GSL(1.13,[],AC_MSG_ERROR(could not find required version of GSL))
 
-[OMP_OPTS="-fopenmp"]
 [CIMG_LIBS="-L/usr/X11R6/lib -lpthread -lX11"] 
 [TIFF_LIBS="-ltiff"]
 
-#AC_SUBST([OMP_OPTS])
 AC_SUBST([CIMG_LIBS])
 AC_SUBST([TIFF_LIBS])
 

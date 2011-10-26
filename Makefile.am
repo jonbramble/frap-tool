@@ -13,8 +13,8 @@ ACLOCAL_AMFLAGS = ${ACLOCAL_FLAGS}
 ## directory named by the predefined variable $(bindir).
 bin_PROGRAMS = FRAP
 
-AM_CPPFLAGS = $(GSL_CFLAGS) #$(OMP_OPTS)
-FRAP_LDADD = $(GSL_LIBS) $(CIMG_LIBS) $(TIFF_LIBS) #$(OMP_OPTS)
+AM_CPPFLAGS = $(GSL_CFLAGS) 
+FRAP_LDADD = $(GSL_LIBS) $(CIMG_LIBS) $(TIFF_LIBS)
 
 ## Define the list of source files for the "hello" target. The file extension
 ## .cc is recognized by Automake, and causes it to produce rules which invoke
