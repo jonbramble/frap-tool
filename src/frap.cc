@@ -1,18 +1,18 @@
 #include "../include/frap.h" 
 
-Frap::Frap(char* pfile, char* cfile, vector<char*> ifiles)
+Frap::Frap(char* pfile, char* cfile)
 {
 	prima = pfile;
-	closed = cfile;
+	closed = cfile;	
+}
 
-	setimagenames(ifiles);
-	doselection(); // do the selections on the closed image - run a separate thread?
-	
+void Frap::processdata()
+{
 	dosort();	// sort by time
 	setimagelist();	// put the images in a list
 	settimes();
 	setpixlen();
-	
+
 	removebackground(); //could crop first to save time - at 60ms its neg
 	
 	getvectors();  // get the data and put it in a matrix
@@ -23,8 +23,16 @@ Frap::Frap(char* pfile, char* cfile, vector<char*> ifiles)
 		char* name = imagefiles[i].getfilename();
 		printf("Filename: %s\tTimes: %f\tLambda: %f\n",name,time_s[i],lambda[i]);
 	} 
+}
 
-	//TODO:  do the one d fitting on the variance - time data
+void Frap::start()
+{
+	m_Thread = boost::thread(&Frap::doselection, this);
+}
+
+void Frap::join()
+{
+	m_Thread.join();
 }
 
 void Frap::dosort(){

@@ -41,7 +41,13 @@ int main(int argc, char* argv[]) {
 	//strftime (buff,sizeof(buff), "%d/%m/%Y %r", &imagedatetime);
 	//printf("tm_hour:  %s\n",buff); 
 	
-	Frap experiment(prima,closed,ifiles);
+	Frap experiment(prima,closed);
+	
+	experiment.start();
+	experiment.setimagenames(ifiles);
+	experiment.join();
+
+	experiment.processdata();
 	
 	//FILE * f = fopen ("alldata.dat", "w");
        	//gsl_matrix_fprintf (f,  experiment.getdata(), "%.5g");

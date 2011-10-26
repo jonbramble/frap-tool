@@ -576,6 +576,7 @@ CXXFLAGS
 CXX
 TIFF_LIBS
 CIMG_LIBS
+BOOST_LIBS
 GSL_LIBS
 GSL_CFLAGS
 am__fastdepCC_FALSE
@@ -2410,7 +2411,6 @@ am__tar='${AMTAR} chof - "$$tardir"'; am__untar='${AMTAR} xf -'
 ac_config_headers="$ac_config_headers config.h"
 
 
-
 DEPDIR="${am__leading_dot}deps"
 
 ac_config_commands="$ac_config_commands depfiles"
@@ -3637,11 +3637,12 @@ rm -f core conftest.err conftest.$ac_objext \
   rm -f conf.gsltest
 
 
-OMP_OPTS="-fopenmp"
+BOOST_LIBS="-lboost_thread"
 CIMG_LIBS="-L/usr/X11R6/lib -lpthread -lX11"
 TIFF_LIBS="-ltiff"
 
-#AC_SUBST([OMP_OPTS])
+
+
 
 
 

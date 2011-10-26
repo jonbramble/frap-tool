@@ -13,19 +13,23 @@
 #include "../include/tiffile.h"
 #include "../include/fitting.h"
 
+#include <boost/thread.hpp>  
+
 
 using namespace cimg_library;
 using namespace std;
 
 class Frap {
 	public: 
-		Frap(char* pfile, char* cfile, vector<char*> ifiles);	
+		Frap(char* pfile, char* cfile);	
 		~Frap(){gsl_matrix_free(data);} //must allocate mem to data before calling free
 		gsl_matrix* getdata(){return data;};
 
-	private:
 		Selection s;
+		void start();
+		void join();
 		void dosort();
+		void processdata();
 		void doselection();
 		void setimagenames(vector<char*> ifiles);
 		void setimagelist();
@@ -43,6 +47,9 @@ class Frap {
 		double pixlen;
 		double scaling_factor;
 		gsl_matrix *data;		//for output data
+
+	private:
+		boost::thread m_Thread;
 };
 
 

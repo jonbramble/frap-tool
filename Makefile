@@ -57,7 +57,7 @@ am_FRAP_OBJECTS = src/tiffile.$(OBJEXT) src/frap.$(OBJEXT) \
 FRAP_OBJECTS = $(am_FRAP_OBJECTS)
 am__DEPENDENCIES_1 =
 FRAP_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
-	$(am__DEPENDENCIES_1)
+	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
 DEFAULT_INCLUDES = -I.
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -92,6 +92,7 @@ AUTOCONF = ${SHELL} /home/DS/phyjpb/Programming/C/frap-tool/missing --run autoco
 AUTOHEADER = ${SHELL} /home/DS/phyjpb/Programming/C/frap-tool/missing --run autoheader
 AUTOMAKE = ${SHELL} /home/DS/phyjpb/Programming/C/frap-tool/missing --run automake-1.11
 AWK = gawk
+BOOST_LIBS = -lboost_thread
 CC = gcc
 CCDEPMODE = depmode=gcc3
 CFLAGS = -g -O2
@@ -180,8 +181,8 @@ top_builddir = .
 top_srcdir = .
 AUTOMAKE_OPTIONS = subdir-objects
 ACLOCAL_AMFLAGS = ${ACLOCAL_FLAGS}
-AM_CPPFLAGS = $(GSL_CFLAGS) #$(OMP_OPTS)
-FRAP_LDADD = $(GSL_LIBS) $(CIMG_LIBS) $(TIFF_LIBS) #$(OMP_OPTS)
+AM_CPPFLAGS = $(GSL_CFLAGS) 
+FRAP_LDADD = $(GSL_LIBS) $(CIMG_LIBS) $(TIFF_LIBS) $(BOOST_LIBS)
 FRAP_SOURCES = include/frap.h include/selection.h include/fitting.h include/tiffile.h src/tiffile.cc src/frap.cc src/selection.cc src/fitting.cc src/main.cc 
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-am
