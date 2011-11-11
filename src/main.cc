@@ -1,6 +1,5 @@
 #include "../include/frap.h"
 
-
 int main(int argc, char* argv[]) {
 	int c, index;
 	char* closed; 
@@ -10,7 +9,6 @@ int main(int argc, char* argv[]) {
 
 	int one = 1, fd;
 	int multiplefiles = (argc > 1);
-	
 	
 	while((c = getopt(argc, argv, "p:c:")) != -1){			//taken from gnu example
 		switch(c){
@@ -34,24 +32,21 @@ int main(int argc, char* argv[]) {
 		ifiles.push_back(argv[index]);
 	}
 
-	//Tiffile mytiff(imagefiles[0]);
-	//tm imagedatetime;
-	//imagedatetime = mytiff.gettm();
-	//char buff[255];
-	//strftime (buff,sizeof(buff), "%d/%m/%Y %r", &imagedatetime);
-	//printf("tm_hour:  %s\n",buff); 
-	
-	Frap experiment(prima,closed);
-	
-	experiment.start();
-	experiment.setimagenames(ifiles);
-	experiment.join();
+	Frap *experiment;
 
-	experiment.processdata();
+	experiment = new Frap(prima,closed);
+	
+	experiment->start();
+	experiment->setimagenames(ifiles);
+	experiment->join();
+
+	experiment->processdata();
 	
 	//FILE * f = fopen ("alldata.dat", "w");
        	//gsl_matrix_fprintf (f,  experiment.getdata(), "%.5g");
         //fclose (f);
+
+	delete experiment;
 	
 	return 0;
 }

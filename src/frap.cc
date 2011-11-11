@@ -6,6 +6,15 @@ Frap::Frap(char* pfile, char* cfile)
 	closed = cfile;	
 }
 
+Frap::~Frap()
+{
+gsl_matrix_free(data);
+}
+
+gsl_matrix* Frap::getdata(){
+	return data;
+}
+
 void Frap::processdata()
 {
 	dosort();	// sort by time
@@ -14,9 +23,7 @@ void Frap::processdata()
 	setpixlen();
 
 	removebackground(); //could crop first to save time - at 60ms its neg
-	
 	getvectors();  // get the data and put it in a matrix
-	 
 	dofitting(); // do the multid fitting on the gaussian profiles - TODO add baseline offset
 		
 	for(uint i=0; i<imagefiles.size(); i++){
@@ -36,15 +43,15 @@ void Frap::join()
 }
 
 void Frap::dosort(){
-	std::sort(imagefiles.begin(), imagefiles.end()); // uses overloaded < operator that compares the seconds from epoch
+	sort(imagefiles.begin(), imagefiles.end()); // uses overloaded < operator that compares the seconds from epoch
 }
 
 void Frap::setimagenames(vector<char*> ifiles){
-	for(uint i=0; i<ifiles.size(); i++){
-		Tiffile tifftmp(ifiles[i]);
+	for(fnameit=ifiles.begin(); fnameit<ifiles.end(); fnameit++){
+		Tiffile tifftmp(*fnameit);
 		imagefiles.push_back(tifftmp);
 	}
-}  // should use iterators here
+}  
 
 void Frap::dofitting(){
 	
@@ -126,7 +133,7 @@ void Frap::getvectors(){
 
 		scaling_factor = hypot(s.getxsize(),s.getysize())/(s.getxsize()); // if pixlen is in um/pixel
 
-		std::cout << scaling_factor << std::endl;
+		cout << scaling_factor << endl;
 
 		for(uint i=0; i<imagefiles.size(); i++){
 			float y, valimage;
