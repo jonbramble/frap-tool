@@ -4,6 +4,7 @@ Frap::Frap(char* pfile, char* cfile)
 {
 	prima = pfile;
 	closed = cfile;	
+	start_time = 10.0;
 }
 
 Frap::~Frap()
@@ -77,21 +78,21 @@ void Frap::doselection(){
 }
 
 void Frap::setimagelist(){
-	for(uint i=0; i<imagefiles.size(); i++){
-		CImg<float> image(imagefiles[i].getfilename());
+	for(imageit=imagefiles.begin(); imageit<imagefiles.end(); imageit++){
+		CImg<float> image(imageit->getfilename());
 		imagelist.push_back(image); 		
 	}
 }
 
 void Frap::settimes(){
-	double starttime = imagefiles[0].gettime()-10.0; //ten second start time
-	for(uint i=0; i<imagefiles.size(); i++){
-		time_s.push_back(imagefiles[i].gettime()-starttime);		
+	double starttime = imagefiles.front().gettime()-start_time; //ten second start time
+	for(imageit=imagefiles.begin(); imageit<imagefiles.end(); imageit++){
+		time_s.push_back(imageit->gettime()-starttime);
 	}
 }
 
 void Frap::setpixlen(){
-	int binning = 1344/(imagefiles[0].getimagewidth());
+	int binning = 1344/(imagefiles.front().getimagewidth());
 	int objective = 40;
 
 	switch( binning ) 
@@ -102,21 +103,14 @@ void Frap::setpixlen(){
 			pixlen = 150/471;
 		case 4: 
 			pixlen = 150/235.5;
-	}
-	//std::cout << pixlen << std::endl;
-		
+	}	
 }
 
 void Frap::removebackground(){
-	clock_t c0, c1;
-	c0 = clock();
-
 	CImg<float> primaimg(prima);	
 	for(uint i=0; i<imagefiles.size(); i++){
-		imagelist(i)=primaimg-imagelist(i); 	// need to check that these have been done	
-	}	
-	c1 = clock();  
-	printf ("\telapsed CPU time: %f\n", (float) (c1 - c0)/CLOCKS_PER_SEC);	
+		imagelist[i]=primaimg-imagelist[i]; 	// need to check that these have been done	
+	}		
 }
 
 void Frap::getvectors(){

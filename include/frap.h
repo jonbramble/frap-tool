@@ -35,6 +35,7 @@ class Frap {
 		char* closed;
 		double pixlen;			//<pixel scaling factor - from microscope
 		double scaling_factor; 		//<pixel scaling factor - from selection length
+		double start_time;
 		Selection s;
 
 		gsl_matrix *data;		//<for output data
@@ -54,6 +55,7 @@ class Frap {
 		CImgList<float> imagelist;	//<this is a list of the image data	
 
 		vector<char*>::iterator fnameit;
+		vector<Tiffile>::iterator imageit;
 };
 
 

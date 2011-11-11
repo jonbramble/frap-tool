@@ -36,9 +36,9 @@ int main(int argc, char* argv[]) {
 
 	experiment = new Frap(prima,closed);
 	
-	experiment->start();
-	experiment->setimagenames(ifiles);
-	experiment->join();
+	experiment->start();				// starts do selection
+	experiment->setimagenames(ifiles);		// but can do processing on tiff files in the meantime
+	experiment->join();				// now we join the thread to continue with dataprocessing
 
 	experiment->processdata();
 	
