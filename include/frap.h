@@ -29,6 +29,8 @@ class Frap {
 		gsl_matrix* getdata();
 		void setimagenames(vector<char*> ifiles);
 
+		void plot_graph();
+
 	private:
 		boost::thread m_Thread;
 		char* prima;
@@ -39,6 +41,8 @@ class Frap {
 		Selection s;
 
 		gsl_matrix *data;		//<for output data
+
+		CImg<unsigned char> *visu;	//<graph plot
 
 		void dosort();	
 		void doselection();
@@ -54,7 +58,7 @@ class Frap {
 		vector<double> time_s; 		//<time data in seconds from the start point of experiment
 		CImgList<float> imagelist;	//<this is a list of the image data	
 
-		vector<char*>::iterator fnameit;
+		vector<char*>::iterator fnameit;	//iterators
 		vector<Tiffile>::iterator imageit;
 };
 

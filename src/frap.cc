@@ -16,6 +16,28 @@ gsl_matrix* Frap::getdata(){
 	return data;
 }
 
+void Frap::plot_graph(){
+	//tricky as we need to size the plot for data size not image data - must normalise
+	visu= new CImg<unsigned char>(s.getxsize(),400,1,3,0); //<a new display for the plot
+	CImgDisplay draw_disp(*visu,"Data Plots");	//draw the display
+	CImg<double> aplot(s.getxsize(),1,1,3,0);
+	CImg<double> bplot(s.getxsize(),1,1,3,0);    // testing only
+	double point;
+	const unsigned char red[] = { 255,0,0 }, green[] = { 0,255,0 }, blue[] = { 0,0,255 };
+	//get data
+	for(uint i=0; i< s.getxsize(); i++){
+		point = gsl_matrix_get(data,0,i);   // get data for first image
+		aplot.set_linear_atXY(point,i,0);	// set data into array
+		bplot.set_linear_atXY(point,i,4);	// set data into array
+	}
+
+	while (!draw_disp.is_closed()) {
+      		draw_disp.wait();
+		visu->draw_graph(aplot,red,1,1,0,14000,100).display(draw_disp);
+		//visu->draw_graph(bplot,blue,1,1,0,14000,100).display(draw_disp);   //why is graph narrow?
+	}
+}
+
 void Frap::processdata()
 {
 	dosort();	// sort by time

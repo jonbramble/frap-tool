@@ -46,6 +46,8 @@ int main(int argc, char* argv[]) {
        	//gsl_matrix_fprintf (f,  experiment.getdata(), "%.5g");
         //fclose (f);
 
+	experiment->plot_graph();
+
 	delete experiment;
 	
 	return 0;
