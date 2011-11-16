@@ -16,7 +16,6 @@ gsl_matrix* Frap::getdata(){
 }
 
 void Frap::plot_graph(){
-	//tricky as we need to size the plot for data size not image data - must normalise
 	visu= new CImg<unsigned char>(s.getxsize(),s.getxsize(),1,3,255); //<a new display for the plot
 	CImgDisplay draw_disp(*visu,"Data Plots");	//draw the display
 	CImg<double> aplot(s.getxsize(),imagefiles.size(),1,1,0);
@@ -32,8 +31,9 @@ void Frap::plot_graph(){
 
 	while (!draw_disp.is_closed()) {
       		draw_disp.wait();
-		visu->draw_graph(aplot.get_crop(0,1,s.getxsize()-1,1),blue,1,1,0,14000,100);
-		visu->draw_graph(aplot.get_crop(0,0,s.getxsize()-1,0),red,1,1,0,14000,100).display(draw_disp);
+		visu->draw_graph(aplot.get_crop(0,2,s.getxsize()-1,2),green,1,1,2,14000,100,0);  // image is fliped by swapping max and min
+		visu->draw_graph(aplot.get_crop(0,1,s.getxsize()-1,1),blue,1,1,2,14000,100,0);  // 14000 is guess at max height, needs function
+		visu->draw_graph(aplot.get_crop(0,0,s.getxsize()-1,0),red,1,1,2,14000,100,0).display(draw_disp); 
 	}
 }
 
