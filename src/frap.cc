@@ -1,4 +1,23 @@
 /* -*- Mode: C; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*- */
+
+/*
+ * frap.cc
+ * Copyright (C) Jonathan Bramble 2011
+ * 
+frap-tool is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * frap-tool is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License along
+ * with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #include "../include/frap.h" 
 
 Frap::Frap(char* pfile, char* cfile){
@@ -35,6 +54,29 @@ void Frap::plot_graph(){
 		visu->draw_graph(aplot.get_crop(0,1,s.getxsize()-1,1),blue,1,1,2,14000,100,0);  // 14000 is guess at max height, needs function
 		visu->draw_graph(aplot.get_crop(0,0,s.getxsize()-1,0),red,1,1,2,14000,100,0).display(draw_disp); 
 	}
+}
+
+void Frap::plplot_chart(){
+
+	gsl_vector *x = gsl_vector_alloc(s.getxsize());
+
+
+	/*for(uint j=0; j< imagefiles.size(); j++){
+		for(uint i=0; i< s.getxsize(); i++){
+			point = gsl_matrix_get(data,j,i);   // get data for first image
+			aplot.set_linear_atXY(point,i,j);	// set data into array
+		}
+	}*/
+
+	for(int a=0;a<s.getxsize();a++)
+	{
+		gsl_vector_set(x,a,a+1);
+	}
+	
+	simple_chart = new Chart();	// create a new chart object
+	//simple_chart->plot(10,x, y); 
+	simple_chart->plot(s.getxsize(),x,data); 
+
 }
 
 void Frap::processdata()

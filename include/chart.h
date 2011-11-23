@@ -1,5 +1,5 @@
 /*
- * selection.h
+ * chart.h
  * Copyright (C) Jonathan Bramble 2011
  * 
 frap-tool is free software: you can redistribute it and/or modify it
@@ -16,35 +16,42 @@ frap-tool is free software: you can redistribute it and/or modify it
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef SELECTION_H
-#define SELECTION_H
+#ifndef CHART_H
+#define CHART_H
 
-#include "CImg.h"
+
+#include <gsl/gsl_vector.h>
+#include <gsl/gsl_matrix.h>
+
+#include <plplot/plstream.h>
 #include <iostream>
+#include <cmath>
 
-using namespace cimg_library;
-using namespace std; 
+#include <ctime>
+#include <cstring>
 
-class Selection {
+#ifdef PL_USE_NAMESPACE
+using namespace std;
+#endif
 
+class Chart 
+{
 	public:
-		int getxsize();
-		int getysize();
-		int getx1();
-		int getx2();
-		int gety1();
-		int gety2();
-		float getm();
-		float getc();
 
-		void selectline(char* filename);
-		bool selmade;
+		Chart();
+		~Chart();
+		void plot(int size, gsl_vector *x, gsl_vector *y);
+		void plot(int size, gsl_vector *x, gsl_matrix *data);
 		
+
 	private:
-		int x1,x2,y1,y2;
-		int xsize, ysize; 
-		float m,c;	
-			
+
+		plstream *pls;
+		char         *f_name;
+
 };
+
+
+
 
 #endif

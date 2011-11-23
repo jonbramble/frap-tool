@@ -1,3 +1,22 @@
+/*
+ * fitting.h
+ * Copyright (C) Jonathan Bramble 2011
+ * 
+frap-tool is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * frap-tool is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License along
+ * with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+
 #ifndef FRAP_H
 #define FRAP_H
 
@@ -12,6 +31,10 @@
 #include <ctime>
 #include "../include/tiffile.h"
 #include "../include/fitting.h"
+#include "../include/chart.h"
+
+#include <gsl/gsl_matrix.h>
+#include <gsl/gsl_vector.h>
 
 #include <boost/thread.hpp>  
 
@@ -30,6 +53,7 @@ class Frap {
 		void setimagenames(vector<char*> ifiles);
 
 		void plot_graph();
+		void plplot_chart();
 
 	private:
 		boost::thread m_Thread;
@@ -41,6 +65,8 @@ class Frap {
 		Selection s;
 
 		gsl_matrix *data;		//<for output data
+		
+		Chart *simple_chart;		// make a chart
 
 		CImg<unsigned char> *visu;	//<graph plot
 
