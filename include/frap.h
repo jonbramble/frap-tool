@@ -49,7 +49,8 @@ class Frap {
 		void start();
 		void join();
 		void processdata();
-		gsl_matrix* getdata();
+		gsl_matrix* get_exp_data();
+		gsl_matrix* get_fitting_data();
 		void setimagenames(vector<char*> ifiles);
 
 		void plot_graph();
@@ -64,7 +65,8 @@ class Frap {
 		double start_time;
 		Selection s;
 
-		gsl_matrix *data;		//<for output data
+		gsl_matrix *exp_data;		//<for output data
+		gsl_matrix *fitting_data;		//<for output data
 		
 		Chart *simple_chart;		// make a chart
 
@@ -78,11 +80,13 @@ class Frap {
 		void setpixlen();
 		void getvectors();
 		void dofitting();
+		void create_fitting_data();
 		
 		vector<Tiffile> imagefiles;	//<this vector contains all the information about each file
 		vector<double> A;		//<this vector contains the A data
 		vector<double> lambda;		//<this vector contains the lambda data
 		vector<double> mu;
+		vector<double> b;
 		vector<double> time_s; 		//<time data in seconds from the start point of experiment
 		CImgList<float> imagelist;	//<this is a list of the image data	
 

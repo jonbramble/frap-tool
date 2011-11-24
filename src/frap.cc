@@ -27,11 +27,16 @@ Frap::Frap(char* pfile, char* cfile){
 }
 
 Frap::~Frap(){
-gsl_matrix_free(data);
+gsl_matrix_free(exp_data);
+gsl_matrix_free(fitting_data);
 }
 
-gsl_matrix* Frap::getdata(){
-	return data;
+gsl_matrix* Frap::get_exp_data(){
+	return exp_data;
+}
+
+gsl_matrix* Frap::get_fitting_data(){
+	return fitting_data;
 }
 
 void Frap::plot_graph(){
@@ -43,7 +48,7 @@ void Frap::plot_graph(){
 	//get data
 	for(uint j=0; j< imagefiles.size(); j++){
 		for(uint i=0; i< s.getxsize(); i++){
-			point = gsl_matrix_get(data,j,i);   // get data for first image
+			point = gsl_matrix_get(exp_data,j,i);   // get data for first image
 			aplot.set_linear_atXY(point,i,j);	// set data into array
 		}
 	}
@@ -60,14 +65,6 @@ void Frap::plplot_chart(){
 
 	gsl_vector *x = gsl_vector_alloc(s.getxsize());
 
-
-	/*for(uint j=0; j< imagefiles.size(); j++){
-		for(uint i=0; i< s.getxsize(); i++){
-			point = gsl_matrix_get(data,j,i);   // get data for first image
-			aplot.set_linear_atXY(point,i,j);	// set data into array
-		}
-	}*/
-
 	for(int a=0;a<s.getxsize();a++)
 	{
 		gsl_vector_set(x,a,a+1);
@@ -75,7 +72,7 @@ void Frap::plplot_chart(){
 	
 	simple_chart = new Chart();	// create a new chart object
 	//simple_chart->plot(10,x, y); 
-	simple_chart->plot(s.getxsize(),x,data); 
+	simple_chart->plot(s.getxsize(),x,fitting_data); 
 
 }
 
@@ -92,8 +89,22 @@ void Frap::processdata()
 		
 	for(uint i=0; i<imagefiles.size(); i++){
 		char* name = imagefiles[i].getfilename();
-		printf("Filename: %s\tTimes: %f\tLambda: %f\n",name,time_s[i],lambda[i]);
+		printf("Filename: %s\tTimes: %f\tLambda: %f\tmu: %f\n",name,time_s[i],lambda[i],mu[i]);
 	} 
+
+	create_fitting_data();
+}
+
+void Frap::create_fitting_data()// create curve data from fits
+{
+	double Yi;
+	for(uint i=0; i<imagefiles.size(); i++){
+		for(int x=0;x<s.getxsize();x++){
+			Yi = A[i]*exp((-1*pow(x-mu[i],2))/(2*pow(lambda[i],2)))+b[i];
+			gsl_matrix_set(fitting_data,i,x,Yi);
+		}
+	} 
+	
 }
 
 void Frap::start()
@@ -121,15 +132,16 @@ void Frap::dofitting(){
 	
 	int ifilestotal = imagefiles.size();
 
-	gsl_matrix *vdata = gsl_matrix_alloc(ifilestotal,4); 
-	gsl_matrix *verr = gsl_matrix_alloc(ifilestotal,4); 
+	gsl_matrix *vdata = gsl_matrix_alloc(4,ifilestotal); 
+	gsl_matrix *verr = gsl_matrix_alloc(4,ifilestotal); 
 
-	Fitting::gaussfit(vdata,verr,getdata()); // fits the data for all images
+	Fitting::gaussfit(vdata,verr,get_exp_data()); // fits the data for all images
 
 	for(uint i=0; i<ifilestotal; i++){
 		A.push_back(gsl_matrix_get(vdata,0,i));  
 		mu.push_back(gsl_matrix_get(vdata,1,i));  
 		lambda.push_back(gsl_matrix_get(vdata,2,i));  // put all the data into lambda vector
+		b.push_back(gsl_matrix_get(vdata,3,i)); 
 	}
 
 	Fitting::linearfit(&time_s[0],&lambda[0],ifilestotal); // needs lots of error handling --needs R factor cutoff
@@ -183,7 +195,8 @@ void Frap::getvectors(){
 	
 		float m, c;
 		int x1,x2;
-		data = gsl_matrix_alloc (imagefiles.size(), s.getxsize());
+		exp_data = gsl_matrix_alloc (imagefiles.size(), s.getxsize());
+		fitting_data = gsl_matrix_alloc (imagefiles.size(), s.getxsize());
 	
 		m = s.getm();	//get local versions
 		c = s.getc();
@@ -199,12 +212,13 @@ void Frap::getvectors(){
 			for(int xk = x1;xk<x2;xk++){			//needs error handling 
 				y = round(m*xk+c);			//finds nearest pixel - could read more values?
 				valimage = imagelist.atNXY(i,xk,(int)y);	// finds value at this pixel in each image
-				gsl_matrix_set (data, i, xk-x1, valimage);	// put the data in the matrix - bug here
+				gsl_matrix_set (exp_data, i, xk-x1, valimage);	// put the data in the matrix - bug here
 			}	
 		}
 	}
 	else {
 		cout << "no selection made" << endl;
-		data = gsl_matrix_alloc (1, 1); // hack to avoid error on destructor
+		exp_data = gsl_matrix_alloc (1, 1); // hack to avoid error on destructor
+		fitting_data = gsl_matrix_alloc (1, 1);
 	}
 }
