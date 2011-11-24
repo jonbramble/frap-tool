@@ -41,7 +41,7 @@ class Chart
 		Chart();
 		~Chart();
 		void plot(int size, gsl_vector *x, gsl_vector *y);
-		void plot(int size, gsl_vector *x, gsl_matrix *data);
+		void plot(int size, gsl_vector *xp, gsl_matrix *exp_data, gsl_matrix *fitting_data);
 		
 
 	private:

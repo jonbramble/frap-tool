@@ -67,7 +67,7 @@ int Fitting::gaussfit(gsl_matrix * vdata, gsl_matrix * verr, const gsl_matrix * 
        		for (it = 0; it < n; it++)
         	{
            		double t = it;
-           		y[it] = gsl_matrix_get(m,k,it)-1000;	//auto offset of 1000
+           		y[it] = gsl_matrix_get(m,k,it);	//auto offset of 1000
            		sigma[it] = 1;				// what should this be?
 			//if(k==0) printf("data: %u %g %g\n", it, y[it], sigma[it]);
         	}
@@ -149,7 +149,7 @@ int Fitting::gauss_f(const gsl_vector * x, void *data, gsl_vector * f)
        double A = gsl_vector_get (x, 0);
        double mu = gsl_vector_get (x, 1);
        double lambda = gsl_vector_get (x, 2);
-	double b = gsl_vector_get (x, 3);
+       double b = gsl_vector_get (x, 3);
      
        for (size_t i = 0; i < n; i++)
          {     

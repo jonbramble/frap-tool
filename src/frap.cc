@@ -20,6 +20,7 @@ frap-tool is free software: you can redistribute it and/or modify it
 
 #include "../include/frap.h" 
 
+/*-- Constructor Destructors ---------------------------------------------------------------------------------*/
 Frap::Frap(char* pfile, char* cfile){
 	prima = pfile;
 	closed = cfile;	
@@ -31,6 +32,18 @@ gsl_matrix_free(exp_data);
 gsl_matrix_free(fitting_data);
 }
 
+/*-- Threading ---------------------------------------------------------------------------------*/
+void Frap::start()
+{
+	m_Thread = boost::thread(&Frap::doselection, this);
+}
+
+void Frap::join()
+{
+	m_Thread.join();
+}
+
+/*-- Data Functions ----------------------------------------------------------------------------*/
 gsl_matrix* Frap::get_exp_data(){
 	return exp_data;
 }
@@ -39,6 +52,7 @@ gsl_matrix* Frap::get_fitting_data(){
 	return fitting_data;
 }
 
+/*-- Plotting ----------------------------------------------------------------------------------*/
 void Frap::plot_graph(){
 	visu= new CImg<unsigned char>(s.getxsize(),s.getxsize(),1,3,255); //<a new display for the plot
 	CImgDisplay draw_disp(*visu,"Data Plots");	//draw the display
@@ -71,10 +85,11 @@ void Frap::plplot_chart(){
 	}
 	
 	simple_chart = new Chart();	// create a new chart object
-	//simple_chart->plot(10,x, y); 
-	simple_chart->plot(s.getxsize(),x,fitting_data); 
+	simple_chart->plot(s.getxsize(),x,exp_data,fitting_data); 
 
 }
+
+/*-- Processing ---------------------------------------------------------------------------------*/
 
 void Frap::processdata()
 {
@@ -95,63 +110,8 @@ void Frap::processdata()
 	create_fitting_data();
 }
 
-void Frap::create_fitting_data()// create curve data from fits
-{
-	double Yi;
-	for(uint i=0; i<imagefiles.size(); i++){
-		for(int x=0;x<s.getxsize();x++){
-			Yi = A[i]*exp((-1*pow(x-mu[i],2))/(2*pow(lambda[i],2)))+b[i];
-			gsl_matrix_set(fitting_data,i,x,Yi);
-		}
-	} 
-	
-}
-
-void Frap::start()
-{
-	m_Thread = boost::thread(&Frap::doselection, this);
-}
-
-void Frap::join()
-{
-	m_Thread.join();
-}
-
 void Frap::dosort(){
 	sort(imagefiles.begin(), imagefiles.end()); // uses overloaded < operator that compares the seconds from epoch
-}
-
-void Frap::setimagenames(vector<char*> ifiles){
-	for(fnameit=ifiles.begin(); fnameit<ifiles.end(); fnameit++){
-		Tiffile tifftmp(*fnameit);
-		imagefiles.push_back(tifftmp);
-	}
-}  
-
-void Frap::dofitting(){
-	
-	int ifilestotal = imagefiles.size();
-
-	gsl_matrix *vdata = gsl_matrix_alloc(4,ifilestotal); 
-	gsl_matrix *verr = gsl_matrix_alloc(4,ifilestotal); 
-
-	Fitting::gaussfit(vdata,verr,get_exp_data()); // fits the data for all images
-
-	for(uint i=0; i<ifilestotal; i++){
-		A.push_back(gsl_matrix_get(vdata,0,i));  
-		mu.push_back(gsl_matrix_get(vdata,1,i));  
-		lambda.push_back(gsl_matrix_get(vdata,2,i));  // put all the data into lambda vector
-		b.push_back(gsl_matrix_get(vdata,3,i)); 
-	}
-
-	Fitting::linearfit(&time_s[0],&lambda[0],ifilestotal); // needs lots of error handling --needs R factor cutoff
-
-	gsl_matrix_free(vdata);
-	gsl_matrix_free(verr);
-}
-
-void Frap::doselection(){
-	s.selectline(closed);  //do selection on the closed image
 }
 
 void Frap::setimagelist(){
@@ -221,4 +181,50 @@ void Frap::getvectors(){
 		exp_data = gsl_matrix_alloc (1, 1); // hack to avoid error on destructor
 		fitting_data = gsl_matrix_alloc (1, 1);
 	}
+}
+
+void Frap::dofitting(){
+	
+	int ifilestotal = imagefiles.size();
+
+	gsl_matrix *vdata = gsl_matrix_alloc(4,ifilestotal); 
+	gsl_matrix *verr = gsl_matrix_alloc(4,ifilestotal); 
+
+	Fitting::gaussfit(vdata,verr,get_exp_data()); // fits the data for all images
+
+	for(uint i=0; i<ifilestotal; i++){
+		A.push_back(gsl_matrix_get(vdata,0,i));  
+		mu.push_back(gsl_matrix_get(vdata,1,i));  
+		lambda.push_back(gsl_matrix_get(vdata,2,i));  // put all the data into lambda vector
+		b.push_back(gsl_matrix_get(vdata,3,i)); 
+	}
+
+	Fitting::linearfit(&time_s[0],&lambda[0],ifilestotal); // needs lots of error handling --needs R factor cutoff
+
+	gsl_matrix_free(vdata);
+	gsl_matrix_free(verr);
+}
+
+
+void Frap::doselection(){
+	s.selectline(closed);  //do selection on the closed image
+}
+
+void Frap::setimagenames(vector<char*> ifiles){
+	for(fnameit=ifiles.begin(); fnameit<ifiles.end(); fnameit++){
+		Tiffile tifftmp(*fnameit);
+		imagefiles.push_back(tifftmp);
+	}
+} 
+
+void Frap::create_fitting_data()// create curve data from fits
+{
+	double Yi;
+	for(uint i=0; i<imagefiles.size(); i++){
+		for(int x=0;x<s.getxsize();x++){
+			Yi = A[i]*exp((-1*pow(x-mu[i],2))/(2*pow(lambda[i],2)))+b[i];
+			gsl_matrix_set(fitting_data,i,x,Yi);
+		}
+	} 
+	
 }
