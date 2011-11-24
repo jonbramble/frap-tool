@@ -121,19 +121,21 @@ void Frap::dofitting(){
 	
 	int ifilestotal = imagefiles.size();
 
-	gsl_vector *vdata = gsl_vector_alloc(ifilestotal); // should use matrix for all data and errors
-	gsl_vector *verr = gsl_vector_alloc(ifilestotal); // errors on lambda
+	gsl_matrix *vdata = gsl_matrix_alloc(ifilestotal,4); 
+	gsl_matrix *verr = gsl_matrix_alloc(ifilestotal,4); 
 
 	Fitting::gaussfit(vdata,verr,getdata()); // fits the data for all images
 
 	for(uint i=0; i<ifilestotal; i++){
-		lambda.push_back(gsl_vector_get(vdata,i));  // put all the data into lambda vector
+		A.push_back(gsl_matrix_get(vdata,0,i));  
+		mu.push_back(gsl_matrix_get(vdata,1,i));  
+		lambda.push_back(gsl_matrix_get(vdata,2,i));  // put all the data into lambda vector
 	}
 
-	Fitting::linearfit(&time_s[0],&lambda[0],ifilestotal); // needs lots of error handling
+	Fitting::linearfit(&time_s[0],&lambda[0],ifilestotal); // needs lots of error handling --needs R factor cutoff
 
-	gsl_vector_free(vdata);
-	gsl_vector_free(verr);
+	gsl_matrix_free(vdata);
+	gsl_matrix_free(verr);
 }
 
 void Frap::doselection(){

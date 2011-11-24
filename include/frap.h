@@ -80,7 +80,9 @@ class Frap {
 		void dofitting();
 		
 		vector<Tiffile> imagefiles;	//<this vector contains all the information about each file
+		vector<double> A;		//<this vector contains the A data
 		vector<double> lambda;		//<this vector contains the lambda data
+		vector<double> mu;
 		vector<double> time_s; 		//<time data in seconds from the start point of experiment
 		CImgList<float> imagelist;	//<this is a list of the image data	
 

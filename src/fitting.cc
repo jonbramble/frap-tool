@@ -31,7 +31,7 @@ void Fitting::print_state (size_t iter, gsl_multifit_fdfsolver * s)
                gsl_blas_dnrm2 (s->f));
      }
 
-int Fitting::gaussfit(gsl_vector * vdata, gsl_vector * verr, const gsl_matrix * m){
+int Fitting::gaussfit(gsl_matrix * vdata, gsl_matrix * verr, const gsl_matrix * m){
 	
 	int l = (int)m->size1;  //images
 	int j = (int)m->size2;  //pixels in selection
@@ -106,8 +106,17 @@ int Fitting::gaussfit(gsl_vector * vdata, gsl_vector * verr, const gsl_matrix * 
          double dof = n - p;
          double c = GSL_MAX_DBL(1, chi / sqrt(dof)); 
      	
-	gsl_vector_set(vdata,k,FIT(2));
-	gsl_vector_set(verr,k,c*ERR(2));
+	gsl_matrix_set(vdata,0,k,FIT(0));
+	gsl_matrix_set(verr,0,k,c*ERR(0));
+
+	gsl_matrix_set(vdata,1,k,FIT(1));
+	gsl_matrix_set(verr,1,k,c*ERR(1));
+
+	gsl_matrix_set(vdata,2,k,FIT(2));
+	gsl_matrix_set(verr,2,k,c*ERR(2));
+
+	gsl_matrix_set(vdata,3,k,FIT(3));
+	gsl_matrix_set(verr,3,k,c*ERR(3));
 	
          printf("chisq/dof = %g\n",  pow(chi, 2.0) / dof);
      
@@ -193,15 +202,10 @@ int Fitting::linearfit(const double * x, const double * y, int n){
 
 	gsl_fit_linear (x, 1, y, 1, n, &c0, &c1, &cov00, &cov01, &cov11, &sumsq);
 
-
 	printf ("# best fit: Y = %g + %g X\n", c0, c1);
-       printf ("# covariance matrix:\n");
-       printf ("# [ %g, %g\n#   %g, %g]\n", 
-               cov00, cov01, cov01, cov11);
-       printf ("# sumsq = %g\n", sumsq);
-     
-     
-
+        printf ("# covariance matrix:\n");
+        printf ("# [ %g, %g\n#   %g, %g]\n", cov00, cov01, cov01, cov11);
+        printf ("# sumsq = %g\n", sumsq);
 
 	return GSL_SUCCESS;
 }
