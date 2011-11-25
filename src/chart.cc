@@ -24,19 +24,14 @@ Chart::Chart()
 	char ver[80];
 	f_name  = "test_file.ps";
 
-	pls->sdev( "psc" );   // the output device
+	pls->sdev( "ps" );   // the output device
 	pls->sfnam( f_name );
 
-	uint col = 254;
-	//pls->scolbg(col,col,col);
+	uint col = 255;
+	pls->scolbg(col,col,col);
 
 	pls->init();
 	pls->gver( ver );
-
-	pls->col0( 15 );  /* White, color 0, background */
-   	//pls->col0( 0 );  /* Black, color 15 */
-
-	//pls->spal0( "cmap0_black_on_white.pal" );
 
 	cout << "Plotting with PLplot version: " << ver << endl;
 
@@ -90,9 +85,9 @@ void Chart::plot(int size, gsl_vector *xp, gsl_matrix *exp_data, gsl_matrix *fit
 	}
 
 
-	pls->col0( 11 );
+	pls->col0( 15 );
    	pls->env( 0, size, 0, 15000, 0, 1 );
-    	pls->col0( 11 );
+    	pls->col0( 15 );
     	pls->lab( "x", "y", "FRAP DATA" );
 
    	 // Draw the line.
@@ -116,7 +111,7 @@ void Chart::plot(int size, gsl_vector *xp, gsl_matrix *exp_data, gsl_matrix *fit
 14	salmon
 15	white
 */
-    	pls->col0( 3 );
+    	pls->col0( 14 );
     	pls->wid( 2 );
     	pls->poin( size, x, y, 20);
     	pls->wid( 1 );
