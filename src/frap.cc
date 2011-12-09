@@ -92,12 +92,19 @@ void Frap::plplot_chart(){
 /*-- Processing ---------------------------------------------------------------------------------*/
 
 void Frap::getfftransforms(){
-	CImg<float> tmp_img;
+	CImg<float> tmp;
+	CImg<unsigned char> mag;
 	//transforms = imagelist.FFT(); //<cimg makes this really easy :) but
 	//transform must be done centred on the image
 	for(cimg_imageit=imagelist.begin(); cimg_imageit<imagelist.end(); cimg_imageit++){
-		tmp_img = cimg_imageit->crop(s.getx1(),s.gety1(),s.getx2(),s.gety2()); // use selection image numbers
-		transforms.push_back(tmp_img.get_FFT()); 
+		tmp = cimg_imageit->crop(s.getx1(),s.gety1(),s.getx2(),s.getx2()).resize(256,256).normalize(0,255); // use selection image numbers
+		CImgList<float> tmp_fft = tmp.get_FFT();
+		mag = ((tmp_fft[0].get_pow(2) + tmp_fft[1].get_pow(2)).sqrt()+1).log().normalize(0,255);
+		//transforms.push_back(tmp_img.get_FFT()); 
+	}
+	CImgDisplay disp2(mag,"Frequency Domain (Log)",0);
+	while (!disp2.is_closed()) { 
+      disp2.wait();
 	}
 
 }
