@@ -91,6 +91,11 @@ void Frap::plplot_chart(){
 
 /*-- Processing ---------------------------------------------------------------------------------*/
 
+void Frap::getfftransforms(){
+	transforms = imagelist.FFT(); //<cimg makes this really easy :)
+}
+
+
 void Frap::processdata()
 {
 	dosort();	// sort by time
@@ -99,6 +104,8 @@ void Frap::processdata()
 	setpixlen();
 
 	removebackground(); //could crop first to save time - at 60ms its neg
+    getfftransforms(); //should do these on centred cropped images
+
 	getvectors();  // get the data and put it in a matrix
 	dofitting(); // do the multid fitting on the gaussian profiles - TODO add baseline offset
 		
@@ -179,7 +186,7 @@ void Frap::getvectors(){
 	else {
 		cout << "no selection made" << endl;
 		exp_data = gsl_matrix_alloc (1, 1); // hack to avoid error on destructor
-		fitting_data = gsl_matrix_alloc (1, 1);
+		fitting_data = gsl_matrix_alloc (1, 1); // hack to avoid error on destructor
 	}
 }
 

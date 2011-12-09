@@ -79,6 +79,7 @@ class Frap {
 		void removebackground();
 		void setpixlen();
 		void getvectors();
+		void getfftransforms();
 		void dofitting();
 		void create_fitting_data();
 		
@@ -89,6 +90,7 @@ class Frap {
 		vector<double> b;
 		vector<double> time_s; 		//<time data in seconds from the start point of experiment
 		CImgList<float> imagelist;	//<this is a list of the image data	
+		CImgList<float> transforms;	//<this is a list of the fourier transformed data
 
 		vector<char*>::iterator fnameit;	//iterators
 		vector<Tiffile>::iterator imageit;
