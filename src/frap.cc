@@ -92,7 +92,14 @@ void Frap::plplot_chart(){
 /*-- Processing ---------------------------------------------------------------------------------*/
 
 void Frap::getfftransforms(){
-	transforms = imagelist.FFT(); //<cimg makes this really easy :)
+	CImg<float> tmp_img;
+	//transforms = imagelist.FFT(); //<cimg makes this really easy :) but
+	//transform must be done centred on the image
+	for(cimg_imageit=imagelist.begin(); cimg_imageit<imagelist.end(); cimg_imageit++){
+		tmp_img = cimg_imageit->crop(s.getx1(),s.gety1(),s.getx2(),s.getx2()); // use selection image numbers
+		transforms.push_back(tmp_img.get_FFT()); 
+	}
+
 }
 
 
@@ -104,10 +111,9 @@ void Frap::processdata()
 	setpixlen();
 
 	removebackground(); //could crop first to save time - at 60ms its neg
-    getfftransforms(); //should do these on centred cropped images
-
 	getvectors();  // get the data and put it in a matrix
-	dofitting(); // do the multid fitting on the gaussian profiles - TODO add baseline offset
+	dofitting(); // do the multid fitting on the gaussian profiles
+	getfftransforms(); //should do these on centred cropped images
 		
 	for(uint i=0; i<imagefiles.size(); i++){
 		char* name = imagefiles[i].getfilename();

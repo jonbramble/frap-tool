@@ -94,6 +94,7 @@ class Frap {
 
 		vector<char*>::iterator fnameit;	//iterators
 		vector<Tiffile>::iterator imageit;
+		CImgList<float>::iterator cimg_imageit;
 };
 
 
