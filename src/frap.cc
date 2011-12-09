@@ -96,7 +96,7 @@ void Frap::getfftransforms(){
 	//transforms = imagelist.FFT(); //<cimg makes this really easy :) but
 	//transform must be done centred on the image
 	for(cimg_imageit=imagelist.begin(); cimg_imageit<imagelist.end(); cimg_imageit++){
-		tmp_img = cimg_imageit->crop(s.getx1(),s.gety1(),s.getx2(),s.getx2()); // use selection image numbers
+		tmp_img = cimg_imageit->crop(s.getx1(),s.gety1(),s.getx2(),s.gety2()); // use selection image numbers
 		transforms.push_back(tmp_img.get_FFT()); 
 	}
 
