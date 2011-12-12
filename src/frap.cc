@@ -102,11 +102,17 @@ void Frap::getfftransforms(){
 		mag = ((tmp_fft[0].get_pow(2) + tmp_fft[1].get_pow(2)).sqrt()+1).log().normalize(0,255);
 		//transforms.push_back(tmp_img.get_FFT()); 
 	}
+
+	CImgDisplay disp3(tmp,"Spatial Domain",0);
+	while (!disp3.is_closed()) { 
+      disp3.wait();
+	}
+
 	CImgDisplay disp2(mag,"Frequency Domain (Log)",0);
 	while (!disp2.is_closed()) { 
       disp2.wait();
 	}
-
+	
 }
 
 
