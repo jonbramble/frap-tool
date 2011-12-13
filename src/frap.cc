@@ -94,8 +94,8 @@ void Frap::plplot_chart(){
 void Frap::getfftransforms(){
 	CImg<float> tmp;
 	CImg<unsigned char> mag;
-	//transforms = imagelist.FFT(); //<cimg makes this really easy :) but
 	//transform must be done centred on the image
+	//it must also be scaled to 2^N pixels
 	for(cimg_imageit=imagelist.begin(); cimg_imageit<imagelist.end(); cimg_imageit++){
 		tmp = cimg_imageit->crop(s.getx1(),s.gety1(),s.getx2(),s.getx2()).resize(256,256).normalize(0,255); // use selection image numbers
 		CImgList<float> tmp_fft = tmp.get_FFT();
