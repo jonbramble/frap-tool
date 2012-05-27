@@ -91,6 +91,31 @@ void Frap::plplot_chart(){
 
 /*-- Processing ---------------------------------------------------------------------------------*/
 
+void Frap::getfftransforms(){
+	CImg<float> tmp;
+	CImg<unsigned char> mag;
+	//transform must be done centred on the image
+	//it must also be scaled to 2^N pixels
+	for(cimg_imageit=imagelist.begin(); cimg_imageit<imagelist.end(); cimg_imageit++){
+		tmp = cimg_imageit->crop(s.getx1(),s.gety1(),s.getx2(),s.getx2()).resize(256,256).normalize(0,255); // use selection image numbers
+		CImgList<float> tmp_fft = tmp.get_FFT();
+		mag = ((tmp_fft[0].get_pow(2) + tmp_fft[1].get_pow(2)).sqrt()+1).log().normalize(0,255);
+		//transforms.push_back(tmp_img.get_FFT()); 
+	}
+
+	CImgDisplay disp3(tmp,"Spatial Domain",0);
+	while (!disp3.is_closed()) { 
+      disp3.wait();
+	}
+
+	CImgDisplay disp2(mag,"Frequency Domain (Log)",0);
+	while (!disp2.is_closed()) { 
+      disp2.wait();
+	}
+	
+}
+
+
 void Frap::processdata()
 {
 	dosort();	// sort by time
@@ -100,7 +125,8 @@ void Frap::processdata()
 
 	removebackground(); //could crop first to save time - at 60ms its neg
 	getvectors();  // get the data and put it in a matrix
-	dofitting(); // do the multid fitting on the gaussian profiles - TODO add baseline offset
+	dofitting(); // do the multid fitting on the gaussian profiles
+	getfftransforms(); //should do these on centred cropped images
 		
 	for(uint i=0; i<imagefiles.size(); i++){
 		char* name = imagefiles[i].getfilename();
@@ -179,7 +205,7 @@ void Frap::getvectors(){
 	else {
 		cout << "no selection made" << endl;
 		exp_data = gsl_matrix_alloc (1, 1); // hack to avoid error on destructor
-		fitting_data = gsl_matrix_alloc (1, 1);
+		fitting_data = gsl_matrix_alloc (1, 1); // hack to avoid error on destructor
 	}
 }
 
