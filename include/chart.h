@@ -19,7 +19,6 @@ frap-tool is free software: you can redistribute it and/or modify it
 #ifndef CHART_H
 #define CHART_H
 
-
 #include <gsl/gsl_vector.h>
 #include <gsl/gsl_matrix.h>
 
