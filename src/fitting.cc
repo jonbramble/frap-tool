@@ -19,6 +19,8 @@ frap-tool is free software: you can redistribute it and/or modify it
 
 #include "../include/fitting.h"
 
+namespace FrapTool {
+
 void Fitting::print_state (size_t iter, gsl_multifit_fdfsolver * s)
      {
        printf ("iter: %3u x = % 15.8f % 15.8f % 15.8f % 15.8f"
@@ -210,5 +212,5 @@ int Fitting::linearfit(const double * x, const double * y, int n){
 	return GSL_SUCCESS;
 }
 
-
+} // FrapTool
 

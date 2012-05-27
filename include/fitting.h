@@ -30,6 +30,7 @@ frap-tool is free software: you can redistribute it and/or modify it
 
 #include <gsl/gsl_fit.h>
 
+namespace FrapTool {
 
 struct data {
        size_t n;
@@ -49,5 +50,7 @@ class Fitting{
 		static void print_state (size_t iter, gsl_multifit_fdfsolver * s);
 	
 };
+
+}
 
 #endif

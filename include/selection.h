@@ -22,8 +22,7 @@ frap-tool is free software: you can redistribute it and/or modify it
 #include "CImg.h"
 #include <iostream>
 
-using namespace cimg_library;
-using namespace std; 
+namespace FrapTool {
 
 class Selection {
 
@@ -46,5 +45,7 @@ class Selection {
 		float m,c;	
 			
 };
+
+}
 
 #endif

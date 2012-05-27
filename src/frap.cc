@@ -20,6 +20,9 @@ frap-tool is free software: you can redistribute it and/or modify it
 
 #include "../include/frap.h" 
 
+namespace FrapTool 
+{
+
 /*-- Constructor Destructors ---------------------------------------------------------------------------------*/
 Frap::Frap(char* pfile, char* cfile){
 	prima = pfile;
@@ -54,9 +57,9 @@ gsl_matrix* Frap::get_fitting_data(){
 
 /*-- Plotting ----------------------------------------------------------------------------------*/
 void Frap::plot_graph(){
-	visu= new CImg<unsigned char>(s.getxsize(),s.getxsize(),1,3,255); //<a new display for the plot
-	CImgDisplay draw_disp(*visu,"Data Plots");	//draw the display
-	CImg<double> aplot(s.getxsize(),imagefiles.size(),1,1,0);
+	visu= new cimg_library::CImg<unsigned char>(s.getxsize(),s.getxsize(),1,3,255); //<a new display for the plot
+	cimg_library::CImgDisplay draw_disp(*visu,"Data Plots");	//draw the display
+	cimg_library::CImg<double> aplot(s.getxsize(),imagefiles.size(),1,1,0);
 	double point;
 	const unsigned char red[] = { 255,0,0 }, green[] = { 0,255,0 }, blue[] = { 0,0,255 };
 	//get data
@@ -92,23 +95,23 @@ void Frap::plplot_chart(){
 /*-- Processing ---------------------------------------------------------------------------------*/
 
 void Frap::getfftransforms(){
-	CImg<float> tmp;
-	CImg<unsigned char> mag;
+	cimg_library::CImg<float> tmp;
+	cimg_library::CImg<unsigned char> mag;
 	//transform must be done centred on the image
 	//it must also be scaled to 2^N pixels
 	for(cimg_imageit=imagelist.begin(); cimg_imageit<imagelist.end(); cimg_imageit++){
 		tmp = cimg_imageit->crop(s.getx1(),s.gety1(),s.getx2(),s.getx2()).resize(256,256).normalize(0,255); // use selection image numbers
-		CImgList<float> tmp_fft = tmp.get_FFT();
+		cimg_library::CImgList<float> tmp_fft = tmp.get_FFT();
 		mag = ((tmp_fft[0].get_pow(2) + tmp_fft[1].get_pow(2)).sqrt()+1).log().normalize(0,255);
 		//transforms.push_back(tmp_img.get_FFT()); 
 	}
 
-	CImgDisplay disp3(tmp,"Spatial Domain",0);
+	cimg_library::CImgDisplay disp3(tmp,"Spatial Domain",0);
 	while (!disp3.is_closed()) { 
       disp3.wait();
 	}
 
-	CImgDisplay disp2(mag,"Frequency Domain (Log)",0);
+	cimg_library::CImgDisplay disp2(mag,"Frequency Domain (Log)",0);
 	while (!disp2.is_closed()) { 
       disp2.wait();
 	}
@@ -142,7 +145,7 @@ void Frap::dosort(){
 
 void Frap::setimagelist(){
 	for(imageit=imagefiles.begin(); imageit<imagefiles.end(); imageit++){
-		CImg<float> image(imageit->getfilename());
+		cimg_library::CImg<float> image(imageit->getfilename());
 		imagelist.push_back(image); 		
 	}
 }
@@ -170,7 +173,7 @@ void Frap::setpixlen(){
 }
 
 void Frap::removebackground(){
-	CImg<float> primaimg(prima);	
+	cimg_library::CImg<float> primaimg(prima);	
 	for(uint i=0; i<imagefiles.size(); i++){
 		imagelist[i]=primaimg-imagelist[i]; 	// need to check that these have been done	
 	}		
@@ -252,5 +255,6 @@ void Frap::create_fitting_data()// create curve data from fits
 			gsl_matrix_set(fitting_data,i,x,Yi);
 		}
 	} 
-	
+}
+
 }

@@ -18,6 +18,8 @@ frap-tool is free software: you can redistribute it and/or modify it
 
 #include "../include/selection.h"
 
+namespace FrapTool {
+
 int Selection::getxsize(){
 		return abs(xsize);
 	}
@@ -55,8 +57,8 @@ void Selection::selectline(char* filename){
 	bool setone,settwo;
 	const unsigned char color[] = { 0,0,0 };
 
-	CImg<float> image(filename), fresh(filename);
-	CImgDisplay main_display(image,filename);
+	cimg_library::CImg<float> image(filename), fresh(filename);
+	cimg_library::CImgDisplay main_display(image,filename);
 
 	x1=0;
 	setone = false;
@@ -102,11 +104,13 @@ void Selection::selectline(char* filename){
 	}
 	else
 	{	
-		cout << "boundaries not set correctly" << endl;
+		std::cout << "boundaries not set correctly" << std::endl;
 
 	}
 }
 
+
+} // FrapTool
 
 /*void Selection::selectline(char* filename){
 	int currentx, currenty;

@@ -51,9 +51,9 @@ int main(int argc, char* argv[]) {
 		ifiles.push_back(argv[index]);
 	}
 
-	Frap *experiment;
+	FrapTool::Frap *experiment;
 
-	experiment = new Frap(prima,closed);
+	experiment = new FrapTool::Frap(prima,closed);
 	
 	experiment->start();				// starts do selection
 	experiment->setimagenames(ifiles);		// but can do processing on tiff files in the meantime

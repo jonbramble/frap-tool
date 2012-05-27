@@ -16,7 +16,6 @@ frap-tool is free software: you can redistribute it and/or modify it
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 #ifndef FRAP_H
 #define FRAP_H
 
@@ -38,8 +37,7 @@ frap-tool is free software: you can redistribute it and/or modify it
 
 #include <boost/thread.hpp>  
 
-using namespace cimg_library;
-using namespace std;
+namespace FrapTool {
 
 class Frap {
 	public: 
@@ -70,7 +68,7 @@ class Frap {
 		
 		Chart *simple_chart;		// make a chart
 
-		CImg<unsigned char> *visu;	//<graph plot
+		cimg_library::CImg<unsigned char> *visu;	//<graph plot
 
 		void dosort();	
 		void doselection();
@@ -83,19 +81,20 @@ class Frap {
 		void dofitting();
 		void create_fitting_data();
 		
-		vector<Tiffile> imagefiles;	//<this vector contains all the information about each file
-		vector<double> A;		//<this vector contains the A data
-		vector<double> lambda;		//<this vector contains the lambda data
-		vector<double> mu;
-		vector<double> b;
-		vector<double> time_s; 		//<time data in seconds from the start point of experiment
-		CImgList<float> imagelist;	//<this is a list of the image data	
-		CImgList<float> transforms;	//<this is a list of the fourier transformed data
+		std::vector<Tiffile> imagefiles;	//<this vector contains all the information about each file
+		std::vector<double> A;		//<this vector contains the A data
+		std::vector<double> lambda;		//<this vector contains the lambda data
+		std::vector<double> mu;
+		std::vector<double> b;
+		std::vector<double> time_s; 		//<time data in seconds from the start point of experiment
+		cimg_library::CImgList<float> imagelist;	//<this is a list of the image data	
+		cimg_library::CImgList<float> transforms;	//<this is a list of the fourier transformed data
 
-		vector<char*>::iterator fnameit;	//iterators
-		vector<Tiffile>::iterator imageit;
-		CImgList<float>::iterator cimg_imageit;
+		std::vector<char*>::iterator fnameit;	//iterators
+		std::vector<Tiffile>::iterator imageit;
+		cimg_library::CImgList<float>::iterator cimg_imageit;
 };
 
+} // FrapTool
 
 #endif
