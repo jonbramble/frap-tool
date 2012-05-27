@@ -126,7 +126,7 @@ void Frap::processdata()
 	removebackground(); //could crop first to save time - at 60ms its neg
 	getvectors();  // get the data and put it in a matrix
 	dofitting(); // do the multid fitting on the gaussian profiles
-	getfftransforms(); //should do these on centred cropped images
+	//getfftransforms(); //should do these on centred cropped images
 		
 	for(uint i=0; i<imagefiles.size(); i++){
 		char* name = imagefiles[i].getfilename();
@@ -192,7 +192,7 @@ void Frap::getvectors(){
 		scaling_factor = hypot(s.getxsize(),s.getysize())/(s.getxsize()); // if pixlen is in um/pixel
 
 		cout << scaling_factor << endl;
-
+        // this needs a rewrite
 		for(uint i=0; i<imagefiles.size(); i++){
 			float y, valimage;
 			for(int xk = x1;xk<x2;xk++){			//needs error handling 

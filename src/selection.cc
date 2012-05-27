@@ -50,7 +50,7 @@ float Selection::getc(){
 		return c;
 	}
 
-/*void Selection::selectline(char* filename){
+void Selection::selectline(char* filename){
 	int currentx, currenty;
 	bool setone,settwo;
 	const unsigned char color[] = { 0,0,0 };
@@ -105,10 +105,10 @@ float Selection::getc(){
 		cout << "boundaries not set correctly" << endl;
 
 	}
-}*/
+}
 
 
-void Selection::selectline(char* filename){
+/*void Selection::selectline(char* filename){
 	int currentx, currenty;
 	bool setone,settwo;
 	const unsigned char color[] = { 0,0,0 };
@@ -180,4 +180,4 @@ void Selection::selectline(char* filename){
 
 	}
 
-}
+}*/
