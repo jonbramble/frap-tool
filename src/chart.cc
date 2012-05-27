@@ -18,6 +18,8 @@ frap-tool is free software: you can redistribute it and/or modify it
 
 #include "../include/chart.h"
 
+namespace FrapTool {
+
 Chart::Chart()
 {
 	pls = new plstream();
@@ -53,7 +55,6 @@ void Chart::plot(int size, gsl_vector *xp, gsl_vector *yp){
     	// separately (just = 0), and we draw a box with axes (axis = 1).
 		// edited
 	
-
     	pls->col0( 1 );
    	pls->env( 0, 100, 0, 25, 0, 1 );
     	pls->col0( 2 );
@@ -68,7 +69,6 @@ void Chart::plot(int size, gsl_vector *xp, gsl_vector *yp){
 
     	delete[] x;
     	delete[] y;
-
 }
 
 void Chart::plot(int size, gsl_vector *xp, gsl_matrix *exp_data, gsl_matrix *fitting_data){
@@ -84,7 +84,6 @@ void Chart::plot(int size, gsl_vector *xp, gsl_matrix *exp_data, gsl_matrix *fit
 		yf[i]=gsl_matrix_get(fitting_data,0,i);
 	}
 
-
 	pls->col0( 15 );
    	pls->env( 0, size, 0, 15000, 0, 1 );
     	pls->col0( 15 );
@@ -93,7 +92,6 @@ void Chart::plot(int size, gsl_vector *xp, gsl_matrix *exp_data, gsl_matrix *fit
    	 // Draw the line.
 /*
 	Integer representing the color. The defaults at present are (these may change):
-
 0	black (default background)
 1	red (default foreground)
 2	yellow
@@ -123,11 +121,9 @@ void Chart::plot(int size, gsl_vector *xp, gsl_matrix *exp_data, gsl_matrix *fit
 
 }
 
-
-
-
 Chart::~Chart()
 {
 	delete pls;
-
 }
+
+} // FrapTool

@@ -34,6 +34,8 @@ frap-tool is free software: you can redistribute it and/or modify it
 using namespace std;
 #endif
 
+namespace FrapTool {
+
 class Chart 
 {
 	public:
@@ -43,7 +45,6 @@ class Chart
 		void plot(int size, gsl_vector *x, gsl_vector *y);
 		void plot(int size, gsl_vector *xp, gsl_matrix *exp_data, gsl_matrix *fitting_data);
 		
-
 	private:
 
 		plstream *pls;
@@ -52,6 +53,6 @@ class Chart
 };
 
 
-
+}
 
 #endif
