@@ -7,7 +7,7 @@ ImagePro Express outputs incorrect datetime tiff tags and are parsed separately.
 If your files are from a different program, this will have to be re-written 
 accordingly.  
 	
-Copyright (C) 2011  Dr. Jonathan Bramble, Mr. Matthew Cheetham
+Copyright (C) 2011  Dr. Jonathan Bramble, Dr. Matthew Cheetham
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
