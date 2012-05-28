@@ -4,3 +4,8 @@ FRAP
 *~
 src/*.o
 src/.deps/
+
+gaussian_file.jpg
+gaussian_file.ps
+linear_file.jpg
+linear_file.ps
