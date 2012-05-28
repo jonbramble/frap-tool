@@ -51,7 +51,7 @@ void Frap::join()
 
 /*-- Data Functions ----------------------------------------------------------------------------*/
 gsl_matrix* Frap::get_exp_data(){
-	return exp_data;
+	return exp_data;	
 }
 
 gsl_matrix* Frap::get_fitting_data(){
@@ -87,7 +87,7 @@ void Frap::plplot_chart(){
 
 	for(int a=0;a<npoints;a++)
 	{
-		gsl_vector_set(x,a,a+1);
+		gsl_vector_set(x,a,a*scaling_factor*pixlen);
 	}
 
 	char const *f_name_gauss;
@@ -175,7 +175,7 @@ void Frap::setpixlen(){
 	switch( binning ) 
 	{
 		case 1:
-			pixlen = 150/942;
+            pixlen = 150/942;       // microns/pixels
 		case 2: 
 			pixlen = 150/471;
 		case 4: 
@@ -207,7 +207,7 @@ void Frap::getvectors(){
 
 		std::cout << "(" << x1 << "," << y1 << ")"<< "(" << x2 << "," << y2 << ")" << std::endl;
 		
-		scaling_factor = hypot(s.getxsize(),s.getysize()); // if pixlen is in um/pixel
+		scaling_factor = (hypot(s.getxsize(),s.getysize())/npoints)*pixlen;
 
 		std::cout << s.getxsize() << "," << s.getysize() << std::endl;
 		std::cout << scaling_factor << std::endl;
@@ -226,12 +226,10 @@ void Frap::getvectors(){
 		for(cimg_imageit=imagelist.begin(); cimg_imageit<imagelist.end(); cimg_imageit++)
 		{
 			for(uint k=0;k<npoints;k++){
-			    // calc x and y values
-				xk=x1+k*xstep;
+				xk=x1+k*xstep; // calc x and y values
 				yk=y1+k*ystep;
 				valimage= cimg_imageit->cubic_atXY(xk,yk);   //cubic interpolation
 				gsl_matrix_set (exp_data, i, k, valimage);
-				//std::cout << valimage << std::endl;
 			}
 		i++;
 		}
@@ -242,7 +240,7 @@ void Frap::getvectors(){
 }
 
 void Frap::dofitting(){
-	
+	double scaled_lambda;
 	int ifilestotal = imagefiles.size();
 
 	gsl_matrix *vdata = gsl_matrix_alloc(4,ifilestotal); 
@@ -252,8 +250,9 @@ void Frap::dofitting(){
 
 	for(uint i=0; i<ifilestotal; i++){
 		A.push_back(gsl_matrix_get(vdata,0,i));  
-		mu.push_back(gsl_matrix_get(vdata,1,i));  
-		lambda.push_back(gsl_matrix_get(vdata,2,i));  // put all the data into lambda vector
+		mu.push_back(gsl_matrix_get(vdata,1,i)); 
+		scaled_lambda = gsl_matrix_get(vdata,2,i)*scaling_factor;
+		lambda.push_back(scaled_lambda);  // put all the data into lambda vector
 		b.push_back(gsl_matrix_get(vdata,3,i)); 
 	}
 
@@ -277,10 +276,11 @@ void Frap::setimagenames(vector<char*> ifiles){
 
 void Frap::create_fitting_data()// create curve data from fits
 {
-	double Yi;
+	double Yi, x_scaled;
 	for(uint i=0; i<imagefiles.size(); i++){
 		for(int x=0;x<npoints;x++){
-			Yi = A[i]*exp((-1*pow(x-mu[i],2))/(2*pow(lambda[i],2)))+b[i];
+			x_scaled = (x-mu[i])*scaling_factor;
+			Yi = A[i]*exp((-1*pow(x_scaled,2))/(2*pow(lambda[i],2)))+b[i]; // not right when scaled
 			gsl_matrix_set(fitting_data,i,x,Yi);
 		}
 	} 
