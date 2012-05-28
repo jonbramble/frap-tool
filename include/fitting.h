@@ -40,7 +40,7 @@ struct data {
 
 class Fitting{
 	public:
-		static int gaussfit(gsl_matrix * vdata, gsl_matrix * verr, const gsl_matrix * m);
+		static int gaussfit(gsl_matrix * vdata, gsl_matrix * verr, const gsl_matrix * m, bool output);
 		static int linearfit(const double * x, const double * y, int n);
 	private:
 		static int gauss_f(const gsl_vector * x, void * data, gsl_vector * f);

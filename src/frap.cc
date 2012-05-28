@@ -28,7 +28,7 @@ Frap::Frap(char* pfile, char* cfile){
 	prima = pfile;
 	closed = cfile;	
 	start_time = 10.0;
-	npoints = 100;
+	npoints = 250;
 }
 
 Frap::~Frap(){
@@ -89,11 +89,19 @@ void Frap::plplot_chart(){
 	{
 		gsl_vector_set(x,a,a+1);
 	}
+
+	char const *f_name_gauss;
+	char const *f_name_lin;
+	f_name_gauss = "gaussian_file.ps";
+	f_name_lin = "linear_file.ps";
 	
-	simple_chart = new Chart();	// create a new chart object
+	simple_chart = new Chart(f_name_gauss);	// create a new chart object
 	simple_chart->plot(npoints,x,exp_data,fitting_data); 
 
+	line_chart = new Chart(f_name_lin);
+	line_chart->plot(imagefiles.size(),time_s,lambda);
 }
+
 
 /*-- Processing ---------------------------------------------------------------------------------*/
 
@@ -136,7 +144,7 @@ void Frap::processdata()
 		
 	for(uint i=0; i<imagefiles.size(); i++){
 		char* name = imagefiles[i].getfilename();
-		printf("Filename: %s\tTimes: %f\tLambda: %f\tmu: %f\n",name,time_s[i],lambda[i],mu[i]);
+		printf("Filename: %s\tTimes: %f\tA: %f\tLambda: %f\tmu: %f\n",name,time_s[i],A[i],lambda[i],mu[i]);
 	} 
 
 	create_fitting_data();
@@ -240,7 +248,7 @@ void Frap::dofitting(){
 	gsl_matrix *vdata = gsl_matrix_alloc(4,ifilestotal); 
 	gsl_matrix *verr = gsl_matrix_alloc(4,ifilestotal); 
 
-	Fitting::gaussfit(vdata,verr,get_exp_data()); // fits the data for all images
+	Fitting::gaussfit(vdata,verr,get_exp_data(),false); // fits the data for all images
 
 	for(uint i=0; i<ifilestotal; i++){
 		A.push_back(gsl_matrix_get(vdata,0,i));  

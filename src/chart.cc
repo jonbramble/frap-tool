@@ -20,11 +20,10 @@ frap-tool is free software: you can redistribute it and/or modify it
 
 namespace FrapTool {
 
-Chart::Chart()
+Chart::Chart(char const *f_name)
 {
 	pls = new plstream();
 	char ver[80];
-	f_name  = "test_file.ps";
 
 	pls->sdev( "ps" );   // the output device
 	pls->sfnam( f_name );
@@ -36,6 +35,54 @@ Chart::Chart()
 	pls->gver( ver );
 
 	cout << "Plotting with PLplot version: " << ver << endl;
+
+}
+
+Chart::Chart()
+{
+	pls = new plstream();
+	char ver[80];
+
+	char *f_name;
+	f_name = "a_file.ps";
+
+	pls->sdev( "ps" );   // the output device
+	pls->sfnam( f_name );
+
+	uint col = 255;
+	pls->scolbg(col,col,col);
+
+	pls->init();
+	pls->gver( ver );
+
+	cout << "Plotting with PLplot version: " << ver << endl;
+
+}
+
+void Chart::plot(int size, std::vector<double> &xp, std::vector<double> &yp){
+	int   i;
+    	PLFLT *x = new PLFLT[size];
+   	PLFLT *y = new PLFLT[size];
+
+	for(i=0;i<size;i++){  // is there a better way
+		x[i]=xp[i];
+		y[i]=yp[i];
+	}
+
+	pls->col0( 1 );
+   	pls->env( 0, 60, 0, 40, 0, 1 );
+    	pls->col0( 2 );
+    	pls->lab( "time (s)", "lambda", "FRAP DATA" );
+
+   	 // Draw the line.
+
+    	pls->col0( 3 );
+    	pls->wid( 2 );
+    	pls->poin( size, x, y, 20);
+    	pls->wid( 1 );
+
+    	delete[] x;
+    	delete[] y;
 
 }
 

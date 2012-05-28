@@ -24,6 +24,7 @@ frap-tool is free software: you can redistribute it and/or modify it
 
 #include <plplot/plstream.h>
 #include <iostream>
+#include <vector>
 #include <cmath>
 
 #include <ctime>
@@ -40,14 +41,14 @@ class Chart
 	public:
 
 		Chart();
+		Chart(char const *f_name);
 		~Chart();
-		void plot(int size, gsl_vector *x, gsl_vector *y);
+		void plot(int size, std::vector<double> &xp, std::vector<double> &yp);
+		void plot(int size, gsl_vector *xp, gsl_vector *yp);
 		void plot(int size, gsl_vector *xp, gsl_matrix *exp_data, gsl_matrix *fitting_data);
 		
 	private:
-
 		plstream *pls;
-		char         *f_name;
 
 };
 

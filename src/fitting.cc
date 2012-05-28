@@ -33,7 +33,7 @@ void Fitting::print_state (size_t iter, gsl_multifit_fdfsolver * s)
                gsl_blas_dnrm2 (s->f));
      }
 
-int Fitting::gaussfit(gsl_matrix * vdata, gsl_matrix * verr, const gsl_matrix * m){
+int Fitting::gaussfit(gsl_matrix * vdata, gsl_matrix * verr, const gsl_matrix * m, bool output){
 	
 	int l = (int)m->size1;  //images
 	int j = (int)m->size2;  //pixels in selection
@@ -86,10 +86,10 @@ int Fitting::gaussfit(gsl_matrix * vdata, gsl_matrix * verr, const gsl_matrix * 
          	{
            		iter++;
            		status = gsl_multifit_fdfsolver_iterate (s);
-     
-           		printf ("status = %s\n", gsl_strerror (status));
-     
-           		Fitting::print_state (iter, s);
+     			if(output){	
+           			printf ("status = %s\n", gsl_strerror (status));
+           			Fitting::print_state (iter, s);
+			}
      
            		if (status)
              		break;
