@@ -28,7 +28,7 @@ Frap::Frap(char* pfile, char* cfile){
 	prima = pfile;
 	closed = cfile;	
 	start_time = 10.0;
-	npoints = 300;
+	npoints = 100;
 }
 
 Frap::~Frap(){
@@ -185,31 +185,35 @@ void Frap::removebackground(){
 void Frap::getvectors(){
 	if(s.selmade){
 	
-		float m, c, valimage, xk, yk, xstep, ystep;
-		int x1,y1;
+		float valimage, xk, yk, xstep, ystep;
+		int x1,y1, x2, y2;
 		int i=0;
 	
 		exp_data = gsl_matrix_alloc (imagefiles.size(), npoints);
 		fitting_data = gsl_matrix_alloc (imagefiles.size(), npoints);
 	
-		m = s.getm();	//get local versions
-		c = s.getc();
 		x1 = s.getx1();
+		x2 = s.getx2();
 		y1 = s.gety1();
+		y2 = s.gety2();
+
+		std::cout << "(" << x1 << "," << y1 << ")"<< "(" << x2 << "," << y2 << ")" << std::endl;
 		
-		scaling_factor = hypot(s.getxsize(),s.getysize())/(s.getxsize()); // if pixlen is in um/pixel
-		//std::cout << scaling_factor << std::endl;
-		xstep = s.getxsize()/npoints;
-		ystep = s.getysize()/npoints;
-        // this needs a rewrite
-		/*for(uint i=0; i<imagefiles.size(); i++){
-			float y, valimage;
-			for(int xk = x1;xk<x2;xk++){			//needs error handling 
-				y = round(m*xk+c);			//finds nearest pixel - could read more values?
-				valimage = imagelist.atNXY(i,xk,(int)y);	// finds value at this pixel in each image
-				gsl_matrix_set (exp_data, i, xk-x1, valimage);	// put the data in the matrix - bug here
-			}	
-		}*/
+		scaling_factor = hypot(s.getxsize(),s.getysize()); // if pixlen is in um/pixel
+
+		std::cout << s.getxsize() << "," << s.getysize() << std::endl;
+		std::cout << scaling_factor << std::endl;
+
+		if(s.getxsize()==0)
+			xstep = 0.0;
+		else 
+			xstep = (float) s.getxsize()/npoints;
+		if(s.getysize()==0)	
+			ystep = 0.0;
+		else 
+			ystep = (float) s.getysize()/npoints;
+
+		std::cout << xstep << "," << ystep << std::endl;
 		
 		for(cimg_imageit=imagelist.begin(); cimg_imageit<imagelist.end(); cimg_imageit++)
 		{

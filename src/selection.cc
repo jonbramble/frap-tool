@@ -21,11 +21,11 @@ frap-tool is free software: you can redistribute it and/or modify it
 namespace FrapTool {
 
 int Selection::getxsize(){
-		return abs(xsize);
+		return xsize;
 	}
 
 int Selection::getysize(){
-		return abs(ysize);
+		return ysize;
 	}
 
 int Selection::getx1(){
@@ -98,9 +98,7 @@ void Selection::selectline(char* filename){
 	if(setone && settwo){
 		selmade = true;
 		xsize = x2-x1;
-		ysize = y2-y1;
-		m = (float)ysize/xsize;
-		c = (float)y2-m*(float)x2;	
+		ysize = y2-y1;	
 	}
 	else
 	{	
