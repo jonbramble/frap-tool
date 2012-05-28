@@ -28,11 +28,14 @@ Frap::Frap(char* pfile, char* cfile){
 	prima = pfile;
 	closed = cfile;	
 	start_time = 10.0;
+	npoints = 300;
 }
 
 Frap::~Frap(){
-gsl_matrix_free(exp_data);
-gsl_matrix_free(fitting_data);
+ if (s.selmade){
+  gsl_matrix_free(exp_data);
+  gsl_matrix_free(fitting_data); 
+ }
 }
 
 /*-- Threading ---------------------------------------------------------------------------------*/
@@ -80,15 +83,15 @@ void Frap::plot_graph(){
 
 void Frap::plplot_chart(){
 
-	gsl_vector *x = gsl_vector_alloc(s.getxsize());
+	gsl_vector *x = gsl_vector_alloc(npoints);
 
-	for(int a=0;a<s.getxsize();a++)
+	for(int a=0;a<npoints;a++)
 	{
 		gsl_vector_set(x,a,a+1);
 	}
 	
 	simple_chart = new Chart();	// create a new chart object
-	simple_chart->plot(s.getxsize(),x,exp_data,fitting_data); 
+	simple_chart->plot(npoints,x,exp_data,fitting_data); 
 
 }
 
@@ -182,33 +185,47 @@ void Frap::removebackground(){
 void Frap::getvectors(){
 	if(s.selmade){
 	
-		float m, c;
-		int x1,x2;
-		exp_data = gsl_matrix_alloc (imagefiles.size(), s.getxsize());
-		fitting_data = gsl_matrix_alloc (imagefiles.size(), s.getxsize());
+		float m, c, valimage, xk, yk, xstep, ystep;
+		int x1,y1;
+		int i=0;
+	
+		exp_data = gsl_matrix_alloc (imagefiles.size(), npoints);
+		fitting_data = gsl_matrix_alloc (imagefiles.size(), npoints);
 	
 		m = s.getm();	//get local versions
 		c = s.getc();
 		x1 = s.getx1();
-		x2 = s.getx2();
-
+		y1 = s.gety1();
+		
 		scaling_factor = hypot(s.getxsize(),s.getysize())/(s.getxsize()); // if pixlen is in um/pixel
-
-		cout << scaling_factor << endl;
+		//std::cout << scaling_factor << std::endl;
+		xstep = s.getxsize()/npoints;
+		ystep = s.getysize()/npoints;
         // this needs a rewrite
-		for(uint i=0; i<imagefiles.size(); i++){
+		/*for(uint i=0; i<imagefiles.size(); i++){
 			float y, valimage;
 			for(int xk = x1;xk<x2;xk++){			//needs error handling 
 				y = round(m*xk+c);			//finds nearest pixel - could read more values?
 				valimage = imagelist.atNXY(i,xk,(int)y);	// finds value at this pixel in each image
 				gsl_matrix_set (exp_data, i, xk-x1, valimage);	// put the data in the matrix - bug here
 			}	
+		}*/
+		
+		for(cimg_imageit=imagelist.begin(); cimg_imageit<imagelist.end(); cimg_imageit++)
+		{
+			for(uint k=0;k<npoints;k++){
+			    // calc x and y values
+				xk=x1+k*xstep;
+				yk=y1+k*ystep;
+				valimage= cimg_imageit->cubic_atXY(xk,yk);   //cubic interpolation
+				gsl_matrix_set (exp_data, i, k, valimage);
+				//std::cout << valimage << std::endl;
+			}
+		i++;
 		}
 	}
 	else {
-		cout << "no selection made" << endl;
-		exp_data = gsl_matrix_alloc (1, 1); // hack to avoid error on destructor
-		fitting_data = gsl_matrix_alloc (1, 1); // hack to avoid error on destructor
+		std::cout << "no selection made" << std::endl;
 	}
 }
 
@@ -250,7 +267,7 @@ void Frap::create_fitting_data()// create curve data from fits
 {
 	double Yi;
 	for(uint i=0; i<imagefiles.size(); i++){
-		for(int x=0;x<s.getxsize();x++){
+		for(int x=0;x<npoints;x++){
 			Yi = A[i]*exp((-1*pow(x-mu[i],2))/(2*pow(lambda[i],2)))+b[i];
 			gsl_matrix_set(fitting_data,i,x,Yi);
 		}

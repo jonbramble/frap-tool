@@ -58,6 +58,7 @@ class Frap {
 		boost::thread m_Thread;
 		char* prima;
 		char* closed;
+		int npoints;			// number of points to use in selection interpolation
 		double pixlen;			//<pixel scaling factor - from microscope
 		double scaling_factor; 		//<pixel scaling factor - from selection length
 		double start_time;

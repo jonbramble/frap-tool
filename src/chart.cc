@@ -79,9 +79,9 @@ void Chart::plot(int size, gsl_vector *xp, gsl_matrix *exp_data, gsl_matrix *fit
 	PLFLT *yf = new PLFLT[size];
 	
 	for(i=0;i<size;i++){  // is there a better way
-		x[i]=gsl_vector_get(xp,i);
-		y[i]=gsl_matrix_get(exp_data,0,i);
-		yf[i]=gsl_matrix_get(fitting_data,0,i);
+	 x[i]=gsl_vector_get(xp,i);
+	 y[i]=gsl_matrix_get(exp_data,0,i);
+	 yf[i]=gsl_matrix_get(fitting_data,0,i);
 	}
 
 	pls->col0( 15 );
