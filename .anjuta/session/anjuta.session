@@ -3,14 +3,14 @@
 Maximized=1
 Geometry=1280x1000+0+24
 
+[Project Manager]
+Expand=frap-tool%%%frap-tool//FRAP
+
 [File Loader]
-Files=../../src/frap.cc#210%%%../../src/chart.cc#127
+Files=../../src/fitting.cc#221%%%../../include/frap.h#76%%%../../src/main.cc#28%%%../../include/chart.h#27%%%../../src/chart.cc#154%%%../../src/frap.cc#97
 
 [Document Manager]
 bookmarks=<?xml version="1.0" encoding="UTF-8"?>\n<bookmarks/>\n
-
-[Project Manager]
-Expand=frap-tool%%%frap-tool//FRAP
 
 [Execution]
 Program uri=../../../../../../../jon/Programming/C/frap-tool/runfrap.sh%%%../../../../../../../jon/Programming/C/frap-tool/FRAP

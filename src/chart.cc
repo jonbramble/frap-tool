@@ -62,6 +62,11 @@ Chart::Chart()
 void Chart::plot(int size, std::vector<double> &xp, std::vector<double> &yp, std::vector<double> &yp_err, double m, double c){
 
 	int   i;
+	double max_x, max_y;
+
+	std::vector<double>::iterator result_min_x, result_max_x;
+	std::vector<double>::iterator result_min_y, result_max_y;
+	
     PLFLT *x = new PLFLT[size];
    	PLFLT *y = new PLFLT[size];
 	PLFLT *y_fit = new PLFLT[size];
@@ -76,8 +81,16 @@ void Chart::plot(int size, std::vector<double> &xp, std::vector<double> &yp, std
 		y_err_lo[i]=yp[i]-yp_err[i];
 	}
 
+	result_min_x = std::min_element(xp.begin(), xp.end());
+    result_max_x = std::max_element(xp.begin(), xp.end());
+	result_min_y = std::min_element(yp.begin(), yp.end());
+    result_max_y = std::max_element(yp.begin(), yp.end());
+	
+	max_x = (*result_max_x)*(1.2);	//sets the axis to be 20% larger than the max value
+	max_y = (*result_max_y)*(1.2);
+
 	pls->col0( 1 );
-   	pls->env( 0, 180, 0, 100, 0, 1 );
+   	pls->env( 0, max_x, 0, max_y, 0, 1 );
     pls->col0( 2 );
     pls->lab( "time (s)", "lambda", "FRAP DATA" );
 
@@ -128,6 +141,9 @@ void Chart::plot(int size, gsl_vector *xp, gsl_vector *yp){
 void Chart::plot(int size, gsl_vector *xp, gsl_matrix *exp_data, gsl_matrix *fitting_data){
 
 	int   i;
+
+	double max_x, max_y;
+
     PLFLT *x = new PLFLT[size];
    	PLFLT *y = new PLFLT[size];
 	PLFLT *yf = new PLFLT[size];
@@ -138,10 +154,13 @@ void Chart::plot(int size, gsl_vector *xp, gsl_matrix *exp_data, gsl_matrix *fit
 	 yf[i]=gsl_matrix_get(fitting_data,0,i);
 	}
 
+	max_x = gsl_vector_max(xp);
+	max_y = 15000;
+
 	pls->col0( 15 );
-   	pls->env( 0, 135, 0, 15000, 0, 1 );
+   	pls->env( 0, max_x, 0, max_y, 0, 1 );
     pls->col0( 15 );
-    pls->lab( "Distance (um)", "Inverted Intensity", "FRAP DATA" );
+    pls->lab( "Distance (μm)", "Inverted Intensity", "FRAP DATA" );
 
    	 // Draw the line.
 

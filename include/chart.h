@@ -24,6 +24,7 @@ frap-tool is free software: you can redistribute it and/or modify it
 
 #include <plplot/plstream.h>
 #include <iostream>
+#include <algorithm>
 #include <vector>
 #include <cmath>
 
