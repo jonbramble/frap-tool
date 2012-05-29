@@ -73,7 +73,7 @@ class Frap {
 
 		cimg_library::CImg<unsigned char> *visu;	//<graph plot
 
-		void dosort();	
+		void dosort();			//separate sub routines to merge later
 		void doselection();
 		void setimagelist();
 		void settimes();
@@ -85,6 +85,7 @@ class Frap {
 		void create_fitting_data();
 		
 		std::vector<Tiffile> imagefiles;	//<this vector contains all the information about each file
+
 		std::vector<double> A;			//<this vector contains the A data
 		std::vector<double> lambda;		//<this vector contains the lambda data
 		std::vector<double> mu;
@@ -96,7 +97,7 @@ class Frap {
 		std::vector<double> mu_err;
 		std::vector<double> b_err;
 
-		double c0, c1, cov00, cov01, cov11, sumsq;
+		double c0, c1, cov00, cov01, cov11, sumsq;  //<linear fit parameters
 		
 		cimg_library::CImgList<float> imagelist;	//<this is a list of the image data	
 		cimg_library::CImgList<float> transforms;	//<this is a list of the fourier transformed data
