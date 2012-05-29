@@ -24,7 +24,8 @@ namespace FrapTool
 {
 
 /*-- Constructor Destructors ---------------------------------------------------------------------------------*/
-Frap::Frap(char* pfile, char* cfile){
+Frap::Frap(char* pfile, char* cfile, bool _verbose){
+	verbose = _verbose;
 	prima = pfile;
 	closed = cfile;	
 	start_time = 10.0;
@@ -87,12 +88,12 @@ void Frap::plplot_chart(){
 
 	for(int a=0;a<npoints;a++)
 	{
-		gsl_vector_set(x,a,a*scaling_factor*pixlen);
+		gsl_vector_set(x,a,a*scaling_factor);
 	}
 
-	char const *f_name_gauss;
+	char const *f_name_gauss;   
 	char const *f_name_lin;
-	f_name_gauss = "gaussian_file.ps";
+	f_name_gauss = "gaussian_file.ps"; //names for files
 	f_name_lin = "linear_file.ps";
 	
 	simple_chart = new Chart(f_name_gauss);	// create a new chart object
@@ -245,8 +246,9 @@ void Frap::dofitting(){
 
 	gsl_matrix *vdata = gsl_matrix_alloc(4,ifilestotal); 
 	gsl_matrix *verr = gsl_matrix_alloc(4,ifilestotal); 
+	gsl_vector *fit = gsl_vector_alloc(6); 
 
-	Fitting::gaussfit(vdata,verr,get_exp_data(),false); // fits the data for all images
+	Fitting::gaussfit(vdata,verr,get_exp_data(),verbose); // fits the data for all images
 
 	for(uint i=0; i<ifilestotal; i++){
 		A.push_back(gsl_matrix_get(vdata,0,i));  
@@ -254,12 +256,19 @@ void Frap::dofitting(){
 		scaled_lambda = gsl_matrix_get(vdata,2,i)*scaling_factor;
 		lambda.push_back(scaled_lambda);  // put all the data into lambda vector
 		b.push_back(gsl_matrix_get(vdata,3,i)); 
+
+		A_err.push_back(gsl_matrix_get(verr,0,i));  
+		mu_err.push_back(gsl_matrix_get(verr,1,i)); 
+		scaled_lambda = gsl_matrix_get(verr,2,i)*scaling_factor;
+		lambda_err.push_back(scaled_lambda);  // put all the data into lambda vector
+		b_err.push_back(gsl_matrix_get(verr,3,i)); 
 	}
 
-	Fitting::linearfit(&time_s[0],&lambda[0],ifilestotal); // needs lots of error handling --needs R factor cutoff
+	Fitting::linearfit(fit, &time_s[0],&lambda[0],ifilestotal, verbose); // needs lots of error handling --needs R factor cutoff
 
 	gsl_matrix_free(vdata);
 	gsl_matrix_free(verr);
+	gsl_vector_free(fit);
 }
 
 
@@ -280,7 +289,7 @@ void Frap::create_fitting_data()// create curve data from fits
 	for(uint i=0; i<imagefiles.size(); i++){
 		for(int x=0;x<npoints;x++){
 			x_scaled = (x-mu[i])*scaling_factor;
-			Yi = A[i]*exp((-1*pow(x_scaled,2))/(2*pow(lambda[i],2)))+b[i]; // not right when scaled
+			Yi = A[i]*exp((-1*pow(x_scaled,2))/(2*pow(lambda[i],2)))+b[i];
 			gsl_matrix_set(fitting_data,i,x,Yi);
 		}
 	} 

@@ -3,17 +3,19 @@
 Maximized=1
 Geometry=1280x1000+0+24
 
+[File Loader]
+Files=../../src/frap.cc#210%%%../../src/chart.cc#127
+
 [Document Manager]
 bookmarks=<?xml version="1.0" encoding="UTF-8"?>\n<bookmarks/>\n
 
-[Execution]
-Program arguments=
-Program uri=file:///home/jon/Programming/C/frap-tool/runfrap.sh%%%file:///home/jon/Programming/C/frap-tool/FRAP
-Run in terminal=2
-Working directories=file:///home/jon/Programming/C/frap-tool
-
 [Project Manager]
-Shortcut=frap-tool//frap-tool//FRAP
+Expand=frap-tool%%%frap-tool//FRAP
+
+[Execution]
+Program uri=../../../../../../../jon/Programming/C/frap-tool/runfrap.sh%%%../../../../../../../jon/Programming/C/frap-tool/FRAP
+Run in terminal=2
+Working directories=../../../../../../../jon/Programming/C/frap-tool
 
 [Build]
 Configuration list=1:Default:%%%1:Debug:Debug%%%1:Profiling:Profiling%%%1:Optimized:Optimized

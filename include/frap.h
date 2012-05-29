@@ -41,7 +41,7 @@ namespace FrapTool {
 
 class Frap {
 	public: 
-		Frap(char* pfile, char* cfile);	
+		Frap(char* pfile, char* cfile, bool verbose);	
 		~Frap(); //<must allocate mem to data before calling free
 		
 		void start();
@@ -58,6 +58,7 @@ class Frap {
 		boost::thread m_Thread;
 		char* prima;
 		char* closed;
+		bool verbose;
 		int npoints;			// number of points to use in selection interpolation
 		double pixlen;			//<pixel scaling factor - from microscope
 		double scaling_factor; 		//<pixel scaling factor - from selection length
@@ -89,6 +90,12 @@ class Frap {
 		std::vector<double> mu;
 		std::vector<double> b;
 		std::vector<double> time_s; 		//<time data in seconds from the start point of experiment
+
+		std::vector<double> A_err;		//<this vector contains the A errors
+		std::vector<double> lambda_err;		//<this vector contains the lambda errors
+		std::vector<double> mu_err;
+		std::vector<double> b_err;
+		
 		cimg_library::CImgList<float> imagelist;	//<this is a list of the image data	
 		cimg_library::CImgList<float> transforms;	//<this is a list of the fourier transformed data
 

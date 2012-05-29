@@ -71,7 +71,7 @@ void Chart::plot(int size, std::vector<double> &xp, std::vector<double> &yp){
 	}
 
 	pls->col0( 1 );
-   	pls->env( 0, 60, 0, 40, 0, 1 );
+   	pls->env( 0, 180, 0, 40, 0, 1 );
     pls->col0( 2 );
     pls->lab( "time (s)", "lambda", "FRAP DATA" );
 
@@ -129,7 +129,7 @@ void Chart::plot(int size, gsl_vector *xp, gsl_matrix *exp_data, gsl_matrix *fit
 	}
 
 	pls->col0( 15 );
-   	pls->env( 0, size, 0, 15000, 0, 1 );
+   	pls->env( 0, 135, 0, 15000, 0, 1 );
     pls->col0( 15 );
     pls->lab( "Distance (um)", "Inverted Intensity", "FRAP DATA" );
 
