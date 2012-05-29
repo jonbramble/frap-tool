@@ -82,7 +82,7 @@ void Frap::plot_graph(){
 	}
 }
 
-void Frap::plplot_chart(){
+void Frap::plplot_chart(char* _prefix){
 
 	gsl_vector *x = gsl_vector_alloc(npoints);
 
@@ -130,7 +130,6 @@ void Frap::getfftransforms(){
 	
 }
 
-
 void Frap::processdata()
 {
 	dosort();	// sort by time
@@ -141,14 +140,60 @@ void Frap::processdata()
 	removebackground(); //could crop first to save time - at 60ms its neg
 	getvectors();  // get the data and put it in a matrix
 	dofitting(); // do the multid fitting on the gaussian profiles
-	//getfftransforms(); //should do these on centred cropped images
-		
+	//getfftransforms(); //should do these on centred cropped images	
+	create_fit_data();
+}
+
+void Frap::print_data(){
 	for(uint i=0; i<imagefiles.size(); i++){
 		char* name = imagefiles[i].getfilename();
 		printf("Filename: %s\tTimes: %f\tA: %f\tLambda: %f\tmu: %f\n",name,time_s[i],A[i],lambda[i],mu[i]);
 	} 
 
-	create_fitting_data();
+	std::cout << "Diffusion Constant " << c1/2 << " μm2/s" << std::endl; 
+}
+
+void Frap::save_data_file(char* _prefix){
+
+	double lambda_fit;
+	char str_summary[80]; //string preparations for filenames
+	char str_fullset[80];
+	//char str_linear_fit[80];
+	
+	strcpy(str_summary,_prefix);
+	strcpy(str_fullset,_prefix);
+	//strcpy(str_linear_fit,_prefix);
+	
+	strcat(str_summary,"-summary.csv");
+	strcat(str_fullset,"-data-set.csv");
+	//strcat(str_linear_fit,"-linear-fit.csv");
+
+	ofstream data_file;
+
+	std::cout << "Writing Datafiles...";
+	
+	data_file.open (str_summary);
+	if (data_file.is_open())
+	{
+		data_file << "Filename,Time(s),A,A error,Lambda,Lambda error,mu, mu error,b,b error,Fitted Lambda\n";
+		for(uint i=0; i<imagefiles.size(); i++){
+			lambda_fit = c0+c1*time_s[i];
+			data_file << imagefiles[i].getfilename() << "," << time_s[i] <<"," << A[i] <<"," << A_err[i] 
+				<<"," << lambda[i] <<"," << lambda_err[i] <<"," 
+				<< mu[i] <<"," << mu_err[i] <<"," << b[i] <<"," << b_err[i] << "," << lambda_fit << std::endl;
+		} 
+	}
+	data_file.close();
+
+	data_file.open (str_fullset);
+	data_file << "Writing this to a file.\n";
+	data_file.close();
+
+	//data_file.open (str_linear_fit);
+	//data_file << "Writing this to a file.\n";
+	//data_file.close();
+
+	std::cout << "...complete" << std::endl;
 }
 
 void Frap::dosort(){
@@ -210,8 +255,8 @@ void Frap::getvectors(){
 		
 		scaling_factor = (hypot(s.getxsize(),s.getysize())/npoints)*pixlen;
 
-		std::cout << s.getxsize() << "," << s.getysize() << std::endl;
-		std::cout << scaling_factor << std::endl;
+		//std::cout << s.getxsize() << "," << s.getysize() << std::endl;
+		std::cout << "scaling factor " << scaling_factor << std::endl;
 
 		if(s.getxsize()==0)
 			xstep = 0.0;
@@ -221,8 +266,6 @@ void Frap::getvectors(){
 			ystep = 0.0;
 		else 
 			ystep = (float) s.getysize()/npoints;
-
-		std::cout << xstep << "," << ystep << std::endl;
 		
 		for(cimg_imageit=imagelist.begin(); cimg_imageit<imagelist.end(); cimg_imageit++)
 		{
@@ -290,7 +333,7 @@ void Frap::setimagenames(vector<char*> ifiles){
 	}
 } 
 
-void Frap::create_fitting_data()// create curve data from fits
+void Frap::create_fit_data()// create curve data from fits
 {
 	double Yi, x_scaled;
 	for(uint i=0; i<imagefiles.size(); i++){

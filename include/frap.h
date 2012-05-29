@@ -25,9 +25,11 @@ frap-tool is free software: you can redistribute it and/or modify it
 
 #include <pthread.h>
 #include <iostream>
+#include <fstream>
 #include <vector>
 #include <algorithm>
 #include <ctime>
+#include <cstring>
 #include "../include/tiffile.h"
 #include "../include/fitting.h"
 #include "../include/chart.h"
@@ -52,7 +54,10 @@ class Frap {
 		void setimagenames(vector<char*> ifiles);
 
 		void plot_graph();
-		void plplot_chart();
+		void plplot_chart(char* _prefix);
+
+		void save_data_file(char* _prefix);
+		void print_data();
 
 	private:
 		boost::thread m_Thread;
@@ -82,7 +87,7 @@ class Frap {
 		void getvectors();
 		void getfftransforms();
 		void dofitting();
-		void create_fitting_data();
+		void create_fit_data();
 		
 		std::vector<Tiffile> imagefiles;	//<this vector contains all the information about each file
 

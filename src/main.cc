@@ -24,14 +24,18 @@ int main(int argc, char* argv[]) {
 	char* closed; 
 	char* prima;
 	char* appname = argv[0];
+	char* prefix;
 	vector<char*> ifiles;
 	bool verbose = false;
-
+	
+	prefix = "frap-data";
 	int one = 1, fd;
 	int multiplefiles = (argc > 1);
 	
-	while((c = getopt(argc, argv, "vp:c:")) != -1){			//taken from gnu example
+	while((c = getopt(argc, argv, "vp:c:f:")) != -1){			//taken from gnu example
 		switch(c){
+		case 'f':
+			prefix = optarg;
 		case 'v':
 			verbose = true;
 		case 'p':
@@ -59,16 +63,14 @@ int main(int argc, char* argv[]) {
 	experiment = new FrapTool::Frap(prima,closed,verbose);
 	
 	experiment->start();				// starts do selection
-	experiment->setimagenames(ifiles);		// but can do processing on tiff files in the meantime
+	experiment->setimagenames(ifiles);	// but can do processing on tiff files in the meantime
 	experiment->join();				// now we join the thread to continue with dataprocessing
-
-	experiment->processdata();
 	
-	//FILE * f = fopen ("alldata.dat", "w");
-    //gsl_matrix_fprintf (f,  experiment.getdata(), "%.5g");
-    //fclose (f);
+	experiment->processdata();
 
-	experiment->plplot_chart();
+	experiment->plplot_chart(prefix);
+	experiment->print_data();
+	experiment->save_data_file(prefix);
 
 	delete experiment;
 	
