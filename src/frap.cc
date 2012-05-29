@@ -157,15 +157,15 @@ void Frap::save_data_file(char* _prefix){
 
 	double lambda_fit;
 	char str_summary[80]; //string preparations for filenames
-	char str_fullset[80];
+	//char str_fullset[80];
 	//char str_linear_fit[80];
 	
 	strcpy(str_summary,_prefix);
-	strcpy(str_fullset,_prefix);
+	//strcpy(str_fullset,_prefix);
 	//strcpy(str_linear_fit,_prefix);
 	
 	strcat(str_summary,"-summary.csv");
-	strcat(str_fullset,"-data-set.csv");
+	//strcat(str_fullset,"-data-set.csv");
 	//strcat(str_linear_fit,"-linear-fit.csv");
 
 	ofstream data_file;
@@ -182,12 +182,13 @@ void Frap::save_data_file(char* _prefix){
 				<<"," << lambda[i] <<"," << lambda_err[i] <<"," 
 				<< mu[i] <<"," << mu_err[i] <<"," << b[i] <<"," << b_err[i] << "," << lambda_fit << std::endl;
 		} 
+		data_file << "Diffusion Constant " << c1/2 << " μm2/s" << std::endl; 
 	}
 	data_file.close();
 
-	data_file.open (str_fullset);
-	data_file << "Writing this to a file.\n";
-	data_file.close();
+	//data_file.open (str_fullset);
+	//data_file << "Writing this to a file.\n";
+	//data_file.close();
 
 	//data_file.open (str_linear_fit);
 	//data_file << "Writing this to a file.\n";
