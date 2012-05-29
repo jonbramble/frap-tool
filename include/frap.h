@@ -59,16 +59,16 @@ class Frap {
 		char* prima;
 		char* closed;
 		bool verbose;
-		int npoints;			// number of points to use in selection interpolation
-		double pixlen;			//<pixel scaling factor - from microscope
-		double scaling_factor; 		//<pixel scaling factor - from selection length
+		int npoints;			 // number of points to use in selection interpolation
+		double pixlen;			 //<pixel scaling factor - from microscope
+		double scaling_factor; 	 //<pixel scaling factor - from selection length
 		double start_time;
 		Selection s;
 
 		gsl_matrix *exp_data;		//<for output data
-		gsl_matrix *fitting_data;		//<for output data
+		gsl_matrix *fitting_data;	//<for output data
 		
-		Chart *simple_chart;		// make a chart
+		Chart *simple_chart;	// make a chart
 		Chart *line_chart;		// make a chart
 
 		cimg_library::CImg<unsigned char> *visu;	//<graph plot
@@ -85,16 +85,18 @@ class Frap {
 		void create_fitting_data();
 		
 		std::vector<Tiffile> imagefiles;	//<this vector contains all the information about each file
-		std::vector<double> A;		//<this vector contains the A data
+		std::vector<double> A;			//<this vector contains the A data
 		std::vector<double> lambda;		//<this vector contains the lambda data
 		std::vector<double> mu;
 		std::vector<double> b;
-		std::vector<double> time_s; 		//<time data in seconds from the start point of experiment
+		std::vector<double> time_s; 	//<time data in seconds from the start point of experiment
 
 		std::vector<double> A_err;		//<this vector contains the A errors
-		std::vector<double> lambda_err;		//<this vector contains the lambda errors
+		std::vector<double> lambda_err;	//<this vector contains the lambda errors
 		std::vector<double> mu_err;
 		std::vector<double> b_err;
+
+		double c0, c1, cov00, cov01, cov11, sumsq;
 		
 		cimg_library::CImgList<float> imagelist;	//<this is a list of the image data	
 		cimg_library::CImgList<float> transforms;	//<this is a list of the fourier transformed data

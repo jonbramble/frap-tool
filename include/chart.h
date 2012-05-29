@@ -43,7 +43,7 @@ class Chart
 		Chart();
 		Chart(char const *f_name);
 		~Chart();
-		void plot(int size, std::vector<double> &xp, std::vector<double> &yp);
+		void plot(int size, std::vector<double> &xp, std::vector<double> &yp, std::vector<double> &yp_err, double m, double c);
 		void plot(int size, gsl_vector *xp, gsl_vector *yp);
 		void plot(int size, gsl_vector *xp, gsl_matrix *exp_data, gsl_matrix *fitting_data);
 		

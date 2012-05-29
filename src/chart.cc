@@ -59,27 +59,37 @@ Chart::Chart()
 
 }
 
-void Chart::plot(int size, std::vector<double> &xp, std::vector<double> &yp){
+void Chart::plot(int size, std::vector<double> &xp, std::vector<double> &yp, std::vector<double> &yp_err, double m, double c){
 
 	int   i;
     PLFLT *x = new PLFLT[size];
    	PLFLT *y = new PLFLT[size];
+	PLFLT *y_fit = new PLFLT[size];
+	PLFLT *y_err_hi = new PLFLT[size]; 
+	PLFLT *y_err_lo = new PLFLT[size];
 
 	for(i=0;i<size;i++){  // is there a better way with first value
 		x[i]=xp[i];
 		y[i]=yp[i];
+		y_fit[i]=m*xp[i]+c;
+		y_err_hi[i]=yp[i]+yp_err[i];
+		y_err_lo[i]=yp[i]-yp_err[i];
 	}
 
 	pls->col0( 1 );
-   	pls->env( 0, 180, 0, 40, 0, 1 );
+   	pls->env( 0, 180, 0, 100, 0, 1 );
     pls->col0( 2 );
     pls->lab( "time (s)", "lambda", "FRAP DATA" );
 
-   	 // Draw the line.
-
-    pls->col0( 3 );
+	pls->col0( 3 );
     pls->wid( 2 );
-    pls->poin( size, x, y, 20);
+	pls->poin( size, x, y, 20);
+    pls->erry( size, x, y_err_hi,y_err_lo);
+    pls->wid( 1 );
+
+	pls->col0( 3 );
+    pls->wid( 2 );
+    pls->line( size, x, y_fit );
     pls->wid( 1 );
 
     delete[] x;

@@ -100,7 +100,7 @@ void Frap::plplot_chart(){
 	simple_chart->plot(npoints,x,exp_data,fitting_data); 
 
 	line_chart = new Chart(f_name_lin);
-	line_chart->plot(imagefiles.size(),time_s,lambda);
+	line_chart->plot(imagefiles.size(),time_s,lambda,lambda_err, c1, c0);
 }
 
 
@@ -266,6 +266,13 @@ void Frap::dofitting(){
 
 	Fitting::linearfit(fit, &time_s[0],&lambda[0],ifilestotal, verbose); // needs lots of error handling --needs R factor cutoff
 
+	c0 = gsl_vector_get(fit,0);
+	c1 = gsl_vector_get(fit,1);
+	cov00 = gsl_vector_get(fit,2);
+	cov01 = gsl_vector_get(fit,3);
+	cov11 = gsl_vector_get(fit,4);
+	sumsq = gsl_vector_get(fit,5);
+		
 	gsl_matrix_free(vdata);
 	gsl_matrix_free(verr);
 	gsl_vector_free(fit);
