@@ -254,7 +254,7 @@ void Frap::getvectors(){
 
 		std::cout << "(" << x1 << "," << y1 << ")"<< "(" << x2 << "," << y2 << ")" << std::endl;
 		
-		scaling_factor = (hypot(s.getxsize(),s.getysize())/npoints)*pixlen;
+		scaling_factor = (hypot(s.getxsize(),s.getysize())/npoints)/pixlen;
 
 		//std::cout << s.getxsize() << "," << s.getysize() << std::endl;
 		std::cout << "scaling factor " << scaling_factor << std::endl;
