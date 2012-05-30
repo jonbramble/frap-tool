@@ -28,7 +28,7 @@ Chart::Chart(char const *f_name)
 	pls->sdev( "ps" );   // the output device
 	pls->sfnam( f_name );
 
-	uint col = 255;
+	unsigned int col = 255;
 	pls->scolbg(col,col,col);
 
 	pls->init();
@@ -49,7 +49,7 @@ Chart::Chart()
 	pls->sdev( "ps" );   // the output device
 	pls->sfnam( f_name );
 
-	uint col = 255;
+	unsigned int col = 255;
 	pls->scolbg(col,col,col);
 
 	pls->init();

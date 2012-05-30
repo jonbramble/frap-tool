@@ -138,7 +138,7 @@ int Fitting::gaussfit(gsl_matrix * vdata, gsl_matrix * verr, const gsl_matrix * 
     	printf ("status = %s\n", gsl_strerror (status));
 	  }
 		
-	for(uint q=0;q<p;q++) x_init[q] = FIT(q); // A mu lambda - use previous data as guess
+	for(unsigned int q=0;q<p;q++) x_init[q] = FIT(q); // A mu lambda - use previous data as guess
 
 	iter = 0; // reset interation value
 	printf("#");
