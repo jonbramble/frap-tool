@@ -7,7 +7,7 @@ Geometry=1280x1000+0+24
 Expand=frap-tool%%%frap-tool//FRAP
 
 [File Loader]
-Files=../../src/fitting.cc#221%%%../../include/frap.h#76%%%../../src/main.cc#28%%%../../include/chart.h#27%%%../../src/chart.cc#154%%%../../src/frap.cc#97
+Files=../../src/fitting.cc#150%%%../../include/frap.h#76%%%../../src/main.cc#28%%%../../include/chart.h#27%%%../../src/frap.cc#257
 
 [Document Manager]
 bookmarks=<?xml version="1.0" encoding="UTF-8"?>\n<bookmarks/>\n

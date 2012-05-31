@@ -3641,7 +3641,7 @@ rm -f core conftest.err conftest.$ac_objext \
   rm -f conf.gsltest
 
 
-PLPLOT_LIBS="-lplplotcxxd -lltdl -ldl -lcsirocsa -lcsironn -lqhull -lqsastime -lfreetype"
+PLPLOT_LIBS="-lplplotcxxd -lltdl -ldl -lcsirocsa -lqhull -lqsastime -lfreetype"
 BOOST_LIBS="-lboost_thread"
 CIMG_LIBS="-L/usr/X11R6/lib -lpthread -lX11"
 TIFF_LIBS="-ltiff"
