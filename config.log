@@ -48,31 +48,31 @@ PATH: /usr/games
 ## Core tests. ##
 ## ----------- ##
 
-configure:1960: checking for a BSD-compatible install
-configure:2028: result: /usr/bin/install -c
-configure:2039: checking whether build environment is sane
-configure:2089: result: yes
-configure:2230: checking for a thread-safe mkdir -p
-configure:2269: result: /bin/mkdir -p
-configure:2282: checking for gawk
-configure:2298: found /usr/bin/gawk
-configure:2309: result: gawk
-configure:2320: checking whether make sets $(MAKE)
-configure:2342: result: yes
-configure:2428: checking for style of include used by make
-configure:2456: result: GNU
-configure:2527: checking for gcc
-configure:2543: found /usr/bin/gcc
-configure:2554: result: gcc
-configure:2783: checking for C compiler version
-configure:2792: gcc --version >&5
+configure:2203: checking for a BSD-compatible install
+configure:2271: result: /usr/bin/install -c
+configure:2282: checking whether build environment is sane
+configure:2332: result: yes
+configure:2473: checking for a thread-safe mkdir -p
+configure:2512: result: /bin/mkdir -p
+configure:2525: checking for gawk
+configure:2541: found /usr/bin/gawk
+configure:2552: result: gawk
+configure:2563: checking whether make sets $(MAKE)
+configure:2585: result: yes
+configure:2671: checking for style of include used by make
+configure:2699: result: GNU
+configure:2770: checking for gcc
+configure:2786: found /usr/bin/gcc
+configure:2797: result: gcc
+configure:3026: checking for C compiler version
+configure:3035: gcc --version >&5
 gcc (Ubuntu/Linaro 4.6.3-1ubuntu5) 4.6.3
 Copyright (C) 2011 Free Software Foundation, Inc.
 This is free software; see the source for copying conditions.  There is NO
 warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-configure:2803: $? = 0
-configure:2792: gcc -v >&5
+configure:3046: $? = 0
+configure:3035: gcc -v >&5
 Using built-in specs.
 COLLECT_GCC=gcc
 COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/4.6/lto-wrapper
@@ -80,74 +80,74 @@ Target: x86_64-linux-gnu
 Configured with: ../src/configure -v --with-pkgversion='Ubuntu/Linaro 4.6.3-1ubuntu5' --with-bugurl=file:///usr/share/doc/gcc-4.6/README.Bugs --enable-languages=c,c++,fortran,objc,obj-c++ --prefix=/usr --program-suffix=-4.6 --enable-shared --enable-linker-build-id --with-system-zlib --libexecdir=/usr/lib --without-included-gettext --enable-threads=posix --with-gxx-include-dir=/usr/include/c++/4.6 --libdir=/usr/lib --enable-nls --with-sysroot=/ --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --enable-gnu-unique-object --enable-plugin --enable-objc-gc --disable-werror --with-arch-32=i686 --with-tune=generic --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu
 Thread model: posix
 gcc version 4.6.3 (Ubuntu/Linaro 4.6.3-1ubuntu5) 
-configure:2803: $? = 0
-configure:2792: gcc -V >&5
+configure:3046: $? = 0
+configure:3035: gcc -V >&5
 gcc: error: unrecognized option '-V'
 gcc: fatal error: no input files
 compilation terminated.
-configure:2803: $? = 4
-configure:2792: gcc -qversion >&5
+configure:3046: $? = 4
+configure:3035: gcc -qversion >&5
 gcc: error: unrecognized option '-qversion'
 gcc: fatal error: no input files
 compilation terminated.
-configure:2803: $? = 4
-configure:2823: checking whether the C compiler works
-configure:2845: gcc    conftest.c  >&5
-configure:2849: $? = 0
-configure:2897: result: yes
-configure:2900: checking for C compiler default output file name
-configure:2902: result: a.out
-configure:2908: checking for suffix of executables
-configure:2915: gcc -o conftest    conftest.c  >&5
-configure:2919: $? = 0
-configure:2941: result: 
-configure:2963: checking whether we are cross compiling
-configure:2971: gcc -o conftest    conftest.c  >&5
-configure:2975: $? = 0
-configure:2982: ./conftest
-configure:2986: $? = 0
-configure:3001: result: no
-configure:3006: checking for suffix of object files
-configure:3028: gcc -c   conftest.c >&5
-configure:3032: $? = 0
-configure:3053: result: o
-configure:3057: checking whether we are using the GNU C compiler
-configure:3076: gcc -c   conftest.c >&5
-configure:3076: $? = 0
-configure:3085: result: yes
-configure:3094: checking whether gcc accepts -g
-configure:3114: gcc -c -g  conftest.c >&5
-configure:3114: $? = 0
-configure:3155: result: yes
-configure:3172: checking for gcc option to accept ISO C89
-configure:3236: gcc  -c -g -O2  conftest.c >&5
-configure:3236: $? = 0
-configure:3249: result: none needed
-configure:3271: checking dependency style of gcc
-configure:3382: result: gcc3
-configure:3434: checking for gsl-config
-configure:3452: found /usr/bin/gsl-config
-configure:3465: result: /usr/bin/gsl-config
-configure:3474: checking for GSL - version >= 1.13
-configure:3568: gcc -o conftest -g -O2 -I/usr/include   conftest.c  -L/usr/lib -lgsl -lgslcblas -lm >&5
+configure:3046: $? = 4
+configure:3066: checking whether the C compiler works
+configure:3088: gcc    conftest.c  >&5
+configure:3092: $? = 0
+configure:3140: result: yes
+configure:3143: checking for C compiler default output file name
+configure:3145: result: a.out
+configure:3151: checking for suffix of executables
+configure:3158: gcc -o conftest    conftest.c  >&5
+configure:3162: $? = 0
+configure:3184: result: 
+configure:3206: checking whether we are cross compiling
+configure:3214: gcc -o conftest    conftest.c  >&5
+configure:3218: $? = 0
+configure:3225: ./conftest
+configure:3229: $? = 0
+configure:3244: result: no
+configure:3249: checking for suffix of object files
+configure:3271: gcc -c   conftest.c >&5
+configure:3275: $? = 0
+configure:3296: result: o
+configure:3300: checking whether we are using the GNU C compiler
+configure:3319: gcc -c   conftest.c >&5
+configure:3319: $? = 0
+configure:3328: result: yes
+configure:3337: checking whether gcc accepts -g
+configure:3357: gcc -c -g  conftest.c >&5
+configure:3357: $? = 0
+configure:3398: result: yes
+configure:3415: checking for gcc option to accept ISO C89
+configure:3479: gcc  -c -g -O2  conftest.c >&5
+configure:3479: $? = 0
+configure:3492: result: none needed
+configure:3514: checking dependency style of gcc
+configure:3625: result: gcc3
+configure:3677: checking for gsl-config
+configure:3695: found /usr/bin/gsl-config
+configure:3708: result: /usr/bin/gsl-config
+configure:3717: checking for GSL - version >= 1.13
+configure:3811: gcc -o conftest -g -O2 -I/usr/include   conftest.c  -L/usr/lib -lgsl -lgslcblas -lm >&5
 conftest.c: In function 'main':
 conftest.c:38:10: warning: ignoring return value of 'system', declared with attribute warn_unused_result [-Wunused-result]
-configure:3568: $? = 0
-configure:3568: ./conftest
-configure:3568: $? = 0
-configure:3582: result: yes
-configure:3712: checking for g++
-configure:3728: found /usr/bin/g++
-configure:3739: result: g++
-configure:3766: checking for C++ compiler version
-configure:3775: g++ --version >&5
+configure:3811: $? = 0
+configure:3811: ./conftest
+configure:3811: $? = 0
+configure:3825: result: yes
+configure:3955: checking for g++
+configure:3971: found /usr/bin/g++
+configure:3982: result: g++
+configure:4009: checking for C++ compiler version
+configure:4018: g++ --version >&5
 g++ (Ubuntu/Linaro 4.6.3-1ubuntu5) 4.6.3
 Copyright (C) 2011 Free Software Foundation, Inc.
 This is free software; see the source for copying conditions.  There is NO
 warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-configure:3786: $? = 0
-configure:3775: g++ -v >&5
+configure:4029: $? = 0
+configure:4018: g++ -v >&5
 Using built-in specs.
 COLLECT_GCC=g++
 COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/4.6/lto-wrapper
@@ -155,28 +155,498 @@ Target: x86_64-linux-gnu
 Configured with: ../src/configure -v --with-pkgversion='Ubuntu/Linaro 4.6.3-1ubuntu5' --with-bugurl=file:///usr/share/doc/gcc-4.6/README.Bugs --enable-languages=c,c++,fortran,objc,obj-c++ --prefix=/usr --program-suffix=-4.6 --enable-shared --enable-linker-build-id --with-system-zlib --libexecdir=/usr/lib --without-included-gettext --enable-threads=posix --with-gxx-include-dir=/usr/include/c++/4.6 --libdir=/usr/lib --enable-nls --with-sysroot=/ --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --enable-gnu-unique-object --enable-plugin --enable-objc-gc --disable-werror --with-arch-32=i686 --with-tune=generic --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu
 Thread model: posix
 gcc version 4.6.3 (Ubuntu/Linaro 4.6.3-1ubuntu5) 
-configure:3786: $? = 0
-configure:3775: g++ -V >&5
+configure:4029: $? = 0
+configure:4018: g++ -V >&5
 g++: error: unrecognized option '-V'
 g++: fatal error: no input files
 compilation terminated.
-configure:3786: $? = 4
-configure:3775: g++ -qversion >&5
+configure:4029: $? = 4
+configure:4018: g++ -qversion >&5
 g++: error: unrecognized option '-qversion'
 g++: fatal error: no input files
 compilation terminated.
-configure:3786: $? = 4
-configure:3790: checking whether we are using the GNU C++ compiler
-configure:3809: g++ -c   conftest.cpp >&5
-configure:3809: $? = 0
-configure:3818: result: yes
-configure:3827: checking whether g++ accepts -g
-configure:3847: g++ -c -g  conftest.cpp >&5
-configure:3847: $? = 0
-configure:3888: result: yes
-configure:3913: checking dependency style of g++
-configure:4024: result: gcc3
-configure:4175: creating ./config.status
+configure:4029: $? = 4
+configure:4033: checking whether we are using the GNU C++ compiler
+configure:4052: g++ -c   conftest.cpp >&5
+configure:4052: $? = 0
+configure:4061: result: yes
+configure:4070: checking whether g++ accepts -g
+configure:4090: g++ -c -g  conftest.cpp >&5
+configure:4090: $? = 0
+configure:4131: result: yes
+configure:4156: checking dependency style of g++
+configure:4267: result: gcc3
+configure:4295: checking how to run the C++ preprocessor
+configure:4322: g++ -E  conftest.cpp
+configure:4322: $? = 0
+configure:4336: g++ -E  conftest.cpp
+conftest.cpp:9:28: fatal error: ac_nonexistent.h: No such file or directory
+compilation terminated.
+configure:4336: $? = 1
+configure: failed program was:
+| /* confdefs.h */
+| #define PACKAGE_NAME "Frap"
+| #define PACKAGE_TARNAME "frap"
+| #define PACKAGE_VERSION "0.1"
+| #define PACKAGE_STRING "Frap 0.1"
+| #define PACKAGE_BUGREPORT "phyjpb@leeds.ac.uk"
+| #define PACKAGE_URL "http://mpi.leeds.ac.uk/software/frap"
+| /* end confdefs.h.  */
+| #include <ac_nonexistent.h>
+configure:4361: result: g++ -E
+configure:4381: g++ -E  conftest.cpp
+configure:4381: $? = 0
+configure:4395: g++ -E  conftest.cpp
+conftest.cpp:9:28: fatal error: ac_nonexistent.h: No such file or directory
+compilation terminated.
+configure:4395: $? = 1
+configure: failed program was:
+| /* confdefs.h */
+| #define PACKAGE_NAME "Frap"
+| #define PACKAGE_TARNAME "frap"
+| #define PACKAGE_VERSION "0.1"
+| #define PACKAGE_STRING "Frap 0.1"
+| #define PACKAGE_BUGREPORT "phyjpb@leeds.ac.uk"
+| #define PACKAGE_URL "http://mpi.leeds.ac.uk/software/frap"
+| /* end confdefs.h.  */
+| #include <ac_nonexistent.h>
+configure:4424: checking for grep that handles long lines and -e
+configure:4482: result: /bin/grep
+configure:4487: checking for egrep
+configure:4549: result: /bin/grep -E
+configure:4554: checking for ANSI C header files
+configure:4574: g++ -c -g -O2  conftest.cpp >&5
+configure:4574: $? = 0
+configure:4647: g++ -o conftest -g -O2   conftest.cpp  >&5
+configure:4647: $? = 0
+configure:4647: ./conftest
+configure:4647: $? = 0
+configure:4658: result: yes
+configure:4671: checking for sys/types.h
+configure:4671: g++ -c -g -O2  conftest.cpp >&5
+configure:4671: $? = 0
+configure:4671: result: yes
+configure:4671: checking for sys/stat.h
+configure:4671: g++ -c -g -O2  conftest.cpp >&5
+configure:4671: $? = 0
+configure:4671: result: yes
+configure:4671: checking for stdlib.h
+configure:4671: g++ -c -g -O2  conftest.cpp >&5
+configure:4671: $? = 0
+configure:4671: result: yes
+configure:4671: checking for string.h
+configure:4671: g++ -c -g -O2  conftest.cpp >&5
+configure:4671: $? = 0
+configure:4671: result: yes
+configure:4671: checking for memory.h
+configure:4671: g++ -c -g -O2  conftest.cpp >&5
+configure:4671: $? = 0
+configure:4671: result: yes
+configure:4671: checking for strings.h
+configure:4671: g++ -c -g -O2  conftest.cpp >&5
+configure:4671: $? = 0
+configure:4671: result: yes
+configure:4671: checking for inttypes.h
+configure:4671: g++ -c -g -O2  conftest.cpp >&5
+configure:4671: $? = 0
+configure:4671: result: yes
+configure:4671: checking for stdint.h
+configure:4671: g++ -c -g -O2  conftest.cpp >&5
+configure:4671: $? = 0
+configure:4671: result: yes
+configure:4671: checking for unistd.h
+configure:4671: g++ -c -g -O2  conftest.cpp >&5
+configure:4671: $? = 0
+configure:4671: result: yes
+configure:4686: checking iostream, usability
+configure:4686: g++ -c -g -O2  conftest.cpp >&5
+conftest.cpp:52:21: fatal error: iostream,: No such file or directory
+compilation terminated.
+configure:4686: $? = 1
+configure: failed program was:
+| /* confdefs.h */
+| #define PACKAGE_NAME "Frap"
+| #define PACKAGE_TARNAME "frap"
+| #define PACKAGE_VERSION "0.1"
+| #define PACKAGE_STRING "Frap 0.1"
+| #define PACKAGE_BUGREPORT "phyjpb@leeds.ac.uk"
+| #define PACKAGE_URL "http://mpi.leeds.ac.uk/software/frap"
+| #define STDC_HEADERS 1
+| #define HAVE_SYS_TYPES_H 1
+| #define HAVE_SYS_STAT_H 1
+| #define HAVE_STDLIB_H 1
+| #define HAVE_STRING_H 1
+| #define HAVE_MEMORY_H 1
+| #define HAVE_STRINGS_H 1
+| #define HAVE_INTTYPES_H 1
+| #define HAVE_STDINT_H 1
+| #define HAVE_UNISTD_H 1
+| /* end confdefs.h.  */
+| #include <stdio.h>
+| #ifdef HAVE_SYS_TYPES_H
+| # include <sys/types.h>
+| #endif
+| #ifdef HAVE_SYS_STAT_H
+| # include <sys/stat.h>
+| #endif
+| #ifdef STDC_HEADERS
+| # include <stdlib.h>
+| # include <stddef.h>
+| #else
+| # ifdef HAVE_STDLIB_H
+| #  include <stdlib.h>
+| # endif
+| #endif
+| #ifdef HAVE_STRING_H
+| # if !defined STDC_HEADERS && defined HAVE_MEMORY_H
+| #  include <memory.h>
+| # endif
+| # include <string.h>
+| #endif
+| #ifdef HAVE_STRINGS_H
+| # include <strings.h>
+| #endif
+| #ifdef HAVE_INTTYPES_H
+| # include <inttypes.h>
+| #endif
+| #ifdef HAVE_STDINT_H
+| # include <stdint.h>
+| #endif
+| #ifdef HAVE_UNISTD_H
+| # include <unistd.h>
+| #endif
+| #include <iostream,>
+configure:4686: result: no
+configure:4686: checking iostream, presence
+configure:4686: g++ -E  conftest.cpp
+conftest.cpp:19:21: fatal error: iostream,: No such file or directory
+compilation terminated.
+configure:4686: $? = 1
+configure: failed program was:
+| /* confdefs.h */
+| #define PACKAGE_NAME "Frap"
+| #define PACKAGE_TARNAME "frap"
+| #define PACKAGE_VERSION "0.1"
+| #define PACKAGE_STRING "Frap 0.1"
+| #define PACKAGE_BUGREPORT "phyjpb@leeds.ac.uk"
+| #define PACKAGE_URL "http://mpi.leeds.ac.uk/software/frap"
+| #define STDC_HEADERS 1
+| #define HAVE_SYS_TYPES_H 1
+| #define HAVE_SYS_STAT_H 1
+| #define HAVE_STDLIB_H 1
+| #define HAVE_STRING_H 1
+| #define HAVE_MEMORY_H 1
+| #define HAVE_STRINGS_H 1
+| #define HAVE_INTTYPES_H 1
+| #define HAVE_STDINT_H 1
+| #define HAVE_UNISTD_H 1
+| /* end confdefs.h.  */
+| #include <iostream,>
+configure:4686: result: no
+configure:4686: checking for iostream,
+configure:4686: result: no
+configure:4686: checking vector, usability
+configure:4686: g++ -c -g -O2  conftest.cpp >&5
+conftest.cpp:52:19: fatal error: vector,: No such file or directory
+compilation terminated.
+configure:4686: $? = 1
+configure: failed program was:
+| /* confdefs.h */
+| #define PACKAGE_NAME "Frap"
+| #define PACKAGE_TARNAME "frap"
+| #define PACKAGE_VERSION "0.1"
+| #define PACKAGE_STRING "Frap 0.1"
+| #define PACKAGE_BUGREPORT "phyjpb@leeds.ac.uk"
+| #define PACKAGE_URL "http://mpi.leeds.ac.uk/software/frap"
+| #define STDC_HEADERS 1
+| #define HAVE_SYS_TYPES_H 1
+| #define HAVE_SYS_STAT_H 1
+| #define HAVE_STDLIB_H 1
+| #define HAVE_STRING_H 1
+| #define HAVE_MEMORY_H 1
+| #define HAVE_STRINGS_H 1
+| #define HAVE_INTTYPES_H 1
+| #define HAVE_STDINT_H 1
+| #define HAVE_UNISTD_H 1
+| /* end confdefs.h.  */
+| #include <stdio.h>
+| #ifdef HAVE_SYS_TYPES_H
+| # include <sys/types.h>
+| #endif
+| #ifdef HAVE_SYS_STAT_H
+| # include <sys/stat.h>
+| #endif
+| #ifdef STDC_HEADERS
+| # include <stdlib.h>
+| # include <stddef.h>
+| #else
+| # ifdef HAVE_STDLIB_H
+| #  include <stdlib.h>
+| # endif
+| #endif
+| #ifdef HAVE_STRING_H
+| # if !defined STDC_HEADERS && defined HAVE_MEMORY_H
+| #  include <memory.h>
+| # endif
+| # include <string.h>
+| #endif
+| #ifdef HAVE_STRINGS_H
+| # include <strings.h>
+| #endif
+| #ifdef HAVE_INTTYPES_H
+| # include <inttypes.h>
+| #endif
+| #ifdef HAVE_STDINT_H
+| # include <stdint.h>
+| #endif
+| #ifdef HAVE_UNISTD_H
+| # include <unistd.h>
+| #endif
+| #include <vector,>
+configure:4686: result: no
+configure:4686: checking vector, presence
+configure:4686: g++ -E  conftest.cpp
+conftest.cpp:19:19: fatal error: vector,: No such file or directory
+compilation terminated.
+configure:4686: $? = 1
+configure: failed program was:
+| /* confdefs.h */
+| #define PACKAGE_NAME "Frap"
+| #define PACKAGE_TARNAME "frap"
+| #define PACKAGE_VERSION "0.1"
+| #define PACKAGE_STRING "Frap 0.1"
+| #define PACKAGE_BUGREPORT "phyjpb@leeds.ac.uk"
+| #define PACKAGE_URL "http://mpi.leeds.ac.uk/software/frap"
+| #define STDC_HEADERS 1
+| #define HAVE_SYS_TYPES_H 1
+| #define HAVE_SYS_STAT_H 1
+| #define HAVE_STDLIB_H 1
+| #define HAVE_STRING_H 1
+| #define HAVE_MEMORY_H 1
+| #define HAVE_STRINGS_H 1
+| #define HAVE_INTTYPES_H 1
+| #define HAVE_STDINT_H 1
+| #define HAVE_UNISTD_H 1
+| /* end confdefs.h.  */
+| #include <vector,>
+configure:4686: result: no
+configure:4686: checking for vector,
+configure:4686: result: no
+configure:4686: checking cmath, usability
+configure:4686: g++ -c -g -O2  conftest.cpp >&5
+conftest.cpp:52:18: fatal error: cmath,: No such file or directory
+compilation terminated.
+configure:4686: $? = 1
+configure: failed program was:
+| /* confdefs.h */
+| #define PACKAGE_NAME "Frap"
+| #define PACKAGE_TARNAME "frap"
+| #define PACKAGE_VERSION "0.1"
+| #define PACKAGE_STRING "Frap 0.1"
+| #define PACKAGE_BUGREPORT "phyjpb@leeds.ac.uk"
+| #define PACKAGE_URL "http://mpi.leeds.ac.uk/software/frap"
+| #define STDC_HEADERS 1
+| #define HAVE_SYS_TYPES_H 1
+| #define HAVE_SYS_STAT_H 1
+| #define HAVE_STDLIB_H 1
+| #define HAVE_STRING_H 1
+| #define HAVE_MEMORY_H 1
+| #define HAVE_STRINGS_H 1
+| #define HAVE_INTTYPES_H 1
+| #define HAVE_STDINT_H 1
+| #define HAVE_UNISTD_H 1
+| /* end confdefs.h.  */
+| #include <stdio.h>
+| #ifdef HAVE_SYS_TYPES_H
+| # include <sys/types.h>
+| #endif
+| #ifdef HAVE_SYS_STAT_H
+| # include <sys/stat.h>
+| #endif
+| #ifdef STDC_HEADERS
+| # include <stdlib.h>
+| # include <stddef.h>
+| #else
+| # ifdef HAVE_STDLIB_H
+| #  include <stdlib.h>
+| # endif
+| #endif
+| #ifdef HAVE_STRING_H
+| # if !defined STDC_HEADERS && defined HAVE_MEMORY_H
+| #  include <memory.h>
+| # endif
+| # include <string.h>
+| #endif
+| #ifdef HAVE_STRINGS_H
+| # include <strings.h>
+| #endif
+| #ifdef HAVE_INTTYPES_H
+| # include <inttypes.h>
+| #endif
+| #ifdef HAVE_STDINT_H
+| # include <stdint.h>
+| #endif
+| #ifdef HAVE_UNISTD_H
+| # include <unistd.h>
+| #endif
+| #include <cmath,>
+configure:4686: result: no
+configure:4686: checking cmath, presence
+configure:4686: g++ -E  conftest.cpp
+conftest.cpp:19:18: fatal error: cmath,: No such file or directory
+compilation terminated.
+configure:4686: $? = 1
+configure: failed program was:
+| /* confdefs.h */
+| #define PACKAGE_NAME "Frap"
+| #define PACKAGE_TARNAME "frap"
+| #define PACKAGE_VERSION "0.1"
+| #define PACKAGE_STRING "Frap 0.1"
+| #define PACKAGE_BUGREPORT "phyjpb@leeds.ac.uk"
+| #define PACKAGE_URL "http://mpi.leeds.ac.uk/software/frap"
+| #define STDC_HEADERS 1
+| #define HAVE_SYS_TYPES_H 1
+| #define HAVE_SYS_STAT_H 1
+| #define HAVE_STDLIB_H 1
+| #define HAVE_STRING_H 1
+| #define HAVE_MEMORY_H 1
+| #define HAVE_STRINGS_H 1
+| #define HAVE_INTTYPES_H 1
+| #define HAVE_STDINT_H 1
+| #define HAVE_UNISTD_H 1
+| /* end confdefs.h.  */
+| #include <cmath,>
+configure:4686: result: no
+configure:4686: checking for cmath,
+configure:4686: result: no
+configure:4686: checking ctime, usability
+configure:4686: g++ -c -g -O2  conftest.cpp >&5
+conftest.cpp:52:18: fatal error: ctime,: No such file or directory
+compilation terminated.
+configure:4686: $? = 1
+configure: failed program was:
+| /* confdefs.h */
+| #define PACKAGE_NAME "Frap"
+| #define PACKAGE_TARNAME "frap"
+| #define PACKAGE_VERSION "0.1"
+| #define PACKAGE_STRING "Frap 0.1"
+| #define PACKAGE_BUGREPORT "phyjpb@leeds.ac.uk"
+| #define PACKAGE_URL "http://mpi.leeds.ac.uk/software/frap"
+| #define STDC_HEADERS 1
+| #define HAVE_SYS_TYPES_H 1
+| #define HAVE_SYS_STAT_H 1
+| #define HAVE_STDLIB_H 1
+| #define HAVE_STRING_H 1
+| #define HAVE_MEMORY_H 1
+| #define HAVE_STRINGS_H 1
+| #define HAVE_INTTYPES_H 1
+| #define HAVE_STDINT_H 1
+| #define HAVE_UNISTD_H 1
+| /* end confdefs.h.  */
+| #include <stdio.h>
+| #ifdef HAVE_SYS_TYPES_H
+| # include <sys/types.h>
+| #endif
+| #ifdef HAVE_SYS_STAT_H
+| # include <sys/stat.h>
+| #endif
+| #ifdef STDC_HEADERS
+| # include <stdlib.h>
+| # include <stddef.h>
+| #else
+| # ifdef HAVE_STDLIB_H
+| #  include <stdlib.h>
+| # endif
+| #endif
+| #ifdef HAVE_STRING_H
+| # if !defined STDC_HEADERS && defined HAVE_MEMORY_H
+| #  include <memory.h>
+| # endif
+| # include <string.h>
+| #endif
+| #ifdef HAVE_STRINGS_H
+| # include <strings.h>
+| #endif
+| #ifdef HAVE_INTTYPES_H
+| # include <inttypes.h>
+| #endif
+| #ifdef HAVE_STDINT_H
+| # include <stdint.h>
+| #endif
+| #ifdef HAVE_UNISTD_H
+| # include <unistd.h>
+| #endif
+| #include <ctime,>
+configure:4686: result: no
+configure:4686: checking ctime, presence
+configure:4686: g++ -E  conftest.cpp
+conftest.cpp:19:18: fatal error: ctime,: No such file or directory
+compilation terminated.
+configure:4686: $? = 1
+configure: failed program was:
+| /* confdefs.h */
+| #define PACKAGE_NAME "Frap"
+| #define PACKAGE_TARNAME "frap"
+| #define PACKAGE_VERSION "0.1"
+| #define PACKAGE_STRING "Frap 0.1"
+| #define PACKAGE_BUGREPORT "phyjpb@leeds.ac.uk"
+| #define PACKAGE_URL "http://mpi.leeds.ac.uk/software/frap"
+| #define STDC_HEADERS 1
+| #define HAVE_SYS_TYPES_H 1
+| #define HAVE_SYS_STAT_H 1
+| #define HAVE_STDLIB_H 1
+| #define HAVE_STRING_H 1
+| #define HAVE_MEMORY_H 1
+| #define HAVE_STRINGS_H 1
+| #define HAVE_INTTYPES_H 1
+| #define HAVE_STDINT_H 1
+| #define HAVE_UNISTD_H 1
+| /* end confdefs.h.  */
+| #include <ctime,>
+configure:4686: result: no
+configure:4686: checking for ctime,
+configure:4686: result: no
+configure:4686: checking cstring usability
+configure:4686: g++ -c -g -O2  conftest.cpp >&5
+configure:4686: $? = 0
+configure:4686: result: yes
+configure:4686: checking cstring presence
+configure:4686: g++ -E  conftest.cpp
+configure:4686: $? = 0
+configure:4686: result: yes
+configure:4686: checking for cstring
+configure:4686: result: yes
+configure:4698: checking CImg.h usability
+configure:4698: g++ -c -g -O2  conftest.cpp >&5
+configure:4698: $? = 0
+configure:4698: result: yes
+configure:4698: checking CImg.h presence
+configure:4698: g++ -E  conftest.cpp
+configure:4698: $? = 0
+configure:4698: result: yes
+configure:4698: checking for CImg.h
+configure:4698: result: yes
+configure:4710: checking plplot/plstream.h usability
+configure:4710: g++ -c -g -O2  conftest.cpp >&5
+configure:4710: $? = 0
+configure:4710: result: yes
+configure:4710: checking plplot/plstream.h presence
+configure:4710: g++ -E  conftest.cpp
+configure:4710: $? = 0
+configure:4710: result: yes
+configure:4710: checking for plplot/plstream.h
+configure:4710: result: yes
+configure:4722: checking boost/thread.hpp usability
+configure:4722: g++ -c -g -O2  conftest.cpp >&5
+configure:4722: $? = 0
+configure:4722: result: yes
+configure:4722: checking boost/thread.hpp presence
+configure:4722: g++ -E  conftest.cpp
+configure:4722: $? = 0
+configure:4722: result: yes
+configure:4722: checking for boost/thread.hpp
+configure:4722: result: yes
+configure:4870: creating ./config.status
 
 ## ---------------------- ##
 ## Running config.status. ##
@@ -193,10 +663,9 @@ generated by GNU Autoconf 2.68.  Invocation command line was
 
 on phy-pc3089
 
-config.status:859: creating Makefile
-config.status:859: creating config.h
-config.status:1040: config.h is unchanged
-config.status:1088: executing depfiles commands
+config.status:876: creating Makefile
+config.status:876: creating config.h
+config.status:1105: executing depfiles commands
 
 ## ---------------- ##
 ## Cache variables. ##
@@ -212,6 +681,8 @@ ac_cv_env_CFLAGS_set=
 ac_cv_env_CFLAGS_value=
 ac_cv_env_CPPFLAGS_set=
 ac_cv_env_CPPFLAGS_value=
+ac_cv_env_CXXCPP_set=
+ac_cv_env_CXXCPP_value=
 ac_cv_env_CXXFLAGS_set=
 ac_cv_env_CXXFLAGS_value=
 ac_cv_env_CXX_set=
@@ -226,11 +697,32 @@ ac_cv_env_host_alias_set=
 ac_cv_env_host_alias_value=
 ac_cv_env_target_alias_set=
 ac_cv_env_target_alias_value=
+ac_cv_header_CImg_h=yes
+ac_cv_header_boost_thread_hpp=yes
+ac_cv_header_cmath_=no
+ac_cv_header_cstring=yes
+ac_cv_header_ctime_=no
+ac_cv_header_inttypes_h=yes
+ac_cv_header_iostream_=no
+ac_cv_header_memory_h=yes
+ac_cv_header_plplot_plstream_h=yes
+ac_cv_header_stdc=yes
+ac_cv_header_stdint_h=yes
+ac_cv_header_stdlib_h=yes
+ac_cv_header_string_h=yes
+ac_cv_header_strings_h=yes
+ac_cv_header_sys_stat_h=yes
+ac_cv_header_sys_types_h=yes
+ac_cv_header_unistd_h=yes
+ac_cv_header_vector_=no
 ac_cv_objext=o
+ac_cv_path_EGREP='/bin/grep -E'
+ac_cv_path_GREP=/bin/grep
 ac_cv_path_GSL_CONFIG=/usr/bin/gsl-config
 ac_cv_path_install='/usr/bin/install -c'
 ac_cv_path_mkdir=/bin/mkdir
 ac_cv_prog_AWK=gawk
+ac_cv_prog_CXXCPP='g++ -E'
 ac_cv_prog_ac_ct_CC=gcc
 ac_cv_prog_ac_ct_CXX=g++
 ac_cv_prog_cc_c89=
@@ -253,13 +745,14 @@ AUTOCONF='${SHELL} /home/DS/phyjpb/Programming/C/frap-tool/missing --run autocon
 AUTOHEADER='${SHELL} /home/DS/phyjpb/Programming/C/frap-tool/missing --run autoheader'
 AUTOMAKE='${SHELL} /home/DS/phyjpb/Programming/C/frap-tool/missing --run automake-1.11'
 AWK='gawk'
-BOOST_LIBS='-lboost_thread'
+BOOST_LIBS='-lboost_thread-mt'
 CC='gcc'
 CCDEPMODE='depmode=gcc3'
 CFLAGS='-g -O2'
 CIMG_LIBS='-L/usr/X11R6/lib -lpthread -lX11'
 CPPFLAGS=''
 CXX='g++'
+CXXCPP='g++ -E'
 CXXDEPMODE='depmode=gcc3'
 CXXFLAGS='-g -O2'
 CYGPATH_W='echo'
@@ -268,7 +761,9 @@ DEPDIR='.deps'
 ECHO_C=''
 ECHO_N='-n'
 ECHO_T=''
+EGREP='/bin/grep -E'
 EXEEXT=''
+GREP='/bin/grep'
 GSL_CFLAGS='-I/usr/include'
 GSL_CONFIG='/usr/bin/gsl-config'
 GSL_LIBS='-L/usr/lib -lgsl -lgslcblas -lm'
@@ -351,23 +846,19 @@ target_alias=''
 #define PACKAGE_STRING "Frap 0.1"
 #define PACKAGE_BUGREPORT "phyjpb@leeds.ac.uk"
 #define PACKAGE_URL "http://mpi.leeds.ac.uk/software/frap"
+#define STDC_HEADERS 1
+#define HAVE_SYS_TYPES_H 1
+#define HAVE_SYS_STAT_H 1
+#define HAVE_STDLIB_H 1
+#define HAVE_STRING_H 1
+#define HAVE_MEMORY_H 1
+#define HAVE_STRINGS_H 1
+#define HAVE_INTTYPES_H 1
+#define HAVE_STDINT_H 1
+#define HAVE_UNISTD_H 1
+#define HAVE_CSTRING 1
+#define HAVE_CIMG_H 1
+#define HAVE_PLPLOT_PLSTREAM_H 1
+#define HAVE_BOOST_THREAD_HPP 1
 
 configure: exit 0
-
-## ---------------------- ##
-## Running config.status. ##
-## ---------------------- ##
-
-This file was extended by Frap config.status 0.1, which was
-generated by GNU Autoconf 2.68.  Invocation command line was
-
-  CONFIG_FILES    = 
-  CONFIG_HEADERS  = 
-  CONFIG_LINKS    = 
-  CONFIG_COMMANDS = 
-  $ ./config.status config.h
-
-on phy-pc3089
-
-config.status:859: creating config.h
-config.status:1040: config.h is unchanged
