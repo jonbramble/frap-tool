@@ -100,7 +100,7 @@ void Frap::plplot_chart(char* _prefix){
 	simple_chart->plot(npoints,x,exp_data,fitting_data); 
 
 	line_chart = new Chart(f_name_lin);
-	line_chart->plot(imagefiles.size(),time_s,lambda,lambda_err, c1, c0);
+	line_chart->plot(imagefiles.size(),time_s,lambda_2,lambda_err_2, c1, c0);
 }
 
 
@@ -147,7 +147,7 @@ void Frap::processdata()
 void Frap::print_data(){
 	for(uint i=0; i<imagefiles.size(); i++){
 		char* name = imagefiles[i].getfilename();
-		printf("Filename: %s\tTimes: %f\tA: %f\tLambda: %f\tmu: %f\n",name,time_s[i],A[i],lambda[i],mu[i]);
+		printf("Filename: %s\tTimes: %f\tA: %f\tLambda: %f\tmu: %f\n",name,time_s[i],A[i],lambda_2[i],mu[i]);
 	} 
 
 	std::cout << "Diffusion Constant " << c1/2 << " μm2/s" << std::endl; 
@@ -175,11 +175,11 @@ void Frap::save_data_file(char* _prefix){
 	data_file.open (str_summary);
 	if (data_file.is_open())
 	{
-		data_file << "Filename,Time(s),A,A error,Lambda,Lambda error,mu, mu error,b,b error,Fitted Lambda\n";
+		data_file << "Filename,Time(s),A,A error,Lambda^2,Lambda error ^2,mu,mu error,b,b error,Fitted Lambda\n";
 		for(uint i=0; i<imagefiles.size(); i++){
 			lambda_fit = c0+c1*time_s[i];
 			data_file << imagefiles[i].getfilename() << "," << time_s[i] <<"," << A[i] <<"," << A_err[i] 
-				<<"," << lambda[i] <<"," << lambda_err[i] <<"," 
+				<<"," << lambda_2[i] <<"," << lambda_err_2[i] <<"," 
 				<< mu[i] <<"," << mu_err[i] <<"," << b[i] <<"," << b_err[i] << "," << lambda_fit << std::endl;
 		} 
 		data_file << "Diffusion Constant " << c1/2 << " μm2/s" << std::endl; 
@@ -222,11 +222,14 @@ void Frap::setpixlen(){
 	switch( binning ) 
 	{
 		case 1:
-            pixlen = 150/942;       // microns/pixels
+            pixlen = (double)150.0/942.0;       // microns/pixels
+			break;
 		case 2: 
-			pixlen = 150/471;
+			pixlen = (double)150.0/471.0;
+			break;
 		case 4: 
-			pixlen = 150/235.5;
+			pixlen = (double)150.0/235.5;
+			break;
 	}	
 }
 
@@ -254,7 +257,7 @@ void Frap::getvectors(){
 
 		std::cout << "(" << x1 << "," << y1 << ")"<< "(" << x2 << "," << y2 << ")" << std::endl;
 		
-		scaling_factor = (npoints/hypot(s.getxsize(),s.getysize()))*pixlen;
+		scaling_factor = (hypot(s.getxsize(),s.getysize())/npoints)*pixlen;
 
 		//std::cout << s.getxsize() << "," << s.getysize() << std::endl;
 		std::cout << "scaling factor " << scaling_factor << std::endl;
@@ -285,7 +288,7 @@ void Frap::getvectors(){
 }
 
 void Frap::dofitting(){
-	double scaled_lambda;
+	double scaled_lambda, scaled_lambda_err;
 	int ifilestotal = imagefiles.size();
 
 	gsl_matrix *vdata = gsl_matrix_alloc(4,ifilestotal); 
@@ -298,17 +301,19 @@ void Frap::dofitting(){
 		A.push_back(gsl_matrix_get(vdata,0,i));  
 		mu.push_back(gsl_matrix_get(vdata,1,i)); 
 		scaled_lambda = gsl_matrix_get(vdata,2,i)*scaling_factor;
-		lambda.push_back(scaled_lambda);  // put all the data into lambda vector
+		lambda.push_back(scaled_lambda);
+		lambda_2.push_back(pow(scaled_lambda,2));  // put all the data into lambda vector
 		b.push_back(gsl_matrix_get(vdata,3,i)); 
 
 		A_err.push_back(gsl_matrix_get(verr,0,i));  
 		mu_err.push_back(gsl_matrix_get(verr,1,i)); 
-		scaled_lambda = gsl_matrix_get(verr,2,i)*scaling_factor;
-		lambda_err.push_back(scaled_lambda);  // put all the data into lambda vector
+		scaled_lambda_err = gsl_matrix_get(verr,2,i)*scaling_factor;
+		lambda_err.push_back(scaled_lambda_err);  // put all the data into lambda vector
+		lambda_err_2.push_back(pow(scaled_lambda_err,2));  // put all the data into lambda vector
 		b_err.push_back(gsl_matrix_get(verr,3,i)); 
 	}
 
-	Fitting::linearfit(fit, &time_s[0],&lambda[0],ifilestotal, verbose); // needs lots of error handling --needs R factor cutoff
+	Fitting::linearfit(fit, &time_s[0],&lambda_2[0],ifilestotal, verbose); // needs lots of error handling --needs R factor cutoff
 
 	c0 = gsl_vector_get(fit,0);
 	c1 = gsl_vector_get(fit,1);

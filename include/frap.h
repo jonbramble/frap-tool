@@ -93,12 +93,14 @@ class Frap {
 
 		std::vector<double> A;			//<this vector contains the A data
 		std::vector<double> lambda;		//<this vector contains the lambda data
+		std::vector<double> lambda_2;		//<this vector contains the lambda data
 		std::vector<double> mu;
 		std::vector<double> b;
 		std::vector<double> time_s; 	//<time data in seconds from the start point of experiment
 
 		std::vector<double> A_err;		//<this vector contains the A errors
 		std::vector<double> lambda_err;	//<this vector contains the lambda errors
+		std::vector<double> lambda_err_2;		//<this vector contains the lambda data
 		std::vector<double> mu_err;
 		std::vector<double> b_err;
 

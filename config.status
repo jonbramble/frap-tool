@@ -450,11 +450,11 @@ Copyright (C) 2010 Free Software Foundation, Inc.
 This config.status script is free software; the Free Software Foundation
 gives unlimited permission to copy, distribute and modify it."
 
-ac_pwd='/home/DS/phyjpb/Programming/C/frap-tool'
+ac_pwd='/home/jon/Programming/C/frap-tool'
 srcdir='.'
 INSTALL='/usr/bin/install -c'
 MKDIR_P='/bin/mkdir -p'
-AWK='gawk'
+AWK='mawk'
 test -n "$AWK" || AWK=awk
 # The default lists apply if the user does not specify any file.
 ac_need_defaults=:
@@ -669,17 +669,17 @@ S["am__tar"]="$${TAR-tar} chof - \"$$tardir\""
 S["AMTAR"]="$${TAR-tar}"
 S["am__leading_dot"]="."
 S["SET_MAKE"]=""
-S["AWK"]="gawk"
+S["AWK"]="mawk"
 S["mkdir_p"]="/bin/mkdir -p"
 S["MKDIR_P"]="/bin/mkdir -p"
 S["INSTALL_STRIP_PROGRAM"]="$(install_sh) -c -s"
 S["STRIP"]=""
-S["install_sh"]="${SHELL} /home/DS/phyjpb/Programming/C/frap-tool/install-sh"
-S["MAKEINFO"]="${SHELL} /home/DS/phyjpb/Programming/C/frap-tool/missing --run makeinfo"
-S["AUTOHEADER"]="${SHELL} /home/DS/phyjpb/Programming/C/frap-tool/missing --run autoheader"
-S["AUTOMAKE"]="${SHELL} /home/DS/phyjpb/Programming/C/frap-tool/missing --run automake-1.11"
-S["AUTOCONF"]="${SHELL} /home/DS/phyjpb/Programming/C/frap-tool/missing --run autoconf"
-S["ACLOCAL"]="${SHELL} /home/DS/phyjpb/Programming/C/frap-tool/missing --run aclocal-1.11"
+S["install_sh"]="${SHELL} /home/jon/Programming/C/frap-tool/install-sh"
+S["MAKEINFO"]="${SHELL} /home/jon/Programming/C/frap-tool/missing --run makeinfo"
+S["AUTOHEADER"]="${SHELL} /home/jon/Programming/C/frap-tool/missing --run autoheader"
+S["AUTOMAKE"]="${SHELL} /home/jon/Programming/C/frap-tool/missing --run automake-1.11"
+S["AUTOCONF"]="${SHELL} /home/jon/Programming/C/frap-tool/missing --run autoconf"
+S["ACLOCAL"]="${SHELL} /home/jon/Programming/C/frap-tool/missing --run aclocal-1.11"
 S["VERSION"]="0.1"
 S["PACKAGE"]="frap"
 S["CYGPATH_W"]="echo"
