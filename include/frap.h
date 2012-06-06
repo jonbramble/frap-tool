@@ -28,16 +28,17 @@ frap-tool is free software: you can redistribute it and/or modify it
 #include <fstream>
 #include <vector>
 #include <algorithm>
+#include <string>
+
 #include <ctime>
 #include <cstring>
+
 #include "../include/tiffile.h"
 #include "../include/fitting.h"
 #include "../include/chart.h"
 
 #include <gsl/gsl_matrix.h>
 #include <gsl/gsl_vector.h>
-
-#include <boost/thread.hpp>  
 
 namespace FrapTool {
 
@@ -46,12 +47,12 @@ class Frap {
 		Frap(char* pfile, char* cfile, bool verbose);	
 		~Frap(); //<must allocate mem to data before calling free
 		
-		void start();
-		void join();
 		void processdata();
+		void doselection();
+
 		gsl_matrix* get_exp_data();
 		gsl_matrix* get_fitting_data();
-		void setimagenames(vector<char*> ifiles);
+		void setimagenames(vector<std::string> ifiles);
 
 		void plot_graph();
 		void plplot_chart(char* _prefix);
@@ -60,7 +61,6 @@ class Frap {
 		void print_data();
 
 	private:
-		boost::thread m_Thread;
 		char* prima;
 		char* closed;
 		bool verbose;
@@ -69,6 +69,8 @@ class Frap {
 		double scaling_factor; 	 //<pixel scaling factor - from selection length
 		double start_time;
 		Selection s;
+
+		char * cstr;
 
 		gsl_matrix *exp_data;		//<for output data
 		gsl_matrix *fitting_data;	//<for output data
@@ -79,7 +81,7 @@ class Frap {
 		cimg_library::CImg<unsigned char> *visu;	//<graph plot
 
 		void dosort();			//separate sub routines to merge later
-		void doselection();
+		
 		void setimagelist();
 		void settimes();
 		void removebackground();
@@ -109,7 +111,7 @@ class Frap {
 		cimg_library::CImgList<float> imagelist;	//<this is a list of the image data	
 		cimg_library::CImgList<float> transforms;	//<this is a list of the fourier transformed data
 
-		std::vector<char*>::iterator fnameit;	//iterators
+		std::vector<std::string>::iterator fnameit;	//iterators
 		std::vector<Tiffile>::iterator imageit;
 		cimg_library::CImgList<float>::iterator cimg_imageit;
 };

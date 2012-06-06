@@ -41,7 +41,7 @@ Tiffile::Tiffile(char* filename){
         TIFFErrorHandler handler;
 	handler = TIFFSetWarningHandler(NULL);	//implement warning handler to supress ALL errors due to image pro express
 	
-	TIFF* tif = TIFFOpen(filename,"r");		//should check for file here
+	TIFF* tif = TIFFOpen(filename,"r");  //should check for file here
 	TIFFSetWarningHandler(handler);
 	
 	TIFFGetField(tif, TIFFTAG_IMAGEWIDTH, &imagewidth);  //get image scales
@@ -50,7 +50,7 @@ Tiffile::Tiffile(char* filename){
 	char* datetime = new char[4];
 	TIFFGetField(tif, TIFFTAG_DATETIME, &datetime); 
 
-	std::cout << datetime << std::endl;
+	std::cout << datetime;
 	
 	char* pch[4];			// does the memory need to be allocated?
 	char delims[] = " ";

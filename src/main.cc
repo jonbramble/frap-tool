@@ -25,7 +25,8 @@ int main(int argc, char* argv[]) {
 	char* prima;
 	char* appname = argv[0];
 	char* prefix;
-	vector<char*> ifiles;
+	vector<std::string> ifiles;
+	string file_name;
 	bool verbose = false;
 	
 	prefix = "frap-data";
@@ -55,17 +56,17 @@ int main(int argc, char* argv[]) {
 
 	for (index = optind; index < argc; index++){
         	//printf ("Image files %s\n", argv[index]);
-		ifiles.push_back(argv[index]);
+		file_name = argv[index];
+		ifiles.push_back(file_name);
 	}
 
 	FrapTool::Frap *experiment;
 
 	experiment = new FrapTool::Frap(prima,closed,verbose);
-	
-	experiment->start();				// starts do selection
-	experiment->setimagenames(ifiles);	// but can do processing on tiff files in the meantime
-	experiment->join();				// now we join the thread to continue with dataprocessing
-	
+			
+	experiment->doselection();
+	experiment->setimagenames(ifiles);
+			
 	experiment->processdata();
 
 	experiment->plplot_chart(prefix);

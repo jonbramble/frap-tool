@@ -1,9 +1,6 @@
 /* config.h.  Generated from config.h.in by configure.  */
 /* config.h.in.  Generated from configure.ac by autoheader.  */
 
-/* Define to 1 if you have the <boost/thread.hpp> header file. */
-#define HAVE_BOOST_THREAD_HPP 1
-
 /* Define to 1 if you have the <CImg.h> header file. */
 #define HAVE_CIMG_H 1
 

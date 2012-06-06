@@ -57,8 +57,7 @@ am_FRAP_OBJECTS = src/tiffile.$(OBJEXT) src/frap.$(OBJEXT) \
 FRAP_OBJECTS = $(am_FRAP_OBJECTS)
 am__DEPENDENCIES_1 =
 FRAP_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
-	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
-	$(am__DEPENDENCIES_1)
+	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
 DEFAULT_INCLUDES = -I.
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -91,13 +90,12 @@ distuninstallcheck_listfiles = find . -type f -print
 am__distuninstallcheck_listfiles = $(distuninstallcheck_listfiles) \
   | sed 's|^\./|$(prefix)/|' | grep -v '$(infodir)/dir$$'
 distcleancheck_listfiles = find . -type f -print
-ACLOCAL = ${SHELL} /home/jon/Programming/C/frap-tool/missing --run aclocal-1.11
+ACLOCAL = ${SHELL} /home/DS/phyjpb/Programming/C/frap-tool/missing --run aclocal-1.11
 AMTAR = $${TAR-tar}
-AUTOCONF = ${SHELL} /home/jon/Programming/C/frap-tool/missing --run autoconf
-AUTOHEADER = ${SHELL} /home/jon/Programming/C/frap-tool/missing --run autoheader
-AUTOMAKE = ${SHELL} /home/jon/Programming/C/frap-tool/missing --run automake-1.11
-AWK = mawk
-BOOST_LIBS = -lboost_thread-mt
+AUTOCONF = ${SHELL} /home/DS/phyjpb/Programming/C/frap-tool/missing --run autoconf
+AUTOHEADER = ${SHELL} /home/DS/phyjpb/Programming/C/frap-tool/missing --run autoheader
+AUTOMAKE = ${SHELL} /home/DS/phyjpb/Programming/C/frap-tool/missing --run automake-1.11
+AWK = gawk
 CC = gcc
 CCDEPMODE = depmode=gcc3
 CFLAGS = -g -O2
@@ -128,7 +126,7 @@ LDFLAGS =
 LIBOBJS = 
 LIBS = 
 LTLIBOBJS = 
-MAKEINFO = ${SHELL} /home/jon/Programming/C/frap-tool/missing --run makeinfo
+MAKEINFO = ${SHELL} /home/DS/phyjpb/Programming/C/frap-tool/missing --run makeinfo
 MKDIR_P = /bin/mkdir -p
 OBJEXT = o
 PACKAGE = frap
@@ -145,10 +143,10 @@ SHELL = /bin/bash
 STRIP = 
 TIFF_LIBS = -ltiff
 VERSION = 0.1
-abs_builddir = /home/jon/Programming/C/frap-tool
-abs_srcdir = /home/jon/Programming/C/frap-tool
-abs_top_builddir = /home/jon/Programming/C/frap-tool
-abs_top_srcdir = /home/jon/Programming/C/frap-tool
+abs_builddir = /home/DS/phyjpb/Programming/C/frap-tool
+abs_srcdir = /home/DS/phyjpb/Programming/C/frap-tool
+abs_top_builddir = /home/DS/phyjpb/Programming/C/frap-tool
+abs_top_srcdir = /home/DS/phyjpb/Programming/C/frap-tool
 ac_ct_CC = gcc
 ac_ct_CXX = g++
 am__include = include
@@ -168,7 +166,7 @@ host_alias =
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = ${SHELL} /home/jon/Programming/C/frap-tool/install-sh
+install_sh = ${SHELL} /home/DS/phyjpb/Programming/C/frap-tool/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
@@ -191,7 +189,7 @@ top_srcdir = .
 AUTOMAKE_OPTIONS = subdir-objects
 ACLOCAL_AMFLAGS = ${ACLOCAL_FLAGS}
 AM_CPPFLAGS = $(GSL_CFLAGS) 
-FRAP_LDADD = $(GSL_LIBS) $(CIMG_LIBS) $(TIFF_LIBS) $(BOOST_LIBS) $(PLPLOT_LIBS)
+FRAP_LDADD = $(GSL_LIBS) $(CIMG_LIBS) $(TIFF_LIBS) $(PLPLOT_LIBS)
 FRAP_SOURCES = include/frap.h include/selection.h include/fitting.h include/tiffile.h src/tiffile.cc src/frap.cc src/selection.cc src/fitting.cc src/main.cc src/chart.cc include/chart.h
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-am

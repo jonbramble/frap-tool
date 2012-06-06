@@ -39,17 +39,6 @@ Frap::~Frap(){
  }
 }
 
-/*-- Threading ---------------------------------------------------------------------------------*/
-void Frap::start()
-{
-	m_Thread = boost::thread(&Frap::doselection, this);
-}
-
-void Frap::join()
-{
-	m_Thread.join();
-}
-
 /*-- Data Functions ----------------------------------------------------------------------------*/
 gsl_matrix* Frap::get_exp_data(){
 	return exp_data;	
@@ -204,6 +193,7 @@ void Frap::dosort(){
 void Frap::setimagelist(){
 	for(imageit=imagefiles.begin(); imageit<imagefiles.end(); imageit++){
 		cimg_library::CImg<float> image(imageit->getfilename());
+		std::cout << "image list: " << imageit->getfilename() << std::endl;
 		imagelist.push_back(image); 		
 	}
 }
@@ -332,9 +322,11 @@ void Frap::doselection(){
 	s.selectline(closed);  //do selection on the closed image
 }
 
-void Frap::setimagenames(vector<char*> ifiles){
+void Frap::setimagenames(vector<std::string> ifiles){
 	for(fnameit=ifiles.begin(); fnameit<ifiles.end(); fnameit++){
-		Tiffile tifftmp(*fnameit);
+		cstr = new char [fnameit->size()+1];
+		strcpy (cstr, fnameit->c_str());
+		Tiffile tifftmp(cstr);
 		imagefiles.push_back(tifftmp);
 	}
 } 

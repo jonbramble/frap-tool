@@ -617,7 +617,6 @@ CXX
 PLPLOT_LIBS
 TIFF_LIBS
 CIMG_LIBS
-BOOST_LIBS
 GSL_LIBS
 GSL_CFLAGS
 am__fastdepCC_FALSE
@@ -3885,10 +3884,8 @@ rm -f core conftest.err conftest.$ac_objext \
 
 
 PLPLOT_LIBS="-lplplotcxxd -lltdl -ldl -lcsirocsa -lqhull -lqsastime -lfreetype"
-BOOST_LIBS="-lboost_thread-mt"
 CIMG_LIBS="-L/usr/X11R6/lib -lpthread -lX11"
 TIFF_LIBS="-ltiff"
-
 
 
 
@@ -4716,19 +4713,6 @@ _ACEOF
 fi
 
 done
-
-for ac_header in boost/thread.hpp
-do :
-  ac_fn_cxx_check_header_mongrel "$LINENO" "boost/thread.hpp" "ac_cv_header_boost_thread_hpp" "$ac_includes_default"
-if test "x$ac_cv_header_boost_thread_hpp" = xyes; then :
-  cat >>confdefs.h <<_ACEOF
-#define HAVE_BOOST_THREAD_HPP 1
-_ACEOF
-
-fi
-
-done
-
 
 
 ac_config_files="$ac_config_files Makefile"
