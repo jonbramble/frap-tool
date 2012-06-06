@@ -614,6 +614,7 @@ CXXDEPMODE
 ac_ct_CXX
 CXXFLAGS
 CXX
+BOOST_LIBS
 PLPLOT_LIBS
 TIFF_LIBS
 CIMG_LIBS
@@ -3886,6 +3887,8 @@ rm -f core conftest.err conftest.$ac_objext \
 PLPLOT_LIBS="-lplplotcxxd -lltdl -ldl -lcsirocsa -lqhull -lqsastime -lfreetype"
 CIMG_LIBS="-L/usr/X11R6/lib -lpthread -lX11"
 TIFF_LIBS="-ltiff"
+BOOST_LIBS="-lboost_thread-mt"
+
 
 
 

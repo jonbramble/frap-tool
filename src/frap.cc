@@ -130,9 +130,14 @@ void Frap::processdata()
     //std::cout << "settimes" << std::endl;
 	settimes();
 	//std::cout << "setpixlen" << std::endl;
-	setpixlen();
+
+	boost::thread t1(boost::bind( &Frap::setpixlen , this ));
+    boost::thread t2(boost::bind( &Frap::removebackground, this ));
+	t1.join();
+	t2.join();
+	//setpixlen();
     //std::cout << "removebackground" << std::endl;
-    removebackground();
+    //removebackground();
     //std::cout << "getvectors" << std::endl;
 	getvectors();  // get the data and put it in a matrix
 	//std::cout << "dofitting" << std::endl;
@@ -196,21 +201,20 @@ void Frap::save_data_file(char* _prefix){
 }
 
 void Frap::dosort(){
-	
+	std::sort(imagefiles.begin(), imagefiles.end()); // uses overloaded < operator that compares the seconds from epoch
 }
 
 void Frap::setimagelist(){			// limited by disc speed 
-	for(imageit=imagefiles.begin(); imageit<imagefiles.end(); imageit++){
-		cimg_library::CImg<float> image(imageit->getfilename());
-		std::cout << "image list: " << imageit->getfilename() << std::endl;
-		imagelist.push_back(image); 		
+	for(image_list_it=imagefiles.begin(); image_list_it<imagefiles.end(); image_list_it++){
+		cimg_library::CImg<float> tmp_image(image_list_it->getfilename());
+		imagelist.push_back(tmp_image); 		
 	}
 }
 
 void Frap::settimes(){
-	double starttime = imagefiles.front().gettime()-start_time; //ten second start time
-	for(imageit=imagefiles.begin(); imageit<imagefiles.end(); imageit++){
-		time_s.push_back(imageit->gettime()-starttime);
+	double starttime = imagefiles.front().gettime()-start_time; 							//ten second start time
+	for(image_time_it=imagefiles.begin(); image_time_it<imagefiles.end(); image_time_it++){
+		time_s.push_back(image_time_it->gettime()-starttime);
 	}
 }
 

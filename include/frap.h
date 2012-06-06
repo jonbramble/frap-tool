@@ -37,6 +37,10 @@ frap-tool is free software: you can redistribute it and/or modify it
 #include "../include/fitting.h"
 #include "../include/chart.h"
 
+#include <boost/thread.hpp>
+#include <boost/bind.hpp>
+
+
 #include <gsl/gsl_matrix.h>
 #include <gsl/gsl_vector.h>
 
@@ -112,7 +116,8 @@ class Frap {
 		cimg_library::CImgList<float> transforms;	//<this is a list of the fourier transformed data
 
 		std::vector<std::string>::iterator fnameit;	//iterators
-		std::vector<Tiffile>::iterator imageit;
+		std::vector<Tiffile>::iterator image_list_it;
+		std::vector<Tiffile>::iterator image_time_it;
 		cimg_library::CImgList<float>::iterator cimg_imageit;
 };
 
