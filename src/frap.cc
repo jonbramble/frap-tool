@@ -206,7 +206,9 @@ void Frap::dosort(){
 
 void Frap::setimagelist(){			// limited by disc speed 
 	for(image_list_it=imagefiles.begin(); image_list_it<imagefiles.end(); image_list_it++){
-		cimg_library::CImg<float> tmp_image(image_list_it->getfilename());
+		//cimg_library::CImg<float> tmp_image(image_list_it->getfilename());
+		cimg_library::CImg<float> tmp_image;
+		tmp_image.load_tiff(image_list_it->getfilename());
 		imagelist.push_back(tmp_image); 		
 	}
 }
