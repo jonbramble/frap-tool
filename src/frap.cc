@@ -90,6 +90,8 @@ void Frap::plplot_chart(char* _prefix){
 
 	line_chart = new Chart(f_name_lin);
 	line_chart->plot(imagefiles.size(),time_s,lambda_2,lambda_err_2, c1, c0);
+
+	gsl_vector_free(x);
 }
 
 
@@ -121,15 +123,22 @@ void Frap::getfftransforms(){
 
 void Frap::processdata()
 {
+	//std::cout << "do sort" << std::endl;
 	dosort();	// sort by time
+	//std::cout << "setimagelist" << std::endl;
 	setimagelist();	// put the images in a list
+    //std::cout << "settimes" << std::endl;
 	settimes();
+	//std::cout << "setpixlen" << std::endl;
 	setpixlen();
-
-	removebackground(); //could crop first to save time - at 60ms its neg
+    //std::cout << "removebackground" << std::endl;
+    removebackground();
+    //std::cout << "getvectors" << std::endl;
 	getvectors();  // get the data and put it in a matrix
+	//std::cout << "dofitting" << std::endl;
 	dofitting(); // do the multid fitting on the gaussian profiles
-	//getfftransforms(); //should do these on centred cropped images	
+	//getfftransforms(); //should do these on centred cropped images
+    //std::cout << "create_fit_data" << std::endl;	
 	create_fit_data();
 }
 
@@ -187,10 +196,10 @@ void Frap::save_data_file(char* _prefix){
 }
 
 void Frap::dosort(){
-	sort(imagefiles.begin(), imagefiles.end()); // uses overloaded < operator that compares the seconds from epoch
+	
 }
 
-void Frap::setimagelist(){
+void Frap::setimagelist(){			// limited by disc speed 
 	for(imageit=imagefiles.begin(); imageit<imagefiles.end(); imageit++){
 		cimg_library::CImg<float> image(imageit->getfilename());
 		std::cout << "image list: " << imageit->getfilename() << std::endl;
@@ -225,8 +234,8 @@ void Frap::setpixlen(){
 
 void Frap::removebackground(){
 	cimg_library::CImg<float> primaimg(prima);	
-	for(uint i=0; i<imagefiles.size(); i++){
-		imagelist[i]=primaimg-imagelist[i]; 	// need to check that these have been done	
+	for(cimg_imageit=imagelist.begin(); cimg_imageit<imagelist.end(); cimg_imageit++){		// odd/even
+		*cimg_imageit=primaimg-(*cimg_imageit); 	// need to check that these have been done	
 	}		
 }
 
