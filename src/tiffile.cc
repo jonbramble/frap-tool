@@ -18,6 +18,9 @@ frap-tool is free software: you can redistribute it and/or modify it
 
 #include "../include/tiffile.h" 
 
+namespace FrapTool 
+{
+
 int Tiffile::getimagewidth(){
 	return imagewidth;
 }
@@ -83,4 +86,6 @@ Tiffile::Tiffile(char* filename){
 	
 	TIFFClose(tif);
 	std::cout << "...complete" << std::endl;
+}
+
 }

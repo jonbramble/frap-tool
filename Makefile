@@ -53,7 +53,7 @@ PROGRAMS = $(bin_PROGRAMS)
 am__dirstamp = $(am__leading_dot)dirstamp
 am_FRAP_OBJECTS = src/tiffile.$(OBJEXT) src/frap.$(OBJEXT) \
 	src/selection.$(OBJEXT) src/fitting.$(OBJEXT) \
-	src/main.$(OBJEXT) src/chart.$(OBJEXT)
+	src/main.$(OBJEXT) src/chart.$(OBJEXT) src/frapimage.$(OBJEXT)
 FRAP_OBJECTS = $(am_FRAP_OBJECTS)
 am__DEPENDENCIES_1 =
 FRAP_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
@@ -91,12 +91,12 @@ distuninstallcheck_listfiles = find . -type f -print
 am__distuninstallcheck_listfiles = $(distuninstallcheck_listfiles) \
   | sed 's|^\./|$(prefix)/|' | grep -v '$(infodir)/dir$$'
 distcleancheck_listfiles = find . -type f -print
-ACLOCAL = ${SHELL} /home/DS/phyjpb/Programming/C/frap-tool/missing --run aclocal-1.11
+ACLOCAL = ${SHELL} /home/jon/Programming/C/frap-tool/missing --run aclocal-1.11
 AMTAR = $${TAR-tar}
-AUTOCONF = ${SHELL} /home/DS/phyjpb/Programming/C/frap-tool/missing --run autoconf
-AUTOHEADER = ${SHELL} /home/DS/phyjpb/Programming/C/frap-tool/missing --run autoheader
-AUTOMAKE = ${SHELL} /home/DS/phyjpb/Programming/C/frap-tool/missing --run automake-1.11
-AWK = gawk
+AUTOCONF = ${SHELL} /home/jon/Programming/C/frap-tool/missing --run autoconf
+AUTOHEADER = ${SHELL} /home/jon/Programming/C/frap-tool/missing --run autoheader
+AUTOMAKE = ${SHELL} /home/jon/Programming/C/frap-tool/missing --run automake-1.11
+AWK = mawk
 BOOST_LIBS = -lboost_thread-mt
 CC = gcc
 CCDEPMODE = depmode=gcc3
@@ -128,7 +128,7 @@ LDFLAGS =
 LIBOBJS = 
 LIBS = 
 LTLIBOBJS = 
-MAKEINFO = ${SHELL} /home/DS/phyjpb/Programming/C/frap-tool/missing --run makeinfo
+MAKEINFO = ${SHELL} /home/jon/Programming/C/frap-tool/missing --run makeinfo
 MKDIR_P = /bin/mkdir -p
 OBJEXT = o
 PACKAGE = frap
@@ -145,10 +145,10 @@ SHELL = /bin/bash
 STRIP = 
 TIFF_LIBS = -ltiff
 VERSION = 0.1
-abs_builddir = /home/DS/phyjpb/Programming/C/frap-tool
-abs_srcdir = /home/DS/phyjpb/Programming/C/frap-tool
-abs_top_builddir = /home/DS/phyjpb/Programming/C/frap-tool
-abs_top_srcdir = /home/DS/phyjpb/Programming/C/frap-tool
+abs_builddir = /home/jon/Programming/C/frap-tool
+abs_srcdir = /home/jon/Programming/C/frap-tool
+abs_top_builddir = /home/jon/Programming/C/frap-tool
+abs_top_srcdir = /home/jon/Programming/C/frap-tool
 ac_ct_CC = gcc
 ac_ct_CXX = g++
 am__include = include
@@ -168,7 +168,7 @@ host_alias =
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = ${SHELL} /home/DS/phyjpb/Programming/C/frap-tool/install-sh
+install_sh = ${SHELL} /home/jon/Programming/C/frap-tool/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
@@ -192,7 +192,7 @@ AUTOMAKE_OPTIONS = subdir-objects
 ACLOCAL_AMFLAGS = ${ACLOCAL_FLAGS}
 AM_CPPFLAGS = $(GSL_CFLAGS) 
 FRAP_LDADD = $(GSL_LIBS) $(CIMG_LIBS) $(TIFF_LIBS) $(BOOST_LIBS) $(PLPLOT_LIBS)
-FRAP_SOURCES = include/frap.h include/selection.h include/fitting.h include/tiffile.h src/tiffile.cc src/frap.cc src/selection.cc src/fitting.cc src/main.cc src/chart.cc include/chart.h
+FRAP_SOURCES = include/frap.h include/selection.h include/fitting.h include/tiffile.h src/tiffile.cc src/frap.cc src/selection.cc src/fitting.cc src/main.cc src/chart.cc include/chart.h include/frapimage.h src/frapimage.cc
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-am
 
@@ -299,6 +299,8 @@ src/fitting.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
 src/main.$(OBJEXT): src/$(am__dirstamp) src/$(DEPDIR)/$(am__dirstamp)
 src/chart.$(OBJEXT): src/$(am__dirstamp) src/$(DEPDIR)/$(am__dirstamp)
+src/frapimage.$(OBJEXT): src/$(am__dirstamp) \
+	src/$(DEPDIR)/$(am__dirstamp)
 FRAP$(EXEEXT): $(FRAP_OBJECTS) $(FRAP_DEPENDENCIES) $(EXTRA_FRAP_DEPENDENCIES) 
 	@rm -f FRAP$(EXEEXT)
 	$(CXXLINK) $(FRAP_OBJECTS) $(FRAP_LDADD) $(LIBS)
@@ -308,6 +310,7 @@ mostlyclean-compile:
 	-rm -f src/chart.$(OBJEXT)
 	-rm -f src/fitting.$(OBJEXT)
 	-rm -f src/frap.$(OBJEXT)
+	-rm -f src/frapimage.$(OBJEXT)
 	-rm -f src/main.$(OBJEXT)
 	-rm -f src/selection.$(OBJEXT)
 	-rm -f src/tiffile.$(OBJEXT)
@@ -318,6 +321,7 @@ distclean-compile:
 include src/$(DEPDIR)/chart.Po
 include src/$(DEPDIR)/fitting.Po
 include src/$(DEPDIR)/frap.Po
+include src/$(DEPDIR)/frapimage.Po
 include src/$(DEPDIR)/main.Po
 include src/$(DEPDIR)/selection.Po
 include src/$(DEPDIR)/tiffile.Po

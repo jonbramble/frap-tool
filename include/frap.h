@@ -35,7 +35,8 @@ frap-tool is free software: you can redistribute it and/or modify it
 #include <ctime>
 #include <cstring>
 
-#include "../include/tiffile.h"
+//#include "../include/tiffile.h"
+#include "../include/frapimage.h"
 #include "../include/fitting.h"
 #include "../include/chart.h"
 
@@ -98,6 +99,8 @@ class Frap {
 		void create_fit_data();
 		
 		std::vector<Tiffile> imagefiles;	//<this vector contains all the information about each file
+
+		std::vector<Frapimage> frapimages; //<this vector contains all the information about each file
 
 		std::vector<double> A;			//<this vector contains the A data
 		std::vector<double> lambda;		//<this vector contains the lambda data

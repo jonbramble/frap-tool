@@ -339,10 +339,8 @@ void Frap::doselection(){
 
 void Frap::setimagenames(vector<std::string> ifiles){
 	for(fnameit=ifiles.begin(); fnameit<ifiles.end(); fnameit++){
-		cstr = new char [fnameit->size()+1];
-		strcpy (cstr, fnameit->c_str());
-		Tiffile tifftmp(cstr);
-		imagefiles.push_back(tifftmp);
+	    Frapimage tmpimage(*fnameit);
+		frapimages.push_back(tmpimage);
 	}
 } 
 
