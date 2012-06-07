@@ -2,6 +2,12 @@ bin/
 autom4te.cache/
 FRAP
 *~
+Makefile
+config.log
+config.status
+
+.anjunta
+
 src/*.o
 src/.deps/
 
