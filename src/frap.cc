@@ -153,14 +153,7 @@ void Frap::processdata()
 }
 
 void Frap::dosort(){
-	for(frapimage_it=frapimages.begin(); frapimage_it<frapimages.end(); frapimage_it++){
-		std::cout << frapimage_it->getfilename() << frapimage_it->get_long_time() << std::endl;
-	}
 	std::sort(frapimages.begin(), frapimages.end()); // uses overloaded < operator that compares the seconds from epoch
-
-	for(frapimage_it=frapimages.begin(); frapimage_it<frapimages.end(); frapimage_it++){
-		std::cout << frapimage_it->getfilename() << frapimage_it->get_long_time() <<std::endl;
-	}
 }
 
 void Frap::print_data(){

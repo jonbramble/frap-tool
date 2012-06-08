@@ -35,8 +35,7 @@ class Tiffile {
         int getimageheight();
 	std::string getfilename();
 	tm gettm();
-	double gettime(){return d_seconds;};
-	long int get_long_time(){return l_seconds;};
+	long gettime(){return l_seconds;};
 
 	protected:
 	long int l_seconds;
