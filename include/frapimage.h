@@ -30,10 +30,7 @@ class Frapimage: public Tiffile {
 
 	double A, lambda, lambda_2, mu, b, time_s, A_err, lambda_err, lambda_err_2, mu_err, b_err;
 
-	bool operator<(Frapimage rhs) const { return seconds < rhs.seconds; }
-
-	private:
-  	 std::string filename;
+	bool operator<(Frapimage rhs) const { return l_seconds < rhs.l_seconds; }
 };
 
 } // FrapTool

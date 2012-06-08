@@ -59,7 +59,7 @@ Tiffile::Tiffile(std::string _filename){
 	char* datetime = new char[4];
 	TIFFGetField(tif, TIFFTAG_DATETIME, &datetime); 
 
-	std::cout << datetime;
+	std::cout << datetime << std::endl;
 	
 	char* pch[4];			// does the memory need to be allocated?
 	char delims[] = " ";
@@ -84,7 +84,10 @@ Tiffile::Tiffile(std::string _filename){
 	strptime (to_parse, "%m/%d/%Y %H:%M:%S", &imagetime); //use ctime function to form date time structure
 
 	time_t result = mktime(&imagetime);
-	seconds = (double)(long(result)+(ms/1000.0));
+	std::cout << result << std::endl;
+
+	l_seconds = long(result);
+	d_seconds = (double)(long(result)+(ms/1000.0));
 
 	//imagefilename = new char[sizeof(filename)];		//allocate memory to imagefilename!
 	//strcpy(imagefilename, filename);
