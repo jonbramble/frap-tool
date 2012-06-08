@@ -97,7 +97,18 @@ void Frap::plplot_chart(char* _prefix){
 
 /*-- Processing ---------------------------------------------------------------------------------*/
 
-void Frap::getfftransforms(){
+void Frap::setimagenames(vector<std::string> ifiles){
+	for(fnameit=ifiles.begin(); fnameit<ifiles.end(); fnameit++){
+	    Frapimage tmpimage(*fnameit);
+		frapimages.push_back(tmpimage);
+	}
+} 
+
+void Frap::doselection(){
+	s.selectline(closed);  //do selection on the closed image
+}
+
+/*void Frap::getfftransforms(){
 	cimg_library::CImg<float> tmp;
 	cimg_library::CImg<unsigned char> mag;
 	//transform must be done centred on the image
@@ -119,7 +130,7 @@ void Frap::getfftransforms(){
       disp2.wait();
 	}
 	
-}
+}*/
 
 void Frap::processdata()
 {
@@ -147,16 +158,23 @@ void Frap::processdata()
 	create_fit_data();
 }
 
-void Frap::print_data(){
+void Frap::dosort(){
+	std::sort(frapimages.begin(), frapimages.end()); // uses overloaded < operator that compares the seconds from epoch
+}
+
+
+
+/*void Frap::print_data(){
 	for(uint i=0; i<imagefiles.size(); i++){
-		char* name = imagefiles[i].getfilename();
+		std::string name;
+		name = imagefiles[i].getfilename();
 		printf("Filename: %s\tTimes: %f\tA: %f\tLambda: %f\tmu: %f\n",name,time_s[i],A[i],lambda_2[i],mu[i]);
 	} 
 
 	std::cout << "Diffusion Constant " << c1/2 << " μm2/s" << std::endl; 
-}
+}*/
 
-void Frap::save_data_file(char* _prefix){
+/*void Frap::save_data_file(char* _prefix){
 
 	double lambda_fit;
 	char str_summary[80]; //string preparations for filenames
@@ -198,11 +216,7 @@ void Frap::save_data_file(char* _prefix){
 	//data_file.close();
 
 	std::cout << "...complete" << std::endl;
-}
-
-void Frap::dosort(){
-	std::sort(imagefiles.begin(), imagefiles.end()); // uses overloaded < operator that compares the seconds from epoch
-}
+}*/
 
 void Frap::setimagelist(){			// limited by disc speed 
 	for(image_list_it=imagefiles.begin(); image_list_it<imagefiles.end(); image_list_it++){
@@ -331,18 +345,6 @@ void Frap::dofitting(){
 	gsl_matrix_free(verr);
 	gsl_vector_free(fit);
 }
-
-
-void Frap::doselection(){
-	s.selectline(closed);  //do selection on the closed image
-}
-
-void Frap::setimagenames(vector<std::string> ifiles){
-	for(fnameit=ifiles.begin(); fnameit<ifiles.end(); fnameit++){
-	    Frapimage tmpimage(*fnameit);
-		frapimages.push_back(tmpimage);
-	}
-} 
 
 void Frap::create_fit_data()// create curve data from fits
 {

@@ -24,15 +24,15 @@ namespace FrapTool
 {
 
  /*-- Constructor Destructors ---------------------------------------------------------------------------------*/
-Frapimage::Frapimage(std::string _filename){
-    filename = _filename;
-    cstr = new char [filename.size()+1];
-    strcpy (cstr, filename.c_str());
-	tiffile = new Tiffile(cstr);
+/*Frapimage::Frapimage(std::string _filename){
+    //filename = _filename;
+    //cstr = new char [filename.size()+1];
+    //strcpy (cstr, filename.c_str());
+	//tiffile = new Tiffile(cstr);
 }
 
 Frapimage::~Frapimage(){
 
-}
+}*/
 
 }

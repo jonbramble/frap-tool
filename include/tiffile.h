@@ -18,6 +18,7 @@ frap-tool is free software: you can redistribute it and/or modify it
 
 
 #include <iostream>
+#include <string>
 #include <cstring>
 #include <cstdlib>
 #include <ctime>
@@ -29,17 +30,17 @@ namespace FrapTool {
 class Tiffile {
 	
 	public:
-	Tiffile(char* filename);
+	Tiffile(std::string _filename);
         int getimagewidth();  //can add more if needed
         int getimageheight();
-	char* getfilename();
+	std::string getfilename();
 	tm gettm();
 	double gettime(){return seconds;};
 	
 	bool operator<(Tiffile rhs) const { return seconds < rhs.seconds; }
 	
 	private:
-	char* imagefilename;
+	std::string filename;
         int imagewidth;
         int imageheight;
 	struct tm imagetime;

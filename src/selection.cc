@@ -52,13 +52,13 @@ float Selection::getc(){
 		return c;
 	}
 
-void Selection::selectline(char* filename){
+void Selection::selectline(std::string _filename){
 	int currentx, currenty;
 	bool setone,settwo;
 	const unsigned char color[] = { 0,0,0 };
 
-	cimg_library::CImg<float> image(filename), fresh(filename);
-	cimg_library::CImgDisplay main_display(image,filename);
+	cimg_library::CImg<float> image(_filename), fresh(_filename);
+	cimg_library::CImgDisplay main_display(image,_filename);
 
 	x1=0;
 	setone = false;

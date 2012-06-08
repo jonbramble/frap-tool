@@ -20,6 +20,7 @@ frap-tool is free software: you can redistribute it and/or modify it
 #define SELECTION_H
 
 #include "CImg.h"
+#include <string>
 #include <iostream>
 
 namespace FrapTool {
@@ -36,7 +37,7 @@ class Selection {
 		float getm();
 		float getc();
 
-		void selectline(char* filename);
+		void selectline(std::string filename);
 		bool selmade;
 		
 	private:

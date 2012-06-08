@@ -33,18 +33,24 @@ tm Tiffile::gettm(){
 	return imagetime;
 }
 
-char* Tiffile::getfilename(){
-	return imagefilename;
+std::string Tiffile::getfilename(){
+	return filename;
 }
 
-Tiffile::Tiffile(char* filename){
+Tiffile::Tiffile(std::string _filename){
+	filename = _filename;
+
 	std::cout << "Processing Image File...";
         std::cout << ".." << filename << "...";		//output file information
-
+	
+	char *cstr;
+	cstr = new char [filename.size()+1];
+    	strcpy (cstr, filename.c_str());
+	
         TIFFErrorHandler handler;
 	handler = TIFFSetWarningHandler(NULL);	//implement warning handler to supress ALL errors due to image pro express
 	
-	TIFF* tif = TIFFOpen(filename,"r");  //should check for file here
+	TIFF* tif = TIFFOpen(cstr,"r");  //should check for file here
 	TIFFSetWarningHandler(handler);
 	
 	TIFFGetField(tif, TIFFTAG_IMAGEWIDTH, &imagewidth);  //get image scales
@@ -66,7 +72,6 @@ Tiffile::Tiffile(char* filename){
 	date = pch[0];
 	fulltime = pch[1];
 
-
 	//shorttime = strtok(fulltime, "."); // get and hence remove millisec portion of datetime
 	//ms = atoi(strtok(NULL, ".")); // convert to separate integer
 	ms = 0;
@@ -81,8 +86,8 @@ Tiffile::Tiffile(char* filename){
 	time_t result = mktime(&imagetime);
 	seconds = (double)(long(result)+(ms/1000.0));
 
-	imagefilename = new char[sizeof(filename)];		//allocate memory to imagefilename!
-	strcpy(imagefilename, filename);
+	//imagefilename = new char[sizeof(filename)];		//allocate memory to imagefilename!
+	//strcpy(imagefilename, filename);
 	
 	TIFFClose(tif);
 	std::cout << "...complete" << std::endl;
