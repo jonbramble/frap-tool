@@ -35,7 +35,6 @@ frap-tool is free software: you can redistribute it and/or modify it
 #include <ctime>
 #include <cstring>
 
-//#include "../include/tiffile.h"
 #include "../include/frapimage.h"
 #include "../include/fitting.h"
 #include "../include/chart.h"
@@ -97,23 +96,13 @@ class Frap {
 		void getfftransforms();
 		void dofitting();
 		void create_fit_data();
-		
-		std::vector<Tiffile> imagefiles;	//<this vector contains all the information about each file
 
 		std::vector<Frapimage> frapimages; //<this vector contains all the information about each file
+		std::vector<Frapimage>::iterator frapimage_it;
 
-		std::vector<double> A;			//<this vector contains the A data
-		std::vector<double> lambda;		//<this vector contains the lambda data
-		std::vector<double> lambda_2;		//<this vector contains the lambda data
-		std::vector<double> mu;
-		std::vector<double> b;
 		std::vector<double> time_s; 	//<time data in seconds from the start point of experiment
-
-		std::vector<double> A_err;		//<this vector contains the A errors
-		std::vector<double> lambda_err;	//<this vector contains the lambda errors
-		std::vector<double> lambda_err_2;		//<this vector contains the lambda data
-		std::vector<double> mu_err;
-		std::vector<double> b_err;
+		std::vector<double> lambda_2; 	//<lambda data
+		std::vector<double> lambda_err_2; 	//<lambda data
 
 		double c0, c1, cov00, cov01, cov11, sumsq;  //<linear fit parameters
 		
@@ -121,8 +110,6 @@ class Frap {
 		cimg_library::CImgList<float> transforms;	//<this is a list of the fourier transformed data
 
 		std::vector<std::string>::iterator fnameit;	//iterators
-		std::vector<Tiffile>::iterator image_list_it;
-		std::vector<Tiffile>::iterator image_time_it;
 		cimg_library::CImgList<float>::iterator cimg_imageit;
 };
 

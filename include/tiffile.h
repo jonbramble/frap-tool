@@ -36,8 +36,9 @@ class Tiffile {
 	std::string getfilename();
 	tm gettm();
 	double gettime(){return seconds;};
-	
-	bool operator<(Tiffile rhs) const { return seconds < rhs.seconds; }
+
+	protected:
+	double seconds;
 	
 	private:
 	std::string filename;
@@ -45,7 +46,6 @@ class Tiffile {
         int imageheight;
 	struct tm imagetime;
 	int ms;	
-	double seconds;
 };
 
 }

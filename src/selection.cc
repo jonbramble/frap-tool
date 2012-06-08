@@ -57,8 +57,12 @@ void Selection::selectline(std::string _filename){
 	bool setone,settwo;
 	const unsigned char color[] = { 0,0,0 };
 
-	cimg_library::CImg<float> image(_filename), fresh(_filename);
-	cimg_library::CImgDisplay main_display(image,_filename);
+	char *cstr;
+	cstr = new char [_filename.size()+1];
+    	strcpy (cstr, _filename.c_str());
+
+	cimg_library::CImg<float> image(cstr), fresh(cstr);
+	cimg_library::CImgDisplay main_display(image,cstr);
 
 	x1=0;
 	setone = false;

@@ -65,11 +65,10 @@ int main(int argc, char* argv[]) {
 	experiment = new FrapTool::Frap(prima,closed,verbose);
 			
 	experiment->doselection();
-	experiment->setimagenames(ifiles);
-			
+	experiment->setimagenames(ifiles);		
 	experiment->processdata();
 
-	experiment->plplot_chart(prefix);
+	//experiment->plplot_chart(prefix);
 	experiment->print_data();
 	experiment->save_data_file(prefix);
 

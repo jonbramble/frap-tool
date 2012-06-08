@@ -49,6 +49,7 @@ gsl_matrix* Frap::get_fitting_data(){
 }
 
 /*-- Plotting ----------------------------------------------------------------------------------*/
+/*
 void Frap::plot_graph(){
 	visu= new cimg_library::CImg<unsigned char>(s.getxsize(),s.getxsize(),1,3,255); //<a new display for the plot
 	cimg_library::CImgDisplay draw_disp(*visu,"Data Plots");	//draw the display
@@ -70,6 +71,7 @@ void Frap::plot_graph(){
 		visu->draw_graph(aplot.get_crop(0,0,s.getxsize()-1,0),red,1,1,2,14000,100,0).display(draw_disp); 
 	}
 }
+*/
 
 void Frap::plplot_chart(char* _prefix){
 
@@ -89,7 +91,7 @@ void Frap::plplot_chart(char* _prefix){
 	simple_chart->plot(npoints,x,exp_data,fitting_data); 
 
 	line_chart = new Chart(f_name_lin);
-	line_chart->plot(imagefiles.size(),time_s,lambda_2,lambda_err_2, c1, c0);
+	line_chart->plot(frapimages.size(),time_s,lambda_2,lambda_err_2, c1, c0);
 
 	gsl_vector_free(x);
 }
@@ -134,27 +136,19 @@ void Frap::doselection(){
 
 void Frap::processdata()
 {
-	//std::cout << "do sort" << std::endl;
 	dosort();	// sort by time
-	//std::cout << "setimagelist" << std::endl;
 	setimagelist();	// put the images in a list
-    //std::cout << "settimes" << std::endl;
 	settimes();
-	//std::cout << "setpixlen" << std::endl;
-
+	
 	boost::thread t1(boost::bind( &Frap::setpixlen , this ));
     boost::thread t2(boost::bind( &Frap::removebackground, this ));
 	t1.join();
 	t2.join();
-	//setpixlen();
-    //std::cout << "removebackground" << std::endl;
-    //removebackground();
-    //std::cout << "getvectors" << std::endl;
+
 	getvectors();  // get the data and put it in a matrix
-	//std::cout << "dofitting" << std::endl;
 	dofitting(); // do the multid fitting on the gaussian profiles
 	//getfftransforms(); //should do these on centred cropped images
-    //std::cout << "create_fit_data" << std::endl;	
+  
 	create_fit_data();
 }
 
@@ -162,21 +156,18 @@ void Frap::dosort(){
 	std::sort(frapimages.begin(), frapimages.end()); // uses overloaded < operator that compares the seconds from epoch
 }
 
-
-
-/*void Frap::print_data(){
-	for(uint i=0; i<imagefiles.size(); i++){
-		std::string name;
-		name = imagefiles[i].getfilename();
-		printf("Filename: %s\tTimes: %f\tA: %f\tLambda: %f\tmu: %f\n",name,time_s[i],A[i],lambda_2[i],mu[i]);
+void Frap::print_data(){
+	std::cout <<  "Filename" << "Times" << "A" << "Lambda^2" << "mu" << std::endl;
+	for(frapimage_it=frapimages.begin(); frapimage_it<frapimages.end(); frapimage_it++){
+		std::cout << frapimage_it->getfilename() << frapimage_it->gettime() << frapimage_it->A << frapimage_it->lambda_2 << frapimage_it->mu << std::endl;
 	} 
-
 	std::cout << "Diffusion Constant " << c1/2 << " μm2/s" << std::endl; 
-}*/
+}
 
-/*void Frap::save_data_file(char* _prefix){
-
+void Frap::save_data_file(char* _prefix){
 	double lambda_fit;
+	unsigned int i = 0;
+
 	char str_summary[80]; //string preparations for filenames
 	//char str_fullset[80];
 	//char str_linear_fit[80];
@@ -197,11 +188,12 @@ void Frap::dosort(){
 	if (data_file.is_open())
 	{
 		data_file << "Filename,Time(s),A,A error,Lambda^2,Lambda error ^2,mu,mu error,b,b error,Fitted Lambda\n";
-		for(uint i=0; i<imagefiles.size(); i++){
+		for(frapimage_it=frapimages.begin(); frapimage_it<frapimages.end(); frapimage_it++){
 			lambda_fit = c0+c1*time_s[i];
-			data_file << imagefiles[i].getfilename() << "," << time_s[i] <<"," << A[i] <<"," << A_err[i] 
-				<<"," << lambda_2[i] <<"," << lambda_err_2[i] <<"," 
-				<< mu[i] <<"," << mu_err[i] <<"," << b[i] <<"," << b_err[i] << "," << lambda_fit << std::endl;
+			data_file << frapimage_it->getfilename() << "," << frapimage_it->time_s <<"," << frapimage_it->A <<"," << frapimage_it->A_err
+				<<"," << frapimage_it->lambda_2 <<"," << frapimage_it->lambda_err_2 <<"," 
+				<< frapimage_it->mu <<"," << frapimage_it->mu_err <<"," << frapimage_it->b <<"," << frapimage_it->b_err << "," << lambda_fit << std::endl;
+			i++;
 		} 
 		data_file << "Diffusion Constant " << c1/2 << " μm2/s" << std::endl; 
 	}
@@ -216,26 +208,31 @@ void Frap::dosort(){
 	//data_file.close();
 
 	std::cout << "...complete" << std::endl;
-}*/
+}
+
 
 void Frap::setimagelist(){			// limited by disc speed 
-	for(image_list_it=imagefiles.begin(); image_list_it<imagefiles.end(); image_list_it++){
-		//cimg_library::CImg<float> tmp_image(image_list_it->getfilename());
+	for(frapimage_it=frapimages.begin(); frapimage_it<frapimages.end(); frapimage_it++){
+		char *cstr;
 		cimg_library::CImg<float> tmp_image;
-		tmp_image.load_tiff(image_list_it->getfilename());
+		std::string filename = frapimage_it->getfilename();
+		cstr = new char [filename.size()+1];
+    	strcpy (cstr, filename.c_str());
+		tmp_image.load_tiff(cstr);
 		imagelist.push_back(tmp_image); 		
 	}
 }
 
 void Frap::settimes(){
-	double starttime = imagefiles.front().gettime()-start_time; 							//ten second start time
-	for(image_time_it=imagefiles.begin(); image_time_it<imagefiles.end(); image_time_it++){
-		time_s.push_back(image_time_it->gettime()-starttime);
+	double starttime = frapimages.front().gettime()-start_time; 							//ten second start time
+	for(frapimage_it=frapimages.begin(); frapimage_it<frapimages.end(); frapimage_it++){
+		time_s.push_back(frapimage_it->gettime()-starttime);
+		frapimage_it->time_s=frapimage_it->gettime()-starttime;
 	}
 }
 
 void Frap::setpixlen(){
-	int binning = 1344/(imagefiles.front().getimagewidth());
+	int binning = 1344/( frapimages.front().getimagewidth());
 	int objective = 40;
 
 	switch( binning ) 
@@ -254,8 +251,8 @@ void Frap::setpixlen(){
 
 void Frap::removebackground(){
 	cimg_library::CImg<float> primaimg(prima);	
-	for(cimg_imageit=imagelist.begin(); cimg_imageit<imagelist.end(); cimg_imageit++){		// odd/even
-		*cimg_imageit=primaimg-(*cimg_imageit); 	// need to check that these have been done	
+	for(cimg_imageit=imagelist.begin(); cimg_imageit<imagelist.end(); cimg_imageit++){
+		*cimg_imageit=primaimg-(*cimg_imageit); 
 	}		
 }
 
@@ -266,8 +263,8 @@ void Frap::getvectors(){
 		int x1,y1, x2, y2;
 		int i=0;
 	
-		exp_data = gsl_matrix_alloc (imagefiles.size(), npoints);
-		fitting_data = gsl_matrix_alloc (imagefiles.size(), npoints);
+		exp_data = gsl_matrix_alloc (frapimages.size(), npoints);
+		fitting_data = gsl_matrix_alloc (frapimages.size(), npoints);
 	
 		x1 = s.getx1();
 		x2 = s.getx2();
@@ -308,31 +305,37 @@ void Frap::getvectors(){
 
 void Frap::dofitting(){
 	double scaled_lambda, scaled_lambda_err;
-	int ifilestotal = imagefiles.size();
+    unsigned int i = 0;
+	int ifilestotal = frapimages.size();
 
 	gsl_matrix *vdata = gsl_matrix_alloc(4,ifilestotal); 
 	gsl_matrix *verr = gsl_matrix_alloc(4,ifilestotal); 
 	gsl_vector *fit = gsl_vector_alloc(6); 
 
 	Fitting::gaussfit(vdata,verr,get_exp_data(),verbose); // fits the data for all images
-
-	for(uint i=0; i<ifilestotal; i++){
-		A.push_back(gsl_matrix_get(vdata,0,i));  
-		mu.push_back(gsl_matrix_get(vdata,1,i)); 
+	
+	for(frapimage_it=frapimages.begin(); frapimage_it<frapimages.end(); frapimage_it++){
+		frapimage_it->A = gsl_matrix_get(vdata,0,i);
+		frapimage_it->mu = gsl_matrix_get(vdata,1,i);
 		scaled_lambda = gsl_matrix_get(vdata,2,i)*scaling_factor;
-		lambda.push_back(scaled_lambda);
-		lambda_2.push_back(pow(scaled_lambda,2));  // put all the data into lambda vector
-		b.push_back(gsl_matrix_get(vdata,3,i)); 
+		frapimage_it->lambda = scaled_lambda;
+		frapimage_it->lambda_2 = pow(scaled_lambda,2);
+		frapimage_it->b = gsl_matrix_get(vdata,3,i);
+	
+		lambda_2.push_back(pow(scaled_lambda,2));
 
-		A_err.push_back(gsl_matrix_get(verr,0,i));  
-		mu_err.push_back(gsl_matrix_get(verr,1,i)); 
-		scaled_lambda_err = gsl_matrix_get(verr,2,i)*scaling_factor;
-		lambda_err.push_back(scaled_lambda_err);  // put all the data into lambda vector
-		lambda_err_2.push_back(pow(scaled_lambda_err,2));  // put all the data into lambda vector
-		b_err.push_back(gsl_matrix_get(verr,3,i)); 
+	    frapimage_it->A_err = gsl_matrix_get(verr,0,i);
+		frapimage_it->mu_err = gsl_matrix_get(verr,1,i);
+		scaled_lambda_err= gsl_matrix_get(verr,2,i)*scaling_factor;
+		frapimage_it->lambda_err = scaled_lambda_err;
+		frapimage_it->lambda_err_2 = pow(scaled_lambda_err,2);
+		frapimage_it->b_err = gsl_matrix_get(verr,3,i);
+
+		lambda_err_2.push_back(pow(scaled_lambda_err,2));
+		i++;
 	}
 
-	Fitting::linearfit(fit, &time_s[0],&lambda_2[0],ifilestotal, verbose); // needs lots of error handling --needs R factor cutoff
+	Fitting::linearfit(fit, &time_s[0],&lambda_2[0], ifilestotal, verbose); // needs lots of error handling --needs R factor cutoff
 
 	c0 = gsl_vector_get(fit,0);
 	c1 = gsl_vector_get(fit,1);
@@ -346,15 +349,23 @@ void Frap::dofitting(){
 	gsl_vector_free(fit);
 }
 
+
 void Frap::create_fit_data()// create curve data from fits
 {
-	double Yi, x_scaled;
-	for(uint i=0; i<imagefiles.size(); i++){
+	double Yi, x_scaled, f_A, f_mu, f_lambda_2, f_b;
+	unsigned int i = 0;
+	for(frapimage_it=frapimages.begin(); frapimage_it<frapimages.end(); frapimage_it++){
+		f_A = frapimage_it->A;
+		f_mu = frapimage_it->mu;
+		f_lambda_2 = frapimage_it->lambda_2;
+		f_b = frapimage_it->b;
+	
 		for(int x=0;x<npoints;x++){
-			x_scaled = (x-mu[i])*scaling_factor;
-			Yi = A[i]*exp((-1*pow(x_scaled,2))/(2*pow(lambda[i],2)))+b[i];
+			x_scaled = (x-f_mu)*scaling_factor;
+			Yi = f_A*exp((-1*pow(x_scaled,2))/(2*f_lambda_2))+f_b;
 			gsl_matrix_set(fitting_data,i,x,Yi);
 		}
+		i++;
 	} 
 }
 

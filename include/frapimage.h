@@ -27,13 +27,13 @@ namespace FrapTool {
 class Frapimage: public Tiffile {
 	public:
 	 Frapimage(std::string _filename) : Tiffile(_filename) { }
-	 ~Frapimage();
 
 	double A, lambda, lambda_2, mu, b, time_s, A_err, lambda_err, lambda_err_2, mu_err, b_err;
 
+	bool operator<(Frapimage rhs) const { return seconds < rhs.seconds; }
+
 	private:
   	 std::string filename;
-	 char *cstr;
 };
 
 } // FrapTool
