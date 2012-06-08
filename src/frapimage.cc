@@ -1,5 +1,7 @@
+/* -*- Mode: C; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*- */
+
 /*
- * tiffile.h
+ * frapimage.cc
  * Copyright (C) Jonathan Bramble 2011
  * 
 frap-tool is free software: you can redistribute it and/or modify it
@@ -16,36 +18,21 @@ frap-tool is free software: you can redistribute it and/or modify it
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "../include/frapimage.h" 
 
-#include <iostream>
-#include <string>
-#include <cstring>
-#include <cstdlib>
-#include <ctime>
+namespace FrapTool 
+{
 
-#include <tiffio.h>
+ /*-- Constructor Destructors ---------------------------------------------------------------------------------*/
+/*Frapimage::Frapimage(std::string _filename){
+    //filename = _filename;
+    //cstr = new char [filename.size()+1];
+    //strcpy (cstr, filename.c_str());
+	//tiffile = new Tiffile(cstr);
+}
 
-namespace FrapTool {
+Frapimage::~Frapimage(){
 
-class Tiffile {
-	
-	public:
-	Tiffile(std::string _filename);
-        int getimagewidth();  //can add more if needed
-        int getimageheight();
-	std::string getfilename();
-	tm gettm();
-	double gettime(){return seconds;};
-
-	protected:
-	double seconds;
-	
-	private:
-	std::string filename;
-        int imagewidth;
-        int imageheight;
-	struct tm imagetime;
-	int ms;	
-};
+}*/
 
 }

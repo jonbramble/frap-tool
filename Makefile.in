@@ -53,7 +53,7 @@ PROGRAMS = $(bin_PROGRAMS)
 am__dirstamp = $(am__leading_dot)dirstamp
 am_FRAP_OBJECTS = src/tiffile.$(OBJEXT) src/frap.$(OBJEXT) \
 	src/selection.$(OBJEXT) src/fitting.$(OBJEXT) \
-	src/main.$(OBJEXT) src/chart.$(OBJEXT)
+	src/main.$(OBJEXT) src/chart.$(OBJEXT) src/frapimage.$(OBJEXT)
 FRAP_OBJECTS = $(am_FRAP_OBJECTS)
 am__DEPENDENCIES_1 =
 FRAP_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
@@ -192,7 +192,7 @@ AUTOMAKE_OPTIONS = subdir-objects
 ACLOCAL_AMFLAGS = ${ACLOCAL_FLAGS}
 AM_CPPFLAGS = $(GSL_CFLAGS) 
 FRAP_LDADD = $(GSL_LIBS) $(CIMG_LIBS) $(TIFF_LIBS) $(BOOST_LIBS) $(PLPLOT_LIBS)
-FRAP_SOURCES = include/frap.h include/selection.h include/fitting.h include/tiffile.h src/tiffile.cc src/frap.cc src/selection.cc src/fitting.cc src/main.cc src/chart.cc include/chart.h
+FRAP_SOURCES = include/frap.h include/selection.h include/fitting.h include/tiffile.h src/tiffile.cc src/frap.cc src/selection.cc src/fitting.cc src/main.cc src/chart.cc include/chart.h include/frapimage.h src/frapimage.cc
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-am
 
@@ -299,6 +299,8 @@ src/fitting.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
 src/main.$(OBJEXT): src/$(am__dirstamp) src/$(DEPDIR)/$(am__dirstamp)
 src/chart.$(OBJEXT): src/$(am__dirstamp) src/$(DEPDIR)/$(am__dirstamp)
+src/frapimage.$(OBJEXT): src/$(am__dirstamp) \
+	src/$(DEPDIR)/$(am__dirstamp)
 FRAP$(EXEEXT): $(FRAP_OBJECTS) $(FRAP_DEPENDENCIES) $(EXTRA_FRAP_DEPENDENCIES) 
 	@rm -f FRAP$(EXEEXT)
 	$(CXXLINK) $(FRAP_OBJECTS) $(FRAP_LDADD) $(LIBS)
@@ -308,6 +310,7 @@ mostlyclean-compile:
 	-rm -f src/chart.$(OBJEXT)
 	-rm -f src/fitting.$(OBJEXT)
 	-rm -f src/frap.$(OBJEXT)
+	-rm -f src/frapimage.$(OBJEXT)
 	-rm -f src/main.$(OBJEXT)
 	-rm -f src/selection.$(OBJEXT)
 	-rm -f src/tiffile.$(OBJEXT)
@@ -318,6 +321,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/chart.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/fitting.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/frap.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/frapimage.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/main.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/selection.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/tiffile.Po@am__quote@
