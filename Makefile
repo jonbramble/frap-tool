@@ -272,7 +272,7 @@ lib_LTLIBRARIES = libfraptool-1.0.la
 libfraptool_1.0_la_SOURCES = fraptool/tiffile.cc fraptool/frap.cc fraptool/selection.cc fraptool/fitting.cc fraptool/chart.cc fraptool/frapimage.cc
 libfraptool_1.0_la_LDFLAGS = -version-info $(FRAPTOOL_SO_VERSION) 
 fraptool_includedir = $(includedir)/fraptool-$(FRAPTOOL_API_VERSION)
-nobase_fraptool_include_HEADERS = fraptool/frap.h fraptool/selection.h fraptool/fitting.h fraptool/chart.h fraptool/frapimage.h
+nobase_fraptool_include_HEADERS = fraptool/frap.h fraptool/selection.h fraptool/fitting.h fraptool/chart.h fraptool/frapimage.h fraptool/tiffile.h
 
 #libfraptools_@FRAPTOOLS_API_VERSION@_la_CPPFLAGS = $(DEPS_CFLAGS) 
 #libfraptools_@FRAPTOOLS_API_VERSION@_la_LIBADD = $(DEPS_LIBS) $(CIMG_LIBS) $(TIFF_LIBS) $(BOOST_LIBS) $(PLPLOT_LIBS)

@@ -39,7 +39,7 @@ libfraptool_@FRAPTOOL_API_VERSION@_la_LDFLAGS = -version-info $(FRAPTOOL_SO_VERS
 ## installation directory.  This only works if the directory hierarchy in the
 ## source tree matches the hierarchy at the install location, however.
 fraptool_includedir = $(includedir)/fraptool-$(FRAPTOOL_API_VERSION)
-nobase_fraptool_include_HEADERS = fraptool/frap.h fraptool/selection.h fraptool/fitting.h fraptool/chart.h fraptool/frapimage.h
+nobase_fraptool_include_HEADERS = fraptool/frap.h fraptool/selection.h fraptool/fitting.h fraptool/chart.h fraptool/frapimage.h fraptool/tiffile.h
 
 #libfraptools_@FRAPTOOLS_API_VERSION@_la_CPPFLAGS = $(DEPS_CFLAGS) 
 #libfraptools_@FRAPTOOLS_API_VERSION@_la_LIBADD = $(DEPS_LIBS) $(CIMG_LIBS) $(TIFF_LIBS) $(BOOST_LIBS) $(PLPLOT_LIBS)
