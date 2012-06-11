@@ -16,6 +16,8 @@
 
 
 
+
+
 pkgdatadir = $(datadir)/frap
 pkgincludedir = $(includedir)/frap
 pkglibdir = $(libdir)/frap
@@ -32,49 +34,89 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-bin_PROGRAMS = FRAP$(EXEEXT)
+build_triplet = x86_64-unknown-linux-gnu
+host_triplet = x86_64-unknown-linux-gnu
 subdir = .
-DIST_COMMON = README $(am__configure_deps) $(srcdir)/Makefile.am \
+DIST_COMMON = README $(am__configure_deps) \
+	$(nobase_fraptool_include_HEADERS) $(srcdir)/Makefile.am \
 	$(srcdir)/Makefile.in $(srcdir)/config.h.in \
+	$(srcdir)/fraptool.pc.in $(srcdir)/fraptoolconfig.h.in \
 	$(top_srcdir)/configure AUTHORS COPYING ChangeLog INSTALL NEWS \
-	depcomp install-sh missing
+	config.guess config.sub depcomp install-sh ltmain.sh missing
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
-am__aclocal_m4_deps = $(top_srcdir)/configure.ac
+am__aclocal_m4_deps = $(top_srcdir)/m4/libtool.m4 \
+	$(top_srcdir)/m4/ltoptions.m4 $(top_srcdir)/m4/ltsugar.m4 \
+	$(top_srcdir)/m4/ltversion.m4 $(top_srcdir)/m4/lt~obsolete.m4 \
+	$(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 am__CONFIG_DISTCLEAN_FILES = config.status config.cache config.log \
  configure.lineno config.status.lineno
 mkinstalldirs = $(install_sh) -d
-CONFIG_HEADER = config.h
-CONFIG_CLEAN_FILES =
+CONFIG_HEADER = config.h fraptoolconfig.h
+CONFIG_CLEAN_FILES = fraptool-${FRAPTOOL_API_VERSION}.pc
 CONFIG_CLEAN_VPATH_FILES =
-am__installdirs = "$(DESTDIR)$(bindir)"
-PROGRAMS = $(bin_PROGRAMS)
+am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
+am__vpath_adj = case $$p in \
+    $(srcdir)/*) f=`echo "$$p" | sed "s|^$$srcdirstrip/||"`;; \
+    *) f=$$p;; \
+  esac;
+am__strip_dir = f=`echo $$p | sed -e 's|^.*/||'`;
+am__install_max = 40
+am__nobase_strip_setup = \
+  srcdirstrip=`echo "$(srcdir)" | sed 's/[].[^$$\\*|]/\\\\&/g'`
+am__nobase_strip = \
+  for p in $$list; do echo "$$p"; done | sed -e "s|$$srcdirstrip/||"
+am__nobase_list = $(am__nobase_strip_setup); \
+  for p in $$list; do echo "$$p $$p"; done | \
+  sed "s| $$srcdirstrip/| |;"' / .*\//!s/ .*/ ./; s,\( .*\)/[^/]*$$,\1,' | \
+  $(AWK) 'BEGIN { files["."] = "" } { files[$$2] = files[$$2] " " $$1; \
+    if (++n[$$2] == $(am__install_max)) \
+      { print $$2, files[$$2]; n[$$2] = 0; files[$$2] = "" } } \
+    END { for (dir in files) print dir, files[dir] }'
+am__base_list = \
+  sed '$$!N;$$!N;$$!N;$$!N;$$!N;$$!N;$$!N;s/\n/ /g' | \
+  sed '$$!N;$$!N;$$!N;$$!N;s/\n/ /g'
+am__uninstall_files_from_dir = { \
+  test -z "$$files" \
+    || { test ! -d "$$dir" && test ! -f "$$dir" && test ! -r "$$dir"; } \
+    || { echo " ( cd '$$dir' && rm -f" $$files ")"; \
+         $(am__cd) "$$dir" && rm -f $$files; }; \
+  }
+am__installdirs = "$(DESTDIR)$(libdir)" "$(DESTDIR)$(pkgconfigdir)" \
+	"$(DESTDIR)$(fraptool_includedir)" \
+	"$(DESTDIR)$(fraptool_libincludedir)"
+LTLIBRARIES = $(lib_LTLIBRARIES)
+libfraptool_1.0_la_LIBADD =
 am__dirstamp = $(am__leading_dot)dirstamp
-am_FRAP_OBJECTS = fraptool/tiffile.$(OBJEXT) fraptool/frap.$(OBJEXT) \
-	fraptool/selection.$(OBJEXT) fraptool/fitting.$(OBJEXT) \
-	fraptool/main.$(OBJEXT) fraptool/chart.$(OBJEXT) \
-	fraptool/frapimage.$(OBJEXT)
-FRAP_OBJECTS = $(am_FRAP_OBJECTS)
-am__DEPENDENCIES_1 =
-FRAP_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
-	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
-	$(am__DEPENDENCIES_1)
+am_libfraptool_1.0_la_OBJECTS =  \
+	fraptool/tiffile.lo fraptool/frap.lo fraptool/selection.lo \
+	fraptool/fitting.lo fraptool/chart.lo fraptool/frapimage.lo
+libfraptool_1.0_la_OBJECTS =  \
+	$(am_libfraptool_1.0_la_OBJECTS)
+libfraptool_1.0_la_LINK = $(LIBTOOL) --tag=CXX \
+	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CXXLD) \
+	$(AM_CXXFLAGS) $(CXXFLAGS) \
+	$(libfraptool_1.0_la_LDFLAGS) $(LDFLAGS) -o \
+	$@
 DEFAULT_INCLUDES = -I.
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
 am__mv = mv -f
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
+LTCXXCOMPILE = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
+	--mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
+	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
 CXXLD = $(CXX)
-CXXLINK = $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) \
-	-o $@
-COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
-	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
-CCLD = $(CC)
-LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
-SOURCES = $(FRAP_SOURCES)
-DIST_SOURCES = $(FRAP_SOURCES)
+CXXLINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
+	--mode=link $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) \
+	$(LDFLAGS) -o $@
+SOURCES = $(libfraptool_1.0_la_SOURCES)
+DIST_SOURCES = $(libfraptool_1.0_la_SOURCES)
+DATA = $(pkgconfig_DATA)
+HEADERS = $(nobase_fraptool_include_HEADERS) \
+	$(nodist_fraptool_libinclude_HEADERS)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -94,6 +136,7 @@ am__distuninstallcheck_listfiles = $(distuninstallcheck_listfiles) \
 distcleancheck_listfiles = find . -type f -print
 ACLOCAL = ${SHELL} /home/DS/phyjpb/Programming/C/frap-tool/missing --run aclocal-1.11
 AMTAR = $${TAR-tar}
+AR = ar
 AUTOCONF = ${SHELL} /home/DS/phyjpb/Programming/C/frap-tool/missing --run autoconf
 AUTOHEADER = ${SHELL} /home/DS/phyjpb/Programming/C/frap-tool/missing --run autoheader
 AUTOMAKE = ${SHELL} /home/DS/phyjpb/Programming/C/frap-tool/missing --run automake-1.11
@@ -103,6 +146,7 @@ CC = gcc
 CCDEPMODE = depmode=gcc3
 CFLAGS = -g -O2
 CIMG_LIBS = -L/usr/X11R6/lib -lpthread -lX11
+CPP = gcc -E
 CPPFLAGS = 
 CXX = g++
 CXXCPP = g++ -E
@@ -111,11 +155,19 @@ CXXFLAGS = -g -O2
 CYGPATH_W = echo
 DEFS = -DHAVE_CONFIG_H
 DEPDIR = .deps
+DEPS_CFLAGS =  
+DEPS_LIBS = -lgsl -lgslcblas -lm  
+DLLTOOL = false
+DSYMUTIL = 
+DUMPBIN = 
 ECHO_C = 
 ECHO_N = -n
 ECHO_T = 
 EGREP = /bin/grep -E
 EXEEXT = 
+FGREP = /bin/grep -F
+FRAPTOOL_API_VERSION = 1.0
+FRAPTOOL_SO_VERSION = 0:1:0
 GREP = /bin/grep
 GSL_CFLAGS = -I/usr/include
 GSL_CONFIG = /usr/bin/gsl-config
@@ -125,47 +177,72 @@ INSTALL_DATA = ${INSTALL} -m 644
 INSTALL_PROGRAM = ${INSTALL}
 INSTALL_SCRIPT = ${INSTALL}
 INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
+LD = /usr/bin/ld -m elf_x86_64
 LDFLAGS = 
 LIBOBJS = 
 LIBS = 
+LIBTOOL = $(SHELL) $(top_builddir)/libtool
+LIPO = 
+LN_S = ln -s
 LTLIBOBJS = 
 MAKEINFO = ${SHELL} /home/DS/phyjpb/Programming/C/frap-tool/missing --run makeinfo
+MANIFEST_TOOL = :
 MKDIR_P = /bin/mkdir -p
+NM = /usr/bin/nm -B
+NMEDIT = 
+OBJDUMP = objdump
 OBJEXT = o
+OTOOL = 
+OTOOL64 = 
 PACKAGE = frap
 PACKAGE_BUGREPORT = phyjpb@leeds.ac.uk
-PACKAGE_NAME = Frap
-PACKAGE_STRING = Frap 0.1
+PACKAGE_NAME = libfraptool
+PACKAGE_STRING = libfraptool 0.1
 PACKAGE_TARNAME = frap
 PACKAGE_URL = http://mpi.leeds.ac.uk/software/frap
 PACKAGE_VERSION = 0.1
 PATH_SEPARATOR = :
+PKG_CONFIG = /usr/bin/pkg-config
+PKG_CONFIG_LIBDIR = 
+PKG_CONFIG_PATH = 
 PLPLOT_LIBS = -lplplotcxxd -lltdl -ldl -lcsirocsa -lqhull -lqsastime -lfreetype
+RANLIB = ranlib
+SED = /bin/sed
 SET_MAKE = 
 SHELL = /bin/bash
-STRIP = 
+STRIP = strip
 TIFF_LIBS = -ltiff
 VERSION = 0.1
 abs_builddir = /home/DS/phyjpb/Programming/C/frap-tool
 abs_srcdir = /home/DS/phyjpb/Programming/C/frap-tool
 abs_top_builddir = /home/DS/phyjpb/Programming/C/frap-tool
 abs_top_srcdir = /home/DS/phyjpb/Programming/C/frap-tool
+ac_ct_AR = ar
 ac_ct_CC = gcc
 ac_ct_CXX = g++
+ac_ct_DUMPBIN = 
 am__include = include
 am__leading_dot = .
 am__quote = 
 am__tar = $${TAR-tar} chof - "$$tardir"
 am__untar = $${TAR-tar} xf -
 bindir = ${exec_prefix}/bin
+build = x86_64-unknown-linux-gnu
 build_alias = 
+build_cpu = x86_64
+build_os = linux-gnu
+build_vendor = unknown
 builddir = .
 datadir = ${datarootdir}
 datarootdir = ${prefix}/share
 docdir = ${datarootdir}/doc/${PACKAGE_TARNAME}
 dvidir = ${docdir}
 exec_prefix = ${prefix}
+host = x86_64-unknown-linux-gnu
 host_alias = 
+host_cpu = x86_64
+host_os = linux-gnu
+host_vendor = unknown
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
@@ -190,15 +267,24 @@ top_build_prefix =
 top_builddir = .
 top_srcdir = .
 AUTOMAKE_OPTIONS = subdir-objects
-ACLOCAL_AMFLAGS = ${ACLOCAL_FLAGS}
-AM_CPPFLAGS = $(GSL_CFLAGS) 
-FRAP_LDADD = $(GSL_LIBS) $(CIMG_LIBS) $(TIFF_LIBS) $(BOOST_LIBS) $(PLPLOT_LIBS)
-FRAP_SOURCES = fraptool/frap.h fraptool/selection.h fraptool/fitting.h fraptool/tiffile.h fraptool/tiffile.cc fraptool/frap.cc fraptool/selection.cc fraptool/fitting.cc fraptool/main.cc fraptool/chart.cc fraptool/chart.h fraptool/frapimage.h fraptool/frapimage.cc
-all: config.h
+ACLOCAL_AMFLAGS = ${ACLOCAL_FLAGS} -I m4
+lib_LTLIBRARIES = libfraptool-1.0.la 
+libfraptool_1.0_la_SOURCES = fraptool/tiffile.cc fraptool/frap.cc fraptool/selection.cc fraptool/fitting.cc fraptool/chart.cc fraptool/frapimage.cc
+libfraptool_1.0_la_LDFLAGS = -version-info $(FRAPTOOL_SO_VERSION) 
+fraptool_includedir = $(includedir)/fraptool-$(FRAPTOOL_API_VERSION)
+nobase_fraptool_include_HEADERS = fraptool/frap.h fraptool/selection.h fraptool/fitting.h fraptool/chart.h fraptool/frapimage.h
+
+#libfraptools_@FRAPTOOLS_API_VERSION@_la_CPPFLAGS = $(DEPS_CFLAGS) 
+#libfraptools_@FRAPTOOLS_API_VERSION@_la_LIBADD = $(DEPS_LIBS) $(CIMG_LIBS) $(TIFF_LIBS) $(BOOST_LIBS) $(PLPLOT_LIBS)
+fraptool_libincludedir = $(libdir)/fraptool-$(FRAPTOOL_API_VERSION)
+nodist_fraptool_libinclude_HEADERS = fraptoolconfig.h
+pkgconfigdir = $(libdir)/pkgconfig
+pkgconfig_DATA = fraptool-$(FRAPTOOL_API_VERSION).pc
+all: config.h fraptoolconfig.h
 	$(MAKE) $(AM_MAKEFLAGS) all-am
 
 .SUFFIXES:
-.SUFFIXES: .cc .o .obj
+.SUFFIXES: .cc .lo .o .obj
 am--refresh: Makefile
 	@:
 $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
@@ -246,89 +332,94 @@ $(srcdir)/config.h.in:  $(am__configure_deps)
 	rm -f stamp-h1
 	touch $@
 
+fraptoolconfig.h: stamp-h2
+	@if test ! -f $@; then rm -f stamp-h2; else :; fi
+	@if test ! -f $@; then $(MAKE) $(AM_MAKEFLAGS) stamp-h2; else :; fi
+
+stamp-h2: $(srcdir)/fraptoolconfig.h.in $(top_builddir)/config.status
+	@rm -f stamp-h2
+	cd $(top_builddir) && $(SHELL) ./config.status fraptoolconfig.h
+
 distclean-hdr:
-	-rm -f config.h stamp-h1
-install-binPROGRAMS: $(bin_PROGRAMS)
+	-rm -f config.h stamp-h1 fraptoolconfig.h stamp-h2
+fraptool-${FRAPTOOL_API_VERSION}.pc: $(top_builddir)/config.status $(srcdir)/fraptool.pc.in
+	cd $(top_builddir) && $(SHELL) ./config.status $@
+install-libLTLIBRARIES: $(lib_LTLIBRARIES)
 	@$(NORMAL_INSTALL)
-	test -z "$(bindir)" || $(MKDIR_P) "$(DESTDIR)$(bindir)"
-	@list='$(bin_PROGRAMS)'; test -n "$(bindir)" || list=; \
-	for p in $$list; do echo "$$p $$p"; done | \
-	sed 's/$(EXEEXT)$$//' | \
-	while read p p1; do if test -f $$p; \
-	  then echo "$$p"; echo "$$p"; else :; fi; \
-	done | \
-	sed -e 'p;s,.*/,,;n;h' -e 's|.*|.|' \
-	    -e 'p;x;s,.*/,,;s/$(EXEEXT)$$//;$(transform);s/$$/$(EXEEXT)/' | \
-	sed 'N;N;N;s,\n, ,g' | \
-	$(AWK) 'BEGIN { files["."] = ""; dirs["."] = 1 } \
-	  { d=$$3; if (dirs[d] != 1) { print "d", d; dirs[d] = 1 } \
-	    if ($$2 == $$4) files[d] = files[d] " " $$1; \
-	    else { print "f", $$3 "/" $$4, $$1; } } \
-	  END { for (d in files) print "f", d, files[d] }' | \
-	while read type dir files; do \
-	    if test "$$dir" = .; then dir=; else dir=/$$dir; fi; \
-	    test -z "$$files" || { \
-	      echo " $(INSTALL_PROGRAM_ENV) $(INSTALL_PROGRAM) $$files '$(DESTDIR)$(bindir)$$dir'"; \
-	      $(INSTALL_PROGRAM_ENV) $(INSTALL_PROGRAM) $$files "$(DESTDIR)$(bindir)$$dir" || exit $$?; \
-	    } \
-	; done
+	test -z "$(libdir)" || $(MKDIR_P) "$(DESTDIR)$(libdir)"
+	@list='$(lib_LTLIBRARIES)'; test -n "$(libdir)" || list=; \
+	list2=; for p in $$list; do \
+	  if test -f $$p; then \
+	    list2="$$list2 $$p"; \
+	  else :; fi; \
+	done; \
+	test -z "$$list2" || { \
+	  echo " $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL) $(INSTALL_STRIP_FLAG) $$list2 '$(DESTDIR)$(libdir)'"; \
+	  $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL) $(INSTALL_STRIP_FLAG) $$list2 "$(DESTDIR)$(libdir)"; \
+	}
 
-uninstall-binPROGRAMS:
+uninstall-libLTLIBRARIES:
 	@$(NORMAL_UNINSTALL)
-	@list='$(bin_PROGRAMS)'; test -n "$(bindir)" || list=; \
-	files=`for p in $$list; do echo "$$p"; done | \
-	  sed -e 'h;s,^.*/,,;s/$(EXEEXT)$$//;$(transform)' \
-	      -e 's/$$/$(EXEEXT)/' `; \
-	test -n "$$list" || exit 0; \
-	echo " ( cd '$(DESTDIR)$(bindir)' && rm -f" $$files ")"; \
-	cd "$(DESTDIR)$(bindir)" && rm -f $$files
+	@list='$(lib_LTLIBRARIES)'; test -n "$(libdir)" || list=; \
+	for p in $$list; do \
+	  $(am__strip_dir) \
+	  echo " $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=uninstall rm -f '$(DESTDIR)$(libdir)/$$f'"; \
+	  $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=uninstall rm -f "$(DESTDIR)$(libdir)/$$f"; \
+	done
 
-clean-binPROGRAMS:
-	-test -z "$(bin_PROGRAMS)" || rm -f $(bin_PROGRAMS)
+clean-libLTLIBRARIES:
+	-test -z "$(lib_LTLIBRARIES)" || rm -f $(lib_LTLIBRARIES)
+	@list='$(lib_LTLIBRARIES)'; for p in $$list; do \
+	  dir="`echo $$p | sed -e 's|/[^/]*$$||'`"; \
+	  test "$$dir" != "$$p" || dir=.; \
+	  echo "rm -f \"$${dir}/so_locations\""; \
+	  rm -f "$${dir}/so_locations"; \
+	done
 fraptool/$(am__dirstamp):
 	@$(MKDIR_P) fraptool
 	@: > fraptool/$(am__dirstamp)
 fraptool/$(DEPDIR)/$(am__dirstamp):
 	@$(MKDIR_P) fraptool/$(DEPDIR)
 	@: > fraptool/$(DEPDIR)/$(am__dirstamp)
-fraptool/tiffile.$(OBJEXT): fraptool/$(am__dirstamp) \
+fraptool/tiffile.lo: fraptool/$(am__dirstamp) \
 	fraptool/$(DEPDIR)/$(am__dirstamp)
-fraptool/frap.$(OBJEXT): fraptool/$(am__dirstamp) \
+fraptool/frap.lo: fraptool/$(am__dirstamp) \
 	fraptool/$(DEPDIR)/$(am__dirstamp)
-fraptool/selection.$(OBJEXT): fraptool/$(am__dirstamp) \
+fraptool/selection.lo: fraptool/$(am__dirstamp) \
 	fraptool/$(DEPDIR)/$(am__dirstamp)
-fraptool/fitting.$(OBJEXT): fraptool/$(am__dirstamp) \
+fraptool/fitting.lo: fraptool/$(am__dirstamp) \
 	fraptool/$(DEPDIR)/$(am__dirstamp)
-fraptool/main.$(OBJEXT): fraptool/$(am__dirstamp) \
+fraptool/chart.lo: fraptool/$(am__dirstamp) \
 	fraptool/$(DEPDIR)/$(am__dirstamp)
-fraptool/chart.$(OBJEXT): fraptool/$(am__dirstamp) \
+fraptool/frapimage.lo: fraptool/$(am__dirstamp) \
 	fraptool/$(DEPDIR)/$(am__dirstamp)
-fraptool/frapimage.$(OBJEXT): fraptool/$(am__dirstamp) \
-	fraptool/$(DEPDIR)/$(am__dirstamp)
-FRAP$(EXEEXT): $(FRAP_OBJECTS) $(FRAP_DEPENDENCIES) $(EXTRA_FRAP_DEPENDENCIES) 
-	@rm -f FRAP$(EXEEXT)
-	$(CXXLINK) $(FRAP_OBJECTS) $(FRAP_LDADD) $(LIBS)
+libfraptool-1.0.la: $(libfraptool_1.0_la_OBJECTS) $(libfraptool_1.0_la_DEPENDENCIES) $(EXTRA_libfraptool_1.0_la_DEPENDENCIES) 
+	$(libfraptool_1.0_la_LINK) -rpath $(libdir) $(libfraptool_1.0_la_OBJECTS) $(libfraptool_1.0_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
 	-rm -f fraptool/chart.$(OBJEXT)
+	-rm -f fraptool/chart.lo
 	-rm -f fraptool/fitting.$(OBJEXT)
+	-rm -f fraptool/fitting.lo
 	-rm -f fraptool/frap.$(OBJEXT)
+	-rm -f fraptool/frap.lo
 	-rm -f fraptool/frapimage.$(OBJEXT)
-	-rm -f fraptool/main.$(OBJEXT)
+	-rm -f fraptool/frapimage.lo
 	-rm -f fraptool/selection.$(OBJEXT)
+	-rm -f fraptool/selection.lo
 	-rm -f fraptool/tiffile.$(OBJEXT)
+	-rm -f fraptool/tiffile.lo
 
 distclean-compile:
 	-rm -f *.tab.c
 
-include fraptool/$(DEPDIR)/chart.Po
-include fraptool/$(DEPDIR)/fitting.Po
-include fraptool/$(DEPDIR)/frap.Po
-include fraptool/$(DEPDIR)/frapimage.Po
-include fraptool/$(DEPDIR)/main.Po
-include fraptool/$(DEPDIR)/selection.Po
-include fraptool/$(DEPDIR)/tiffile.Po
+include fraptool/$(DEPDIR)/chart.Plo
+include fraptool/$(DEPDIR)/fitting.Plo
+include fraptool/$(DEPDIR)/frap.Plo
+include fraptool/$(DEPDIR)/frapimage.Plo
+include fraptool/$(DEPDIR)/selection.Plo
+include fraptool/$(DEPDIR)/tiffile.Plo
 
 .cc.o:
 	depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\
@@ -346,6 +437,81 @@ include fraptool/$(DEPDIR)/tiffile.Po
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
 #	$(CXXCOMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
 
+.cc.lo:
+	depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.lo$$||'`;\
+	$(LTCXXCOMPILE) -MT $@ -MD -MP -MF $$depbase.Tpo -c -o $@ $< &&\
+	$(am__mv) $$depbase.Tpo $$depbase.Plo
+#	source='$<' object='$@' libtool=yes \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(LTCXXCOMPILE) -c -o $@ $<
+
+mostlyclean-libtool:
+	-rm -f *.lo
+
+clean-libtool:
+	-rm -rf .libs _libs
+	-rm -rf fraptool/.libs fraptool/_libs
+
+distclean-libtool:
+	-rm -f libtool config.lt
+install-pkgconfigDATA: $(pkgconfig_DATA)
+	@$(NORMAL_INSTALL)
+	test -z "$(pkgconfigdir)" || $(MKDIR_P) "$(DESTDIR)$(pkgconfigdir)"
+	@list='$(pkgconfig_DATA)'; test -n "$(pkgconfigdir)" || list=; \
+	for p in $$list; do \
+	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+	  echo "$$d$$p"; \
+	done | $(am__base_list) | \
+	while read files; do \
+	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(pkgconfigdir)'"; \
+	  $(INSTALL_DATA) $$files "$(DESTDIR)$(pkgconfigdir)" || exit $$?; \
+	done
+
+uninstall-pkgconfigDATA:
+	@$(NORMAL_UNINSTALL)
+	@list='$(pkgconfig_DATA)'; test -n "$(pkgconfigdir)" || list=; \
+	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
+	dir='$(DESTDIR)$(pkgconfigdir)'; $(am__uninstall_files_from_dir)
+install-nobase_fraptool_includeHEADERS: $(nobase_fraptool_include_HEADERS)
+	@$(NORMAL_INSTALL)
+	test -z "$(fraptool_includedir)" || $(MKDIR_P) "$(DESTDIR)$(fraptool_includedir)"
+	@list='$(nobase_fraptool_include_HEADERS)'; test -n "$(fraptool_includedir)" || list=; \
+	$(am__nobase_list) | while read dir files; do \
+	  xfiles=; for file in $$files; do \
+	    if test -f "$$file"; then xfiles="$$xfiles $$file"; \
+	    else xfiles="$$xfiles $(srcdir)/$$file"; fi; done; \
+	  test -z "$$xfiles" || { \
+	    test "x$$dir" = x. || { \
+	      echo "$(MKDIR_P) '$(DESTDIR)$(fraptool_includedir)/$$dir'"; \
+	      $(MKDIR_P) "$(DESTDIR)$(fraptool_includedir)/$$dir"; }; \
+	    echo " $(INSTALL_HEADER) $$xfiles '$(DESTDIR)$(fraptool_includedir)/$$dir'"; \
+	    $(INSTALL_HEADER) $$xfiles "$(DESTDIR)$(fraptool_includedir)/$$dir" || exit $$?; }; \
+	done
+
+uninstall-nobase_fraptool_includeHEADERS:
+	@$(NORMAL_UNINSTALL)
+	@list='$(nobase_fraptool_include_HEADERS)'; test -n "$(fraptool_includedir)" || list=; \
+	$(am__nobase_strip_setup); files=`$(am__nobase_strip)`; \
+	dir='$(DESTDIR)$(fraptool_includedir)'; $(am__uninstall_files_from_dir)
+install-nodist_fraptool_libincludeHEADERS: $(nodist_fraptool_libinclude_HEADERS)
+	@$(NORMAL_INSTALL)
+	test -z "$(fraptool_libincludedir)" || $(MKDIR_P) "$(DESTDIR)$(fraptool_libincludedir)"
+	@list='$(nodist_fraptool_libinclude_HEADERS)'; test -n "$(fraptool_libincludedir)" || list=; \
+	for p in $$list; do \
+	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+	  echo "$$d$$p"; \
+	done | $(am__base_list) | \
+	while read files; do \
+	  echo " $(INSTALL_HEADER) $$files '$(DESTDIR)$(fraptool_libincludedir)'"; \
+	  $(INSTALL_HEADER) $$files "$(DESTDIR)$(fraptool_libincludedir)" || exit $$?; \
+	done
+
+uninstall-nodist_fraptool_libincludeHEADERS:
+	@$(NORMAL_UNINSTALL)
+	@list='$(nodist_fraptool_libinclude_HEADERS)'; test -n "$(fraptool_libincludedir)" || list=; \
+	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
+	dir='$(DESTDIR)$(fraptool_libincludedir)'; $(am__uninstall_files_from_dir)
+
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \
 	unique=`for i in $$list; do \
@@ -356,11 +522,11 @@ ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	mkid -fID $$unique
 tags: TAGS
 
-TAGS:  $(HEADERS) $(SOURCES) config.h.in $(TAGS_DEPENDENCIES) \
+TAGS:  $(HEADERS) $(SOURCES) config.h.in fraptoolconfig.h.in $(TAGS_DEPENDENCIES) \
 		$(TAGS_FILES) $(LISP)
 	set x; \
 	here=`pwd`; \
-	list='$(SOURCES) $(HEADERS) config.h.in $(LISP) $(TAGS_FILES)'; \
+	list='$(SOURCES) $(HEADERS) config.h.in fraptoolconfig.h.in $(LISP) $(TAGS_FILES)'; \
 	unique=`for i in $$list; do \
 	    if test -f "$$i"; then echo $$i; else echo $(srcdir)/$$i; fi; \
 	  done | \
@@ -378,9 +544,9 @@ TAGS:  $(HEADERS) $(SOURCES) config.h.in $(TAGS_DEPENDENCIES) \
 	  fi; \
 	fi
 ctags: CTAGS
-CTAGS:  $(HEADERS) $(SOURCES) config.h.in $(TAGS_DEPENDENCIES) \
+CTAGS:  $(HEADERS) $(SOURCES) config.h.in fraptoolconfig.h.in $(TAGS_DEPENDENCIES) \
 		$(TAGS_FILES) $(LISP)
-	list='$(SOURCES) $(HEADERS) config.h.in $(LISP) $(TAGS_FILES)'; \
+	list='$(SOURCES) $(HEADERS) config.h.in fraptoolconfig.h.in $(LISP) $(TAGS_FILES)'; \
 	unique=`for i in $$list; do \
 	    if test -f "$$i"; then echo $$i; else echo $(srcdir)/$$i; fi; \
 	  done | \
@@ -562,9 +728,10 @@ distcleancheck: distclean
 	       exit 1; } >&2
 check-am: all-am
 check: check-am
-all-am: Makefile $(PROGRAMS) config.h
+all-am: Makefile $(LTLIBRARIES) $(DATA) $(HEADERS) config.h \
+		fraptoolconfig.h
 installdirs:
-	for dir in "$(DESTDIR)$(bindir)"; do \
+	for dir in "$(DESTDIR)$(libdir)" "$(DESTDIR)$(pkgconfigdir)" "$(DESTDIR)$(fraptool_includedir)" "$(DESTDIR)$(fraptool_libincludedir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: install-am
@@ -601,14 +768,15 @@ maintainer-clean-generic:
 	@echo "it deletes files that may require special tools to rebuild."
 clean: clean-am
 
-clean-am: clean-binPROGRAMS clean-generic mostlyclean-am
+clean-am: clean-generic clean-libLTLIBRARIES clean-libtool \
+	mostlyclean-am
 
 distclean: distclean-am
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
 	-rm -rf fraptool/$(DEPDIR)
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
-	distclean-hdr distclean-tags
+	distclean-hdr distclean-libtool distclean-tags
 
 dvi: dvi-am
 
@@ -622,13 +790,15 @@ info: info-am
 
 info-am:
 
-install-data-am:
+install-data-am: install-nobase_fraptool_includeHEADERS \
+	install-nodist_fraptool_libincludeHEADERS \
+	install-pkgconfigDATA
 
 install-dvi: install-dvi-am
 
 install-dvi-am:
 
-install-exec-am: install-binPROGRAMS
+install-exec-am: install-libLTLIBRARIES
 
 install-html: install-html-am
 
@@ -659,7 +829,8 @@ maintainer-clean-am: distclean-am maintainer-clean-generic
 
 mostlyclean: mostlyclean-am
 
-mostlyclean-am: mostlyclean-compile mostlyclean-generic
+mostlyclean-am: mostlyclean-compile mostlyclean-generic \
+	mostlyclean-libtool
 
 pdf: pdf-am
 
@@ -669,28 +840,36 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am: uninstall-binPROGRAMS
+uninstall-am: uninstall-libLTLIBRARIES \
+	uninstall-nobase_fraptool_includeHEADERS \
+	uninstall-nodist_fraptool_libincludeHEADERS \
+	uninstall-pkgconfigDATA
 
 .MAKE: all install-am install-strip
 
 .PHONY: CTAGS GTAGS all all-am am--refresh check check-am clean \
-	clean-binPROGRAMS clean-generic ctags dist dist-all dist-bzip2 \
-	dist-gzip dist-lzip dist-lzma dist-shar dist-tarZ dist-xz \
-	dist-zip distcheck distclean distclean-compile \
-	distclean-generic distclean-hdr distclean-tags distcleancheck \
-	distdir distuninstallcheck dvi dvi-am html html-am info \
-	info-am install install-am install-binPROGRAMS install-data \
-	install-data-am install-dvi install-dvi-am install-exec \
-	install-exec-am install-html install-html-am install-info \
-	install-info-am install-man install-pdf install-pdf-am \
-	install-ps install-ps-am install-strip installcheck \
-	installcheck-am installdirs maintainer-clean \
-	maintainer-clean-generic mostlyclean mostlyclean-compile \
-	mostlyclean-generic pdf pdf-am ps ps-am tags uninstall \
-	uninstall-am uninstall-binPROGRAMS
+	clean-generic clean-libLTLIBRARIES clean-libtool ctags dist \
+	dist-all dist-bzip2 dist-gzip dist-lzip dist-lzma dist-shar \
+	dist-tarZ dist-xz dist-zip distcheck distclean \
+	distclean-compile distclean-generic distclean-hdr \
+	distclean-libtool distclean-tags distcleancheck distdir \
+	distuninstallcheck dvi dvi-am html html-am info info-am \
+	install install-am install-data install-data-am install-dvi \
+	install-dvi-am install-exec install-exec-am install-html \
+	install-html-am install-info install-info-am \
+	install-libLTLIBRARIES install-man \
+	install-nobase_fraptool_includeHEADERS \
+	install-nodist_fraptool_libincludeHEADERS install-pdf \
+	install-pdf-am install-pkgconfigDATA install-ps install-ps-am \
+	install-strip installcheck installcheck-am installdirs \
+	maintainer-clean maintainer-clean-generic mostlyclean \
+	mostlyclean-compile mostlyclean-generic mostlyclean-libtool \
+	pdf pdf-am ps ps-am tags uninstall uninstall-am \
+	uninstall-libLTLIBRARIES \
+	uninstall-nobase_fraptool_includeHEADERS \
+	uninstall-nodist_fraptool_libincludeHEADERS \
+	uninstall-pkgconfigDATA
 
-
-#dist_noinst_SCRIPTS = autogen.sh
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

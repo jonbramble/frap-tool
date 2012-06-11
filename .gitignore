@@ -1,16 +1,23 @@
-bin/
 autom4te.cache/
-FRAP
 *~
 Makefile
 config.log
 config.status
+config.guess
+config.sub
 
 .anjunta
+.libs/
 
-fraptool/.deps/
+*.la
+
+libtool
+
+fraptool/.deps
+fraptool/.libs
 fraptool/.dirstamp
 fraptool/*.o
+fraptool/*.lo
 
 *.jpg
 *.ps

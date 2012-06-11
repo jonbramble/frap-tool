@@ -1,0 +1,11 @@
+prefix=/usr/local
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: libfraptool
+Description: Example C++ library.
+Version: 0.1
+URL: http://mpi.leeds.ac.uk/software/frap
+Libs: -L${libdir} -lfraptool-1.0
+Cflags: -I${includedir}/fraptool-1.0

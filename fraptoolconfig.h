@@ -1,0 +1,1 @@
+/* fraptoolconfig.h.  Generated from fraptoolconfig.h.in by configure.  */

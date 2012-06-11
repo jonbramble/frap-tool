@@ -13,6 +13,9 @@
 /* Define to 1 if you have the <ctime,> header file. */
 /* #undef HAVE_CTIME_ */
 
+/* Define to 1 if you have the <dlfcn.h> header file. */
+#define HAVE_DLFCN_H 1
+
 /* Define to 1 if you have the <inttypes.h> header file. */
 #define HAVE_INTTYPES_H 1
 
@@ -49,14 +52,18 @@
 /* Define to 1 if you have the <vector,> header file. */
 /* #undef HAVE_VECTOR_ */
 
+/* Define to the sub-directory in which libtool stores uninstalled libraries.
+   */
+#define LT_OBJDIR ".libs/"
+
 /* Define to the address where bug reports for this package should be sent. */
 #define PACKAGE_BUGREPORT "phyjpb@leeds.ac.uk"
 
 /* Define to the full name of this package. */
-#define PACKAGE_NAME "Frap"
+#define PACKAGE_NAME "libfraptool"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "Frap 0.1"
+#define PACKAGE_STRING "libfraptool 0.1"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "frap"
