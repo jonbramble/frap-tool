@@ -21,7 +21,7 @@ FRAP_LDADD = $(GSL_LIBS) $(CIMG_LIBS) $(TIFF_LIBS) $(BOOST_LIBS) $(PLPLOT_LIBS)
 ## the C++ compiler to produce an object file (.o) from each source file. The
 ## header files (.h) do not result in object files by themselves, but will be
 ## included in distribution archives of the project.
-FRAP_SOURCES = include/frap.h include/selection.h include/fitting.h include/tiffile.h src/tiffile.cc src/frap.cc src/selection.cc src/fitting.cc src/main.cc src/chart.cc include/chart.h include/frapimage.h src/frapimage.cc
+FRAP_SOURCES = fraptool/frap.h fraptool/selection.h fraptool/fitting.h fraptool/tiffile.h fraptool/tiffile.cc fraptool/frap.cc fraptool/selection.cc fraptool/fitting.cc fraptool/main.cc fraptool/chart.cc fraptool/chart.h fraptool/frapimage.h fraptool/frapimage.cc
 
 ## Define an independent executable script for inclusion in the distribution
 ## archive. It will not be installed on an end user's system, however.

@@ -51,9 +51,10 @@ CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
 am__dirstamp = $(am__leading_dot)dirstamp
-am_FRAP_OBJECTS = src/tiffile.$(OBJEXT) src/frap.$(OBJEXT) \
-	src/selection.$(OBJEXT) src/fitting.$(OBJEXT) \
-	src/main.$(OBJEXT) src/chart.$(OBJEXT) src/frapimage.$(OBJEXT)
+am_FRAP_OBJECTS = fraptool/tiffile.$(OBJEXT) fraptool/frap.$(OBJEXT) \
+	fraptool/selection.$(OBJEXT) fraptool/fitting.$(OBJEXT) \
+	fraptool/main.$(OBJEXT) fraptool/chart.$(OBJEXT) \
+	fraptool/frapimage.$(OBJEXT)
 FRAP_OBJECTS = $(am_FRAP_OBJECTS)
 am__DEPENDENCIES_1 =
 FRAP_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
@@ -192,7 +193,7 @@ AUTOMAKE_OPTIONS = subdir-objects
 ACLOCAL_AMFLAGS = ${ACLOCAL_FLAGS}
 AM_CPPFLAGS = $(GSL_CFLAGS) 
 FRAP_LDADD = $(GSL_LIBS) $(CIMG_LIBS) $(TIFF_LIBS) $(BOOST_LIBS) $(PLPLOT_LIBS)
-FRAP_SOURCES = include/frap.h include/selection.h include/fitting.h include/tiffile.h src/tiffile.cc src/frap.cc src/selection.cc src/fitting.cc src/main.cc src/chart.cc include/chart.h include/frapimage.h src/frapimage.cc
+FRAP_SOURCES = fraptool/frap.h fraptool/selection.h fraptool/fitting.h fraptool/tiffile.h fraptool/tiffile.cc fraptool/frap.cc fraptool/selection.cc fraptool/fitting.cc fraptool/main.cc fraptool/chart.cc fraptool/chart.h fraptool/frapimage.h fraptool/frapimage.cc
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-am
 
@@ -284,47 +285,50 @@ uninstall-binPROGRAMS:
 
 clean-binPROGRAMS:
 	-test -z "$(bin_PROGRAMS)" || rm -f $(bin_PROGRAMS)
-src/$(am__dirstamp):
-	@$(MKDIR_P) src
-	@: > src/$(am__dirstamp)
-src/$(DEPDIR)/$(am__dirstamp):
-	@$(MKDIR_P) src/$(DEPDIR)
-	@: > src/$(DEPDIR)/$(am__dirstamp)
-src/tiffile.$(OBJEXT): src/$(am__dirstamp) \
-	src/$(DEPDIR)/$(am__dirstamp)
-src/frap.$(OBJEXT): src/$(am__dirstamp) src/$(DEPDIR)/$(am__dirstamp)
-src/selection.$(OBJEXT): src/$(am__dirstamp) \
-	src/$(DEPDIR)/$(am__dirstamp)
-src/fitting.$(OBJEXT): src/$(am__dirstamp) \
-	src/$(DEPDIR)/$(am__dirstamp)
-src/main.$(OBJEXT): src/$(am__dirstamp) src/$(DEPDIR)/$(am__dirstamp)
-src/chart.$(OBJEXT): src/$(am__dirstamp) src/$(DEPDIR)/$(am__dirstamp)
-src/frapimage.$(OBJEXT): src/$(am__dirstamp) \
-	src/$(DEPDIR)/$(am__dirstamp)
+fraptool/$(am__dirstamp):
+	@$(MKDIR_P) fraptool
+	@: > fraptool/$(am__dirstamp)
+fraptool/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) fraptool/$(DEPDIR)
+	@: > fraptool/$(DEPDIR)/$(am__dirstamp)
+fraptool/tiffile.$(OBJEXT): fraptool/$(am__dirstamp) \
+	fraptool/$(DEPDIR)/$(am__dirstamp)
+fraptool/frap.$(OBJEXT): fraptool/$(am__dirstamp) \
+	fraptool/$(DEPDIR)/$(am__dirstamp)
+fraptool/selection.$(OBJEXT): fraptool/$(am__dirstamp) \
+	fraptool/$(DEPDIR)/$(am__dirstamp)
+fraptool/fitting.$(OBJEXT): fraptool/$(am__dirstamp) \
+	fraptool/$(DEPDIR)/$(am__dirstamp)
+fraptool/main.$(OBJEXT): fraptool/$(am__dirstamp) \
+	fraptool/$(DEPDIR)/$(am__dirstamp)
+fraptool/chart.$(OBJEXT): fraptool/$(am__dirstamp) \
+	fraptool/$(DEPDIR)/$(am__dirstamp)
+fraptool/frapimage.$(OBJEXT): fraptool/$(am__dirstamp) \
+	fraptool/$(DEPDIR)/$(am__dirstamp)
 FRAP$(EXEEXT): $(FRAP_OBJECTS) $(FRAP_DEPENDENCIES) $(EXTRA_FRAP_DEPENDENCIES) 
 	@rm -f FRAP$(EXEEXT)
 	$(CXXLINK) $(FRAP_OBJECTS) $(FRAP_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
-	-rm -f src/chart.$(OBJEXT)
-	-rm -f src/fitting.$(OBJEXT)
-	-rm -f src/frap.$(OBJEXT)
-	-rm -f src/frapimage.$(OBJEXT)
-	-rm -f src/main.$(OBJEXT)
-	-rm -f src/selection.$(OBJEXT)
-	-rm -f src/tiffile.$(OBJEXT)
+	-rm -f fraptool/chart.$(OBJEXT)
+	-rm -f fraptool/fitting.$(OBJEXT)
+	-rm -f fraptool/frap.$(OBJEXT)
+	-rm -f fraptool/frapimage.$(OBJEXT)
+	-rm -f fraptool/main.$(OBJEXT)
+	-rm -f fraptool/selection.$(OBJEXT)
+	-rm -f fraptool/tiffile.$(OBJEXT)
 
 distclean-compile:
 	-rm -f *.tab.c
 
-include src/$(DEPDIR)/chart.Po
-include src/$(DEPDIR)/fitting.Po
-include src/$(DEPDIR)/frap.Po
-include src/$(DEPDIR)/frapimage.Po
-include src/$(DEPDIR)/main.Po
-include src/$(DEPDIR)/selection.Po
-include src/$(DEPDIR)/tiffile.Po
+include fraptool/$(DEPDIR)/chart.Po
+include fraptool/$(DEPDIR)/fitting.Po
+include fraptool/$(DEPDIR)/frap.Po
+include fraptool/$(DEPDIR)/frapimage.Po
+include fraptool/$(DEPDIR)/main.Po
+include fraptool/$(DEPDIR)/selection.Po
+include fraptool/$(DEPDIR)/tiffile.Po
 
 .cc.o:
 	depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\
@@ -589,8 +593,8 @@ clean-generic:
 distclean-generic:
 	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
 	-test . = "$(srcdir)" || test -z "$(CONFIG_CLEAN_VPATH_FILES)" || rm -f $(CONFIG_CLEAN_VPATH_FILES)
-	-rm -f src/$(DEPDIR)/$(am__dirstamp)
-	-rm -f src/$(am__dirstamp)
+	-rm -f fraptool/$(DEPDIR)/$(am__dirstamp)
+	-rm -f fraptool/$(am__dirstamp)
 
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
@@ -601,7 +605,7 @@ clean-am: clean-binPROGRAMS clean-generic mostlyclean-am
 
 distclean: distclean-am
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
-	-rm -rf src/$(DEPDIR)
+	-rm -rf fraptool/$(DEPDIR)
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-hdr distclean-tags
@@ -649,7 +653,7 @@ installcheck-am:
 maintainer-clean: maintainer-clean-am
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
 	-rm -rf $(top_srcdir)/autom4te.cache
-	-rm -rf src/$(DEPDIR)
+	-rm -rf fraptool/$(DEPDIR)
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 

@@ -8,8 +8,9 @@ config.status
 
 .anjunta
 
-src/*.o
-src/.deps/
+fraptool/.deps/
+fraptool/.dirstamp
+fraptool/*.o
 
 *.jpg
 *.ps
