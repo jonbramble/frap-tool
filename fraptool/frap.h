@@ -25,7 +25,7 @@ frap-tool is free software: you can redistribute it and/or modify it
 #include "unistd.h"
 #include "selection.h"
 
-#include <pthread.h>
+
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -65,6 +65,7 @@ class Frap {
 
 		void save_data_file(char* _prefix);
 		void print_data();
+        double dif_const();
 
 	private:
 		const char* prima;
@@ -76,7 +77,7 @@ class Frap {
 		double start_time;
 		Selection s;
 
-		char * cstr;
+        char *cstr;
 
 		gsl_matrix *exp_data;		//<for output data
 		gsl_matrix *fitting_data;	//<for output data
