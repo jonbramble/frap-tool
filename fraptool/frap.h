@@ -50,7 +50,7 @@ namespace FrapTool {
 
 class Frap {
 	public: 
-		Frap(char* pfile, char* cfile, bool verbose);	
+		Frap(const char* pfile, const char* cfile, bool verbose);	
 		~Frap(); //<must allocate mem to data before calling free
 		
 		void processdata();
@@ -67,8 +67,8 @@ class Frap {
 		void print_data();
 
 	private:
-		char* prima;
-		char* closed;
+		const char* prima;
+		const char* closed;
 		bool verbose;
 		int npoints;			 // number of points to use in selection interpolation
 		double pixlen;			 //<pixel scaling factor - from microscope

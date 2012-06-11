@@ -24,7 +24,7 @@ namespace FrapTool
 {
 
 /*-- Constructor Destructors ---------------------------------------------------------------------------------*/
-Frap::Frap(char* pfile, char* cfile, bool _verbose){
+Frap::Frap(const char* pfile, const char* cfile, bool _verbose){
 	verbose = _verbose;
 	prima = pfile;
 	closed = cfile;	
@@ -218,6 +218,7 @@ void Frap::setimagelist(){			// limited by disc speed
 		std::string filename = frapimage_it->getfilename();
 		cstr = new char [filename.size()+1];
     	strcpy (cstr, filename.c_str());
+		std::cout << cstr << std::endl;
 		tmp_image.load_tiff(cstr);
 		imagelist.push_back(tmp_image); 		
 	}
