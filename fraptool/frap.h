@@ -19,7 +19,7 @@ frap-tool is free software: you can redistribute it and/or modify it
 #ifndef FRAP_H
 #define FRAP_H
 
-#define cimg_use_tif 1
+//#define cimg_use_tif 1
 
 #include "CImg.h"
 #include "unistd.h"
