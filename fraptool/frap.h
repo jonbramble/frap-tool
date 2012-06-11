@@ -25,7 +25,7 @@ frap-tool is free software: you can redistribute it and/or modify it
 #include "unistd.h"
 #include "selection.h"
 
-#include <pthread.h>
+
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -50,7 +50,7 @@ namespace FrapTool {
 
 class Frap {
 	public: 
-		Frap(char* pfile, char* cfile, bool verbose);	
+		Frap(const char* pfile, const char* cfile, bool verbose);	
 		~Frap(); //<must allocate mem to data before calling free
 		
 		void processdata();
@@ -65,10 +65,11 @@ class Frap {
 
 		void save_data_file(char* _prefix);
 		void print_data();
+        double dif_const();
 
 	private:
-		char* prima;
-		char* closed;
+		const char* prima;
+		const char* closed;
 		bool verbose;
 		int npoints;			 // number of points to use in selection interpolation
 		double pixlen;			 //<pixel scaling factor - from microscope
@@ -76,7 +77,7 @@ class Frap {
 		double start_time;
 		Selection s;
 
-		char * cstr;
+        char *cstr;
 
 		gsl_matrix *exp_data;		//<for output data
 		gsl_matrix *fitting_data;	//<for output data
