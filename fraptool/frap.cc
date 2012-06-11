@@ -217,12 +217,10 @@ void Frap::save_data_file(char* _prefix){
 
 void Frap::setimagelist(){			// limited by disc speed 
     for(frapimage_it=frapimages.begin(); frapimage_it<frapimages.end(); frapimage_it++){
-        char *cstr;
         cimg_library::CImg<float> tmp_image;
         std::string filename = frapimage_it->getfilename();
-        cstr = new char [filename.size()+1];
-        strcpy (cstr, filename.c_str());
-        tmp_image.load_tiff(cstr);
+        const char *cstr = filename.c_str();
+        tmp_image.load(cstr);
         imagelist.push_back(tmp_image);
     }
 }
