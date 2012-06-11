@@ -77,8 +77,6 @@ class Frap {
 		double start_time;
 		Selection s;
 
-        char *cstr;
-
 		gsl_matrix *exp_data;		//<for output data
 		gsl_matrix *fitting_data;	//<for output data
 		
