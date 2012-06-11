@@ -24,10 +24,13 @@ namespace FrapTool
 {
 
 /*-- Constructor Destructors ---------------------------------------------------------------------------------*/
-Frap::Frap(const char* pfile, const char* cfile, bool _verbose){
+Frap::Frap(std::string pfile, std::string cfile, bool _verbose){
     verbose = _verbose;
-    prima = pfile;
-    closed = cfile;
+    prima = new char[pfile.length()+1];
+    closed = new char[cfile.length()+1];
+    strcpy(prima,pfile.c_str());
+    strcpy(closed,cfile.c_str());
+
     start_time = 10.0;
     npoints = 250;
 }
@@ -219,7 +222,9 @@ void Frap::setimagelist(){			// limited by disc speed
     for(frapimage_it=frapimages.begin(); frapimage_it<frapimages.end(); frapimage_it++){ 
         cimg_library::CImg<float> tmp_image;
         std::string filename = frapimage_it->getfilename();
-        const char *cstr = filename.c_str();
+        char *cstr;
+        cstr = new char[filename.length()+1];
+        strcpy(cstr,filename.c_str());
         tmp_image.load(cstr);
         imagelist.push_back(tmp_image);
     }
@@ -252,6 +257,7 @@ void Frap::setpixlen(){
 }
 
 void Frap::removebackground(){
+        std::cout << prima << std::endl;
     cimg_library::CImg<float> primaimg(prima);
     for(cimg_imageit=imagelist.begin(); cimg_imageit<imagelist.end(); cimg_imageit++){
         *cimg_imageit=primaimg-(*cimg_imageit);
