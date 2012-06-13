@@ -35,6 +35,12 @@ Frap::Frap(std::string pfile, std::string cfile, bool _verbose){
     npoints = 250;
 }
 
+Frap::Frap(){
+	start_time = 10.0;
+    npoints = 250;
+	verbose = false;
+}
+
 Frap::~Frap(){
     if (s.selmade){
         gsl_matrix_free(exp_data);
@@ -54,6 +60,17 @@ gsl_matrix* Frap::get_fitting_data(){
 double Frap::dif_const(){
     return c1/2;
 }
+
+void Frap::setprima(std::string pfile){
+    prima = new char[pfile.length()+1];
+    strcpy(prima,pfile.c_str());
+}
+
+void Frap::setclosed(std::string cfile){
+	closed = new char[cfile.length()+1];
+	strcpy(closed,cfile.c_str());
+}
+
 
 /*-- Plotting ----------------------------------------------------------------------------------*/
 /*

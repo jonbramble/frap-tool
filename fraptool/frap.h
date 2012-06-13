@@ -51,6 +51,7 @@ namespace FrapTool {
 class Frap {
 	public: 
         Frap(std::string pfile, std::string cfile, bool verbose);
+	Frap();
 		~Frap(); //<must allocate mem to data before calling free
 		
 		void processdata();
@@ -59,6 +60,8 @@ class Frap {
 		gsl_matrix* get_exp_data();
 		gsl_matrix* get_fitting_data();
 		void setimagenames(vector<std::string> ifiles);
+		void setprima(std::string prima);
+		void setclosed(std::string closed);
 
 		void plot_graph();
 		void plplot_chart(char* _prefix);
