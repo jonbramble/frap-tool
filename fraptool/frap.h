@@ -69,6 +69,7 @@ class Frap {
 		void save_data_file(char* _prefix);
 		void print_data();
         double dif_const();
+	bool selected();
 
 	private:
         char* prima;
@@ -97,6 +98,7 @@ class Frap {
 		void getvectors();
 		void getfftransforms();
 		void dofitting();
+		void linearfit();
 		void create_fit_data();
 
 		std::vector<Frapimage> frapimages; //<this vector contains all the information about each file
