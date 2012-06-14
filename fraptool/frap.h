@@ -69,6 +69,7 @@ class Frap {
 		void save_data_file(char* _prefix);
 		void print_data();
         double dif_const();
+        void get_results(std::vector<result> &results);
 	bool selected();
 
 	private:

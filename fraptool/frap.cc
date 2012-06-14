@@ -187,11 +187,19 @@ void Frap::dosort(){
     std::sort(frapimages.begin(), frapimages.end()); // uses overloaded < operator that compares the seconds from epoch
 }
 
+void Frap::get_results(std::vector<result> &results){
+    results.clear();
+    // could use transform here
+    for(frapimage_it=frapimages.begin(); frapimage_it<frapimages.end(); frapimage_it++){
+        results.push_back(frapimage_it->r);
+    }
+}
+
 void Frap::print_data(){
     unsigned int i = 0;
     std::cout <<  "Filename" << "Times" << "A" << "Lambda^2" << "mu" << std::endl;
     for(frapimage_it=frapimages.begin(); frapimage_it<frapimages.end(); frapimage_it++){
-        std::cout << frapimage_it->getfilename()<< "\t" << time_s[i] << "\t" << frapimage_it->A << "\t" <<frapimage_it->lambda_2 << "\t"<< frapimage_it->mu << std::endl;
+        std::cout << frapimage_it->getfilename()<< "\t" << time_s[i] << "\t" << frapimage_it->r.A << "\t" <<frapimage_it->r.lambda_2 << "\t"<< frapimage_it->r.mu << std::endl;
         i++;
     }
     std::cout << "Diffusion Constant " << c1/2 << " μm2/s" << std::endl;
@@ -223,9 +231,9 @@ void Frap::save_data_file(char* _prefix){
         data_file << "Filename,Time(s),A,A error,Lambda^2,Lambda error ^2,mu,mu error,b,b error,Fitted Lambda\n";
         for(frapimage_it=frapimages.begin(); frapimage_it<frapimages.end(); frapimage_it++){
             lambda_fit = c0+c1*time_s[i];
-            data_file << frapimage_it->getfilename() << "," << frapimage_it->time_s <<"," << frapimage_it->A <<"," << frapimage_it->A_err
-                      <<"," << frapimage_it->lambda_2 <<"," << frapimage_it->lambda_err_2 <<","
-                     << frapimage_it->mu <<"," << frapimage_it->mu_err <<"," << frapimage_it->b <<"," << frapimage_it->b_err << "," << lambda_fit << std::endl;
+            data_file << frapimage_it->getfilename() << "," << frapimage_it->r.time_s <<"," << frapimage_it->r.A <<"," << frapimage_it->r.A_err
+                      <<"," << frapimage_it->r.lambda_2 <<"," << frapimage_it->r.lambda_err_2 <<","
+                     << frapimage_it->r.mu <<"," << frapimage_it->r.mu_err <<"," << frapimage_it->r.b <<"," << frapimage_it->r.b_err << "," << lambda_fit << std::endl;
             i++;
         }
         data_file << "Diffusion Constant " << c1/2 << " μm2/s" << std::endl;
@@ -262,7 +270,7 @@ void Frap::settimes(){
     double starttime = frapimages.front().gettime()-start_time; 							//ten second start time
     for(frapimage_it=frapimages.begin(); frapimage_it<frapimages.end(); frapimage_it++){
         time_s.push_back(frapimage_it->gettime()-starttime);
-        frapimage_it->time_s=frapimage_it->gettime()-starttime;
+        frapimage_it->r.time_s=frapimage_it->gettime()-starttime;
     }
 }
 
@@ -354,21 +362,21 @@ void Frap::dofitting(){
     Fitting::gaussfit(vdata,verr,get_exp_data(),verbose); // fits the data for all images
 
     for(frapimage_it=frapimages.begin(); frapimage_it<frapimages.end(); frapimage_it++){
-        frapimage_it->A = gsl_matrix_get(vdata,0,i);
-        frapimage_it->mu = gsl_matrix_get(vdata,1,i);
+        frapimage_it->r.A = gsl_matrix_get(vdata,0,i);
+        frapimage_it->r.mu = gsl_matrix_get(vdata,1,i);
         scaled_lambda = gsl_matrix_get(vdata,2,i)*scaling_factor;
-        frapimage_it->lambda = scaled_lambda;
-        frapimage_it->lambda_2 = pow(scaled_lambda,2);
-        frapimage_it->b = gsl_matrix_get(vdata,3,i);
+        frapimage_it->r.lambda = scaled_lambda;
+        frapimage_it->r.lambda_2 = pow(scaled_lambda,2);
+        frapimage_it->r.b = gsl_matrix_get(vdata,3,i);
 
         lambda_2.push_back(pow(scaled_lambda,2));
 
-        frapimage_it->A_err = gsl_matrix_get(verr,0,i);
-        frapimage_it->mu_err = gsl_matrix_get(verr,1,i);
+        frapimage_it->r.A_err = gsl_matrix_get(verr,0,i);
+        frapimage_it->r.mu_err = gsl_matrix_get(verr,1,i);
         scaled_lambda_err= gsl_matrix_get(verr,2,i)*scaling_factor;
-        frapimage_it->lambda_err = scaled_lambda_err;
-        frapimage_it->lambda_err_2 = pow(scaled_lambda_err,2);
-        frapimage_it->b_err = gsl_matrix_get(verr,3,i);
+        frapimage_it->r.lambda_err = scaled_lambda_err;
+        frapimage_it->r.lambda_err_2 = pow(scaled_lambda_err,2);
+        frapimage_it->r.b_err = gsl_matrix_get(verr,3,i);
 
         lambda_err_2.push_back(pow(scaled_lambda_err,2));
         i++;
@@ -401,10 +409,10 @@ void Frap::create_fit_data()// create curve data from fits
     double Yi, x_scaled, f_A, f_mu, f_lambda_2, f_b;
     unsigned int i = 0;
     for(frapimage_it=frapimages.begin(); frapimage_it<frapimages.end(); frapimage_it++){
-        f_A = frapimage_it->A;
-        f_mu = frapimage_it->mu;
-        f_lambda_2 = frapimage_it->lambda_2;
-        f_b = frapimage_it->b;
+        f_A = frapimage_it->r.A;
+        f_mu = frapimage_it->r.mu;
+        f_lambda_2 = frapimage_it->r.lambda_2;
+        f_b = frapimage_it->r.b;
 
         for(int x=0;x<npoints;x++){
             x_scaled = (x-f_mu)*scaling_factor;
