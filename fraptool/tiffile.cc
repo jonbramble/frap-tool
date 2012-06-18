@@ -90,7 +90,7 @@ Tiffile::Tiffile(std::string _filename){
 
 	TIFFClose(tif);
 
-	delete [] datetime;
+    //delete [] datetime;
 	delete [] cstr;
 	std::cout << "...complete" << std::endl;
 }
