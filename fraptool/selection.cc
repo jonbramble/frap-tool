@@ -64,6 +64,8 @@ void Selection::selectline(std::string _filename){
 	cimg_library::CImg<float> image(cstr), fresh(cstr);
 	cimg_library::CImgDisplay main_display(image,cstr);
 
+	delete [] cstr;
+
 	x1=0;
 	setone = false;
 	settwo = false;
@@ -114,76 +116,3 @@ void Selection::selectline(std::string _filename){
 
 } // FrapTool
 
-/*void Selection::selectline(char* filename){
-	int currentx, currenty;
-	bool setone,settwo;
-	const unsigned char color[] = { 0,0,0 };
-	const unsigned char white[] = { 255,255,255 };
-	std::string text;
-
-	CImg<float> image(filename), fresh(filename);
-	image.normalize(0,255);
-	fresh.normalize(0,255);
-	CImgDisplay main_display(image,filename);
-
-	x1=0;
-	setone = false;
-	settwo = false;
-	
-	while (!main_display.is_closed()) {
-		main_display.wait();
-
-		if(main_display.button()>=0){
-			currentx = main_display.mouse_x(); //get x and y points
-			currenty = main_display.mouse_y();
-
-			if(x1!=0){
-				image.draw_line(x1,y1,currentx,currenty,white);
-				//bounding lines
-				image.draw_line(x1,y1,x1,currenty,white);
-				image.draw_line(x1,y1,x1,currenty,white);
-				image.draw_line(x1,y1,currentx,y1,white);
-				image.draw_line(currentx,y1,currentx,currenty,white);
-				image.draw_line(x1,currenty,currentx,currenty,white);
-				xsize = x2-x1;
-				ysize = y2-y1;
-				m = (float)ysize/xsize;			
-		
-				image.draw_text(20,20,white,color,1.0,"Ratio %f",m).display(main_display);
-				
-				image = fresh; //reload image with a clean one
-			}
-			
-			if(main_display.button()==1){
-				setone = false;
-				x1 = currentx;  // left click to set starting point
-				y1 = currenty;
-				image = fresh; 		
-				main_display.set_button(0);  // breaks out of this sequence if mouse is held down	
-				setone = true;	// know that the point has been set
-			}			
-
-			if(main_display.button()==2){
-				settwo = false;
-				x2 = main_display.mouse_x();
-				y2 = main_display.mouse_y();
-				settwo = true;
-				main_display.close(); //right click to close
-				}
-			}
-		}
-
-	if(setone && settwo){
-		selmade = true;
-		xsize = x2-x1;
-		ysize = y2-y1;
-		m = (float)ysize/xsize;
-		c = (float)y2-m*(float)x2;	
-	}
-	else
-	{	
-		cout << "boundaries not set correctly" << endl;
-
-	}
-
-}*/

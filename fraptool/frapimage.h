@@ -26,13 +26,15 @@ namespace FrapTool {
 
 typedef struct  {
      double A, lambda, lambda_2, mu, b, time_s, A_err, lambda_err, lambda_err_2, mu_err, b_err;
+     std::string short_file_name;
+     bool use_in_fit;
  } result;
 
 class Frapimage: public Tiffile {
 	public:
-	 Frapimage(std::string _filename) : Tiffile(_filename) { }
+	 Frapimage(std::string _filename) : Tiffile(_filename) {r.use_in_fit=true;}
 
-    result r;
+    	result r;
 
 	bool operator<(Frapimage rhs) const { return l_seconds < rhs.l_seconds; }
 };

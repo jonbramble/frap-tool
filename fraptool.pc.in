@@ -7,5 +7,5 @@ Name: @PACKAGE_NAME@
 Description: Example C++ library.
 Version: @PACKAGE_VERSION@
 URL: @PACKAGE_URL@
-Libs: -L${libdir} -lfraptool-@FRAPTOOL_API_VERSION@
+Libs: -L${libdir} -lfraptool-@FRAPTOOL_API_VERSION@ @CIMG_LIBS@ @TIFF_LIBS@ @TIFF_LIBS@ @PLPLOT_LIBS@ @BOOST_LIBS@ @GSL_LIBS@
 Cflags: -I${includedir}/fraptool-@FRAPTOOL_API_VERSION@

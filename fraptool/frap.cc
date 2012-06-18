@@ -46,6 +46,8 @@ Frap::~Frap(){
         gsl_matrix_free(exp_data);
         gsl_matrix_free(fitting_data);
     }
+	delete [] prima;
+	delete [] closed;
 }
 
 /*-- Data Functions ----------------------------------------------------------------------------*/
@@ -262,6 +264,7 @@ void Frap::setimagelist(){			// limited by disc speed
         strcpy(cstr,filename.c_str());
         tmp_image.load(cstr);
         imagelist.push_back(tmp_image);
+		delete [] cstr;
     }
 }
 
@@ -269,7 +272,9 @@ void Frap::settimes(){
     time_s.clear();
     double starttime = frapimages.front().gettime()-start_time; 							//ten second start time
     for(frapimage_it=frapimages.begin(); frapimage_it<frapimages.end(); frapimage_it++){
-        time_s.push_back(frapimage_it->gettime()-starttime);
+        if(frapimage_it->r.use_in_fit){
+			time_s.push_back(frapimage_it->gettime()-starttime);
+		}
         frapimage_it->r.time_s=frapimage_it->gettime()-starttime;
     }
 }
@@ -369,7 +374,9 @@ void Frap::dofitting(){
         frapimage_it->r.lambda_2 = pow(scaled_lambda,2);
         frapimage_it->r.b = gsl_matrix_get(vdata,3,i);
 
-        lambda_2.push_back(pow(scaled_lambda,2));
+		if(frapimage_it->r.use_in_fit){
+        	lambda_2.push_back(pow(scaled_lambda,2));
+		}
 
         frapimage_it->r.A_err = gsl_matrix_get(verr,0,i);
         frapimage_it->r.mu_err = gsl_matrix_get(verr,1,i);
@@ -390,6 +397,11 @@ void Frap::linearfit(){
 
     gsl_vector *fit = gsl_vector_alloc(6);
     int ifilestotal = frapimages.size();
+
+	int ts = time_s.size();
+	int lms = lambda_2.size();
+
+	//std::cout << "ts" << ts << "lms" << lms << std::endl;
 
     Fitting::linearfit(fit, &time_s[0],&lambda_2[0], ifilestotal, verbose); // needs lots of error handling --needs R factor cutoff
 

@@ -7,5 +7,5 @@ Name: libfraptool
 Description: Example C++ library.
 Version: 0.1
 URL: http://mpi.leeds.ac.uk/software/frap
-Libs: -L${libdir} -lfraptool-1.0
+Libs: -L${libdir} -lfraptool-1.0 -L/usr/X11R6/lib -lpthread -lX11 -ltiff -ltiff -lplplotcxxd -lltdl -ldl -lcsirocsa -lqhull -lqsastime -lfreetype -lboost_thread-mt -L/usr/lib -lgsl -lgslcblas -lm
 Cflags: -I${includedir}/fraptool-1.0

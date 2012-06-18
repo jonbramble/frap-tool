@@ -89,6 +89,9 @@ Tiffile::Tiffile(std::string _filename){
 	d_seconds = (double)(long(result)+(ms/1000.0));
 
 	TIFFClose(tif);
+
+	delete [] datetime;
+	delete [] cstr;
 	std::cout << "...complete" << std::endl;
 }
 
