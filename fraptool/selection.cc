@@ -64,6 +64,8 @@ void Selection::selectline(std::string _filename){
 	cimg_library::CImg<float> image(cstr), fresh(cstr);
 	cimg_library::CImgDisplay main_display(image,cstr);
 
+	// show a sideplot of peak position
+
 	delete [] cstr;
 
 	x1=0;
