@@ -124,6 +124,8 @@ void Frap::plplot_chart(char* _prefix){
     line_chart->plot(frapimages.size(),time_s,lambda_2,lambda_err_2, c1, c0);
 
     gsl_vector_free(x);
+	delete simple_chart;
+	delete line_chart;
 }
 
 

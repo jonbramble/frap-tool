@@ -31,6 +31,8 @@ Chart::Chart(char const *f_name)
 	unsigned int col = 255;
 	pls->scolbg(col,col,col);
 
+	pls->setopt( "-geometry", "800x1024" );
+
 	pls->init();
 	pls->gver( ver );
 
@@ -44,13 +46,15 @@ Chart::Chart()
 	char ver[80];
 
 	char *f_name;
-	f_name = "a_file.ps";
+	f_name = "a_file.eps";
 
 	pls->sdev( "ps" );   // the output device
 	pls->sfnam( f_name );
 
 	unsigned int col = 255;
 	pls->scolbg(col,col,col);
+
+	pls->setopt( "-geometry", "800x1024" );
 
 	pls->init();
 	pls->gver( ver );
