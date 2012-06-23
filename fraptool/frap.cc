@@ -33,21 +33,34 @@ Frap::Frap(std::string pfile, std::string cfile, bool _verbose){
 
     start_time = 10.0;
     npoints = 250;
+
+    alloc_prima_name = true;
+    alloc_closed_name = true;
+
+    s = new Selection();
 }
 
 Frap::Frap(){
 	start_time = 10.0;
     npoints = 250;
 	verbose = false;
+    alloc_prima_name = false;
+    alloc_closed_name = false;
+
+    s = new Selection();
 }
 
 Frap::~Frap(){
-    if (s.selmade){
+    if (s->selmade){
         gsl_matrix_free(exp_data);
         gsl_matrix_free(fitting_data);
     }
-	delete [] prima;
-	delete [] closed;
+
+    delete s;
+
+    if (alloc_prima_name) delete [] prima;
+    if (alloc_closed_name) delete [] closed;
+
 }
 
 /*-- Data Functions ----------------------------------------------------------------------------*/
@@ -63,18 +76,28 @@ double Frap::dif_const(){
     return c1/2;
 }
 
+double Frap::get_m(){
+    return c1;
+}
+
+double Frap::get_c(){
+    return c0;
+}
+
 bool Frap::selected(){
-    return s.selmade;
+    return s->selmade;
 }
 
 void Frap::setprima(std::string pfile){
     prima = new char[pfile.length()+1];
     strcpy(prima,pfile.c_str());
+    alloc_prima_name = true;
 }
 
 void Frap::setclosed(std::string cfile){
 	closed = new char[cfile.length()+1];
 	strcpy(closed,cfile.c_str());
+    alloc_closed_name = true;
 }
 
 
@@ -128,7 +151,6 @@ void Frap::plplot_chart(char* _prefix){
 
 
 /*-- Processing ---------------------------------------------------------------------------------*/
-
 void Frap::setimagenames(vector<std::string> ifiles){
     frapimages.clear();
     for(fnameit=ifiles.begin(); fnameit<ifiles.end(); fnameit++){
@@ -138,7 +160,7 @@ void Frap::setimagenames(vector<std::string> ifiles){
 } 
 
 void Frap::doselection(){
-    s.selectline(closed);  //do selection on the closed image
+    s->selectline(closed);  //do selection on the closed image
 }
 
 /*void Frap::getfftransforms(){
@@ -306,35 +328,35 @@ void Frap::removebackground(){
 }
 
 void Frap::getvectors(){
-    if(s.selmade){
+    if(s->selmade){
 
         float valimage, xk, yk, xstep, ystep;
         int x1,y1, x2, y2;
         int i=0;
 
-        exp_data = gsl_matrix_alloc (frapimages.size(), npoints);
-        fitting_data = gsl_matrix_alloc (frapimages.size(), npoints);
+        unsigned int size = frapimages.size();
 
-        x1 = s.getx1();
-        x2 = s.getx2();
-        y1 = s.gety1();
-        y2 = s.gety2();
+        exp_data = gsl_matrix_alloc (size, npoints);
+        fitting_data = gsl_matrix_alloc (size, npoints);
+
+        x1 = s->getx1();
+        x2 = s->getx2();
+        y1 = s->gety1();
+        y2 = s->gety2();
 
         std::cout << "(" << x1 << "," << y1 << ")"<< "(" << x2 << "," << y2 << ")" << std::endl;
 
-        scaling_factor = (hypot(s.getxsize(),s.getysize())/npoints)*pixlen;
+        scaling_factor = (hypot(s->getxsize(),s->getysize())/npoints)*pixlen;
+        //std::cout << "scaling factor " << scaling_factor << std::endl;
 
-        //std::cout << s.getxsize() << "," << s.getysize() << std::endl;
-        std::cout << "scaling factor " << scaling_factor << std::endl;
-
-        if(s.getxsize()==0)
+        if(s->getxsize()==0)
             xstep = 0.0;
         else
-            xstep = (float) s.getxsize()/npoints;
-        if(s.getysize()==0)
+            xstep = (float) s->getxsize()/npoints;
+        if(s->getysize()==0)
             ystep = 0.0;
         else
-            ystep = (float) s.getysize()/npoints;
+            ystep = (float) s->getysize()/npoints;
 
         for(cimg_imageit=imagelist.begin(); cimg_imageit<imagelist.end(); cimg_imageit++)
         {
@@ -398,10 +420,8 @@ void Frap::linearfit(){
     gsl_vector *fit = gsl_vector_alloc(6);
     int ifilestotal = frapimages.size();
 
-	int ts = time_s.size();
-	int lms = lambda_2.size();
-
-	//std::cout << "ts" << ts << "lms" << lms << std::endl;
+    //int ts = time_s.size();
+    //int lms = lambda_2.size();
 
     Fitting::linearfit(fit, &time_s[0],&lambda_2[0], ifilestotal, verbose); // needs lots of error handling --needs R factor cutoff
 

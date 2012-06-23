@@ -107,6 +107,9 @@ void Chart::plot(int size, std::vector<double> &xp, std::vector<double> &yp, std
 
     delete[] x;
     delete[] y;
+    delete[] y_fit;
+    delete[] y_err_hi;
+    delete[] y_err_lo;
 
 }
 
