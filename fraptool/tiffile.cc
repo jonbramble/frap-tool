@@ -56,19 +56,19 @@ Tiffile::Tiffile(std::string _filename){
 	TIFFGetField(tif, TIFFTAG_IMAGEWIDTH, &imagewidth);  //get image scales
 	TIFFGetField(tif, TIFFTAG_IMAGEWIDTH, &imageheight);
 
-	char* datetime = new char[4];
+	char* datetime[4];
 	TIFFGetField(tif, TIFFTAG_DATETIME, &datetime); 
 
-	std::cout << datetime;
+	std::cout << *datetime;
 	
 	char* pch[4];			// does the memory need to be allocated?
 	char delims[] = " ";
 	char *date,*fulltime;
 	  
 	//issue with image pro express means datetime is trimmed by tifflib because 27 bytes long
-	pch[0] = strtok(datetime, delims);			//chopping into sections with space delimiters recovers the data
+	pch[0] = strtok(*datetime, delims);//chopping into sections with space delimiters recovers the data
 	pch[1] = strtok(NULL, delims);
-		
+	
 	date = pch[0];
 	fulltime = pch[1];
 
@@ -90,7 +90,6 @@ Tiffile::Tiffile(std::string _filename){
 
 	TIFFClose(tif);
 
-    //delete [] datetime;
 	delete [] cstr;
 	std::cout << "...complete" << std::endl;
 }
