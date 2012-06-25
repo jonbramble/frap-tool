@@ -37,7 +37,7 @@ class Selection {
 		float getm();
 		float getc();
 
-		void selectline(std::string filename);
+		void selectline(std::string, std::string);
 		bool selmade;
 		
 	private:

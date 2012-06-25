@@ -52,21 +52,26 @@ float Selection::getc(){
 		return c;
 	}
 
-void Selection::selectline(std::string _filename){
+void Selection::selectline(std::string _closed, std::string _first){
 	int currentx, currenty;
 	bool setone,settwo;
 	const unsigned char color[] = { 0,0,0 };
 
-	char *cstr;
-	cstr = new char [_filename.size()+1];
-    	strcpy (cstr, _filename.c_str());
+	char *closed, *first;
+	closed = new char [_closed.size()+1];
+	first = new char [_first.size()+1];
+    	strcpy (closed, _closed.c_str());
+	strcpy (first, _first.c_str());
 
-	cimg_library::CImg<float> image(cstr), fresh(cstr);
-	cimg_library::CImgDisplay main_display(image,cstr);
+	cimg_library::CImg<float> image(closed), fresh(closed), visu(400,320,1,3,0);
+	cimg_library::CImgDisplay main_display(image,closed), draw_display(visu,"Intensity Profile");
 
 	// show a sideplot of peak position
 
-	delete [] cstr;
+	delete [] closed;
+	delete [] first;
+
+	const unsigned char red[] = { 255,0,0 };
 
 	x1=0;
 	setone = false;
@@ -81,6 +86,7 @@ void Selection::selectline(std::string _filename){
 
 			if(x1!=0){
 				image.draw_line(x1,y1,currentx,currenty,color).display(main_display);	
+	//visu.fill(0).draw_graph(image.get_crop(x1,y1,currentx,currenty,image.width()-1,currenty,0,0),red,1,1,0,255,0).display(draw_disp);
 				image = fresh; //reload image with a clean one
 			}
 			
