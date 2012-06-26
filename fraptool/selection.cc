@@ -57,8 +57,9 @@ void Selection::selectline(std::string _prima, std::string _closed, std::string 
 	bool setone,settwo;
 	const int npoints = 450;
 
-	const unsigned char black[] = { 0,0,0 };
+	const unsigned char white[] = { 255,255,255 };
 	const unsigned char red[] = { 255,0,0 };
+	const unsigned char yellow[] = {255,255,0};
 
 	x1=0;
 	a=0;
@@ -75,7 +76,6 @@ void Selection::selectline(std::string _prima, std::string _closed, std::string 
 
 	cimg_library::CImg<float> image(closed), fresh(closed), visu(npoints,320,1,3,0);
 	cimg_library::CImgDisplay main_display(image,closed), draw_display(visu,"Intensity Profile");
-	cimg_library::CImg<float> graph_values(npoints,1,1,1);
 	cimg_library::CImg<float> first_image(first);
 	cimg_library::CImg<float> prima_image(prima);
 	cimg_library::CImg<float> baseline_image; 
@@ -86,6 +86,8 @@ void Selection::selectline(std::string _prima, std::string _closed, std::string 
 	float max_val = baseline_image.max();
 	float min_val = baseline_image.min();
 	float pix_val,xk,yk, xstep, ystep, len, x_size, y_size;
+
+	cimg_library::CImg<float> graph_values(npoints,1,1,1);
 
 	delete [] closed;
 	delete [] first;
@@ -100,27 +102,33 @@ void Selection::selectline(std::string _prima, std::string _closed, std::string 
 
 			if(x1!=0){
 				std::cout << a ; 
-				image.draw_line(x1,y1,currentx,currenty,black).display(main_display);	
-				 
+				image.draw_line(x1,y1,currentx,currenty,white);	
+				image.draw_line(x1,y1,x1,currenty,yellow);
+				image.draw_line(x1,y1,currentx,y1,yellow);
+				image.draw_line(currentx,y1,currentx,currenty,yellow);
+				image.draw_line(x1,currenty,currentx,currenty,yellow);
+				image.display(main_display);
 				x_size = currentx-x1;
 				y_size = currenty-y1;
 
 				len = hypot(xsize,ysize);
 				if(len == 0.0) {len = 1.0;} 
 
-				xstep = x_size/len; // should be length of line?
-				ystep = y_size/len;
+				xstep = x_size/npoints; // should be length of line?
+				ystep = y_size/npoints;
 
-				for(k=0;k<(int)len;k++){
+				
+
+				for(k=0;k<npoints;k++){
 					xk=x1+k*xstep; // calc x and y values
                 			yk=y1+k*ystep;
-					pix_val = baseline_image.cubic_atXY(xk,yk);  // out of range here
+					pix_val = baseline_image.cubic_atXY(xk,yk);
 					graph_values.set_linear_atXY(pix_val,k);
 				}
 
 				//max_val = graph_values.max();
 				//min_val = graph_values.min();
-				graph_values.resize(npoints,1);
+				//graph_values.resize(npoints,1);
 				visu.fill(0).draw_graph(graph_values,red,1,1,0,min_val,max_val).display(draw_display);
 				std::cout << "..end" << std::endl;
 				a++;
