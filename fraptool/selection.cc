@@ -53,9 +53,17 @@ float Selection::getc(){
 	}
 
 void Selection::selectline(std::string _closed, std::string _first){
-	int currentx, currenty;
+	int currentx, currenty, k, a;
 	bool setone,settwo;
-	const unsigned char color[] = { 0,0,0 };
+	const int npoints = 250;
+
+	const unsigned char black[] = { 0,0,0 };
+	const unsigned char red[] = { 255,0,0 };
+
+	x1=0;
+	a=0;
+	setone = false;
+	settwo = false;
 
 	char *closed, *first;
 	closed = new char [_closed.size()+1];
@@ -63,22 +71,20 @@ void Selection::selectline(std::string _closed, std::string _first){
     	strcpy (closed, _closed.c_str());
 	strcpy (first, _first.c_str());
 
-	cimg_library::CImg<float> image(closed), fresh(closed), visu(400,320,1,3,0);
+	cimg_library::CImg<float> image(closed), fresh(closed), visu(npoints,320,1,3,0);
 	cimg_library::CImgDisplay main_display(image,closed), draw_display(visu,"Intensity Profile");
+	cimg_library::CImg<float> graph_values(npoints,1,1,1);
+	cimg_library::CImg<float> first_image(first);
 
-	float max_val = image.max();
+	first_image.blur(2.5);
 
-	// show a sideplot of peak position
+	float max_val = first_image.max();
+	float min_val = first_image.min();
+	float pix_val,xk,yk, xstep, ystep;
 
 	delete [] closed;
 	delete [] first;
 
-	const unsigned char red[] = { 255,0,0 };
-
-	x1=0;
-	setone = false;
-	settwo = false;
-	
 	while (!main_display.is_closed()) {
 		main_display.wait();
 
@@ -87,9 +93,25 @@ void Selection::selectline(std::string _closed, std::string _first){
 			currenty = main_display.mouse_y();
 
 			if(x1!=0){
-				image.draw_line(x1,y1,currentx,currenty,color).display(main_display);	
-	//visu.fill(0).draw_graph(image.get_crop(x1,y1,currentx,currenty,image.width()-1,currenty,0,0),red,1,1,0,255,0).display(draw_disp);
+				std::cout << a ; 
+				image.draw_line(x1,y1,currentx,currenty,black).display(main_display);	
+				xstep = (currentx-x1)/npoints; // should be length of line
+				ystep = (currenty-y1)/npoints;
+				for(k=0;k<npoints;k++){
+					xk=x1+k*xstep; // calc x and y values
+                			yk=y1+k*ystep;
+					pix_val = first_image.cubic_atXY(xk,yk);
+					graph_values.set_linear_atXY(pix_val,k);
+				}
+
+				//max_val = graph_values.max();
+				//min_val = graph_values.min();
+				visu.fill(0).draw_graph(graph_values,red,1,1,0,min_val,max_val).display(draw_display);
+				std::cout << "..end" << std::endl;
+				a++;
 				image = fresh; //reload image with a clean one
+
+				
 			}
 			
 			if(main_display.button()==1){

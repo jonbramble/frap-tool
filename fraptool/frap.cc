@@ -128,6 +128,9 @@ void Frap::plot_graph(){
 
 void Frap::plplot_chart(char* _prefix){
 
+	Chart *simple_chart;	// make a chart
+	Chart *line_chart;		// make a chart
+
     gsl_vector *x = gsl_vector_alloc(npoints);
 
     for(int a=0;a<npoints;a++)

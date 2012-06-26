@@ -90,9 +90,6 @@ class Frap {
 
 		gsl_matrix *exp_data;		//<for output data
 		gsl_matrix *fitting_data;	//<for output data
-		
-		Chart *simple_chart;	// make a chart
-		Chart *line_chart;		// make a chart
 
 		cimg_library::CImg<unsigned char> *visu;	//<graph plot
 
