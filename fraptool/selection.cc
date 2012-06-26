@@ -59,6 +59,7 @@ void Selection::selectline(std::string _prima, std::string _closed, std::string 
 
 	const unsigned char white[] = { 255,255,255 };
 	const unsigned char red[] = { 255,0,0 };
+    const unsigned char green[] = { 0,255,0 };
 	const unsigned char yellow[] = {255,255,0};
 
 	x1=0;
@@ -70,7 +71,7 @@ void Selection::selectline(std::string _prima, std::string _closed, std::string 
 	closed = new char [_closed.size()+1];
 	first = new char [_first.size()+1];
 	prima = new char [_prima.size()+1];
-    	strcpy (closed, _closed.c_str());
+    strcpy (closed, _closed.c_str());
 	strcpy (first, _first.c_str());
 	strcpy (prima, _prima.c_str());
 
@@ -85,9 +86,10 @@ void Selection::selectline(std::string _prima, std::string _closed, std::string 
 
 	float max_val = baseline_image.max();
 	float min_val = baseline_image.min();
-	float pix_val,xk,yk, xstep, ystep, len, x_size, y_size;
+    float pix_val, pix_val_c, xk, yk, xstep, ystep, x_size, y_size, xkc, ykc;
 
 	cimg_library::CImg<float> graph_values(npoints,1,1,1);
+    cimg_library::CImg<float> graph_values_c(npoints,1,1,1);
 
 	delete [] closed;
 	delete [] first;
@@ -101,7 +103,6 @@ void Selection::selectline(std::string _prima, std::string _closed, std::string 
 			currenty = main_display.mouse_y();
 
 			if(x1!=0){
-				std::cout << a ; 
 				image.draw_line(x1,y1,currentx,currenty,white);	
 				image.draw_line(x1,y1,x1,currenty,yellow);
 				image.draw_line(x1,y1,currentx,y1,yellow);
@@ -111,30 +112,27 @@ void Selection::selectline(std::string _prima, std::string _closed, std::string 
 				x_size = currentx-x1;
 				y_size = currenty-y1;
 
-				len = hypot(xsize,ysize);
-				if(len == 0.0) {len = 1.0;} 
+                //len = hypot(xsize,ysize);
+                //if(len == 0.0) {len = 1.0;}
 
 				xstep = x_size/npoints; // should be length of line?
 				ystep = y_size/npoints;
 
-				
-
 				for(k=0;k<npoints;k++){
 					xk=x1+k*xstep; // calc x and y values
-                			yk=y1+k*ystep;
+                    yk=y1+k*ystep;
+                    //xkc=currentx-k*xstep;
+                    xkc=xk;
+                    ykc=currenty-k*ystep;
 					pix_val = baseline_image.cubic_atXY(xk,yk);
+                    pix_val_c = baseline_image.cubic_atXY(xkc,ykc);
 					graph_values.set_linear_atXY(pix_val,k);
+                    graph_values_c.set_linear_atXY(pix_val_c,k);
 				}
 
-				//max_val = graph_values.max();
-				//min_val = graph_values.min();
-				//graph_values.resize(npoints,1);
-				visu.fill(0).draw_graph(graph_values,red,1,1,0,min_val,max_val).display(draw_display);
-				std::cout << "..end" << std::endl;
-				a++;
-				image = fresh; //reload image with a clean one
-
-				
+                visu.fill(0).draw_graph(graph_values,red,1,1,0,max_val,min_val);
+                visu.draw_graph(graph_values_c,green,1,1,0,max_val,min_val).display(draw_display);
+				image = fresh; //reload image with a clean one			
 			}
 			
 			if(main_display.button()==1){
