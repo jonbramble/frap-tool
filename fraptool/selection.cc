@@ -107,10 +107,11 @@ void Selection::selectline(std::string _prima, std::string _closed, std::string 
 
 				len = hypot(xsize,ysize);
 				if(len == 0.0) {len = 1.0;} 
+
 				xstep = x_size/len; // should be length of line?
 				ystep = y_size/len;
 
-				for(k=0;k<npoints;k++){
+				for(k=0;k<(int)len;k++){
 					xk=x1+k*xstep; // calc x and y values
                 			yk=y1+k*ystep;
 					pix_val = baseline_image.cubic_atXY(xk,yk);  // out of range here
@@ -119,6 +120,7 @@ void Selection::selectline(std::string _prima, std::string _closed, std::string 
 
 				//max_val = graph_values.max();
 				//min_val = graph_values.min();
+				graph_values.resize(npoints,1);
 				visu.fill(0).draw_graph(graph_values,red,1,1,0,min_val,max_val).display(draw_display);
 				std::cout << "..end" << std::endl;
 				a++;
