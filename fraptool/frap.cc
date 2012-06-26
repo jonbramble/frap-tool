@@ -166,7 +166,7 @@ void Frap::setimagenames(vector<std::string> ifiles){
 } 
 
 void Frap::doselection(){
-    s->selectline(closed,frapimages.front().getfilename());  //do selection on the closed image
+    s->selectline(prima,closed,frapimages.front().getfilename());  //do selection on the closed image
 }
 
 /*void Frap::getfftransforms(){

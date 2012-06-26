@@ -52,10 +52,10 @@ float Selection::getc(){
 		return c;
 	}
 
-void Selection::selectline(std::string _closed, std::string _first){
+void Selection::selectline(std::string _prima, std::string _closed, std::string _first){
 	int currentx, currenty, k, a;
 	bool setone,settwo;
-	const int npoints = 250;
+	const int npoints = 450;
 
 	const unsigned char black[] = { 0,0,0 };
 	const unsigned char red[] = { 255,0,0 };
@@ -65,25 +65,31 @@ void Selection::selectline(std::string _closed, std::string _first){
 	setone = false;
 	settwo = false;
 
-	char *closed, *first;
+	char *closed, *first, *prima;
 	closed = new char [_closed.size()+1];
 	first = new char [_first.size()+1];
+	prima = new char [_prima.size()+1];
     	strcpy (closed, _closed.c_str());
 	strcpy (first, _first.c_str());
+	strcpy (prima, _prima.c_str());
 
 	cimg_library::CImg<float> image(closed), fresh(closed), visu(npoints,320,1,3,0);
 	cimg_library::CImgDisplay main_display(image,closed), draw_display(visu,"Intensity Profile");
 	cimg_library::CImg<float> graph_values(npoints,1,1,1);
 	cimg_library::CImg<float> first_image(first);
+	cimg_library::CImg<float> prima_image(prima);
+	cimg_library::CImg<float> baseline_image; 
 
-	first_image.blur(2.5);
+	baseline_image = prima_image-first_image;		//this is the 'wrong' way to get +ve image
+	baseline_image.blur(2.5);
 
-	float max_val = first_image.max();
-	float min_val = first_image.min();
-	float pix_val,xk,yk, xstep, ystep;
+	float max_val = baseline_image.max();
+	float min_val = baseline_image.min();
+	float pix_val,xk,yk, xstep, ystep, len, x_size, y_size;
 
 	delete [] closed;
 	delete [] first;
+	delete [] prima;
 
 	while (!main_display.is_closed()) {
 		main_display.wait();
@@ -95,12 +101,19 @@ void Selection::selectline(std::string _closed, std::string _first){
 			if(x1!=0){
 				std::cout << a ; 
 				image.draw_line(x1,y1,currentx,currenty,black).display(main_display);	
-				xstep = (currentx-x1)/npoints; // should be length of line
-				ystep = (currenty-y1)/npoints;
+				 
+				x_size = currentx-x1;
+				y_size = currenty-y1;
+
+				len = hypot(xsize,ysize);
+				if(len == 0.0) {len = 1.0;} 
+				xstep = x_size/len; // should be length of line?
+				ystep = y_size/len;
+
 				for(k=0;k<npoints;k++){
 					xk=x1+k*xstep; // calc x and y values
                 			yk=y1+k*ystep;
-					pix_val = first_image.cubic_atXY(xk,yk);
+					pix_val = baseline_image.cubic_atXY(xk,yk);  // out of range here
 					graph_values.set_linear_atXY(pix_val,k);
 				}
 
