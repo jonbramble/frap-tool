@@ -66,6 +66,8 @@ void Selection::selectline(std::string _closed, std::string _first){
 	cimg_library::CImg<float> image(closed), fresh(closed), visu(400,320,1,3,0);
 	cimg_library::CImgDisplay main_display(image,closed), draw_display(visu,"Intensity Profile");
 
+	float max_val = image.max();
+
 	// show a sideplot of peak position
 
 	delete [] closed;
