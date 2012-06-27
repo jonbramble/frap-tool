@@ -20,6 +20,21 @@ frap-tool is free software: you can redistribute it and/or modify it
 
 namespace FrapTool {
 
+Selection::Selection(std::string _prima, std::string _closed, std::string _first){
+	closed = new char [_closed.size()+1];
+	first = new char [_first.size()+1];
+	prima = new char [_prima.size()+1];
+    	strcpy (closed, _closed.c_str());
+	strcpy (first, _first.c_str());
+	strcpy (prima, _prima.c_str());	
+}
+
+Selection::~Selection(){
+	delete [] closed;
+	delete [] first;
+	delete [] prima;
+}
+
 int Selection::getxsize(){
 		return xsize;
 	}
@@ -52,28 +67,20 @@ float Selection::getc(){
 		return c;
 	}
 
-void Selection::selectline(std::string _prima, std::string _closed, std::string _first){
-	int currentx, currenty, k, a;
+void Selection::selectline(){
+	int currentx, currenty, k;
 	bool setone,settwo;
 	const int npoints = 450;
 
 	const unsigned char white[] = { 255,255,255 };
 	const unsigned char red[] = { 255,0,0 };
-    const unsigned char green[] = { 0,255,0 };
+    	const unsigned char green[] = { 0,255,0 };
 	const unsigned char yellow[] = {255,255,0};
 
 	x1=0;
-	a=0;
+	
 	setone = false;
 	settwo = false;
-
-	char *closed, *first, *prima;
-	closed = new char [_closed.size()+1];
-	first = new char [_first.size()+1];
-	prima = new char [_prima.size()+1];
-    strcpy (closed, _closed.c_str());
-	strcpy (first, _first.c_str());
-	strcpy (prima, _prima.c_str());
 
 	cimg_library::CImg<float> image(closed), fresh(closed), visu(npoints,320,1,3,0);
 	cimg_library::CImgDisplay main_display(image,closed), draw_display(visu,"Intensity Profile");
@@ -86,14 +93,10 @@ void Selection::selectline(std::string _prima, std::string _closed, std::string 
 
 	float max_val = baseline_image.max();
 	float min_val = baseline_image.min();
-    float pix_val, pix_val_c, xk, yk, xstep, ystep, x_size, y_size, xkc, ykc;
+    	float pix_val, pix_val_c, xk, yk, xstep, ystep, x_size, y_size, xkc, ykc;
 
 	cimg_library::CImg<float> graph_values(npoints,1,1,1);
-    cimg_library::CImg<float> graph_values_c(npoints,1,1,1);
-
-	delete [] closed;
-	delete [] first;
-	delete [] prima;
+    	cimg_library::CImg<float> graph_values_c(npoints,1,1,1);
 
 	while (!main_display.is_closed()) {
 		main_display.wait();

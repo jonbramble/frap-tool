@@ -28,6 +28,8 @@ namespace FrapTool {
 class Selection {
 
 	public:
+		Selection(std::string, std::string, std::string);
+		~Selection();
 		int getxsize();
 		int getysize();
 		int getx1();
@@ -37,13 +39,15 @@ class Selection {
 		float getm();
 		float getc();
 
-		void selectline(std::string, std::string, std::string);
+		void selectline();
 		bool selmade;
 		
 	private:
 		int x1,x2,y1,y2;
 		int xsize, ysize; 
-		float m,c;	
+		float m,c;
+
+		char *closed, *prima, *first;	
 			
 };
 

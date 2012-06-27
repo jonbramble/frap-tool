@@ -87,6 +87,7 @@ class Frap {
 		double scaling_factor; 	 //<pixel scaling factor - from selection length
         double start_time;      // start time should be editable
         Selection *s;
+	bool sel_made;
 
 		gsl_matrix *exp_data;		//<for output data
 		gsl_matrix *fitting_data;	//<for output data

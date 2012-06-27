@@ -36,8 +36,6 @@ Frap::Frap(std::string pfile, std::string cfile, bool _verbose){
 
     alloc_prima_name = true;
     alloc_closed_name = true;
-
-    s = new Selection();
 }
 
 Frap::Frap(){
@@ -46,18 +44,13 @@ Frap::Frap(){
 	verbose = false;
     alloc_prima_name = false;
     alloc_closed_name = false;
-
-    s = new Selection();
 }
 
 Frap::~Frap(){
-    if (s->selmade){
+    if (sel_made){
         gsl_matrix_free(exp_data);
         gsl_matrix_free(fitting_data);
     }
-
-    delete s;
-
     if (alloc_prima_name) delete [] prima;
     if (alloc_closed_name) delete [] closed;
 
@@ -166,7 +159,9 @@ void Frap::setimagenames(vector<std::string> ifiles){
 } 
 
 void Frap::doselection(){
-    s->selectline(prima,closed,frapimages.front().getfilename());  //do selection on the closed image
+	s = new Selection(prima,closed,frapimages.front().getfilename());
+    s->selectline();  //do selection on the closed image
+	sel_made = s->selmade;
 }
 
 /*void Frap::getfftransforms(){
@@ -334,7 +329,7 @@ void Frap::removebackground(){
 }
 
 void Frap::getvectors(){
-    if(s->selmade){
+    if(sel_made){
 
         float valimage, xk, yk, xstep, ystep;
         int x1,y1, x2, y2;
@@ -378,6 +373,8 @@ void Frap::getvectors(){
     else {
         std::cout << "no selection made" << std::endl;
     }
+
+	delete s;
 }
 
 void Frap::dofitting(){
