@@ -74,7 +74,7 @@ void Selection::selectline(){
 
 	const unsigned char white[] = { 255,255,255 };
 	const unsigned char red[] = { 255,0,0 };
-    	const unsigned char green[] = { 0,255,0 };
+    const unsigned char green[] = { 0,255,0 };
 	const unsigned char yellow[] = {255,255,0};
 
 	x1=0;
@@ -89,14 +89,14 @@ void Selection::selectline(){
 	cimg_library::CImg<float> baseline_image; 
 
 	baseline_image = prima_image-first_image;		//this is the 'wrong' way to get +ve image
-	baseline_image.blur(2.5);
+    baseline_image.blur(2.5);                       //soften hard edges
 
 	float max_val = baseline_image.max();
 	float min_val = baseline_image.min();
-    	float pix_val, pix_val_c, xk, yk, xstep, ystep, x_size, y_size, xkc, ykc;
+    float pix_val, pix_val_c, xk, yk, xstep, ystep, x_size, y_size, xkc, ykc;
 
 	cimg_library::CImg<float> graph_values(npoints,1,1,1);
-    	cimg_library::CImg<float> graph_values_c(npoints,1,1,1);
+    cimg_library::CImg<float> graph_values_c(npoints,1,1,1);
 
 	while (!main_display.is_closed()) {
 		main_display.wait();
@@ -124,7 +124,6 @@ void Selection::selectline(){
 				for(k=0;k<npoints;k++){
 					xk=x1+k*xstep; // calc x and y values
                     yk=y1+k*ystep;
-                    //xkc=currentx-k*xstep;
                     xkc=xk;
                     ykc=currenty-k*ystep;
 					pix_val = baseline_image.cubic_atXY(xk,yk);
@@ -133,9 +132,12 @@ void Selection::selectline(){
                     graph_values_c.set_linear_atXY(pix_val_c,k);
 				}
 
-                visu.fill(0).draw_graph(graph_values,red,1,1,0,max_val,min_val);
-                visu.draw_graph(graph_values_c,green,1,1,0,max_val,min_val).display(draw_display);
-				image = fresh; //reload image with a clean one			
+                visu.fill(255).draw_graph(graph_values,red,2,1,0,max_val,min_val);
+                visu.draw_graph(graph_values_c,green,2,1,0,max_val,min_val);
+                graph_values.fill(0);  // reset these images to remove zeros that dont get overwritten.
+                graph_values_c.fill(0);
+                visu.display(draw_display);
+                image = fresh; //reload image with a clean one
 			}
 			
 			if(main_display.button()==1){
